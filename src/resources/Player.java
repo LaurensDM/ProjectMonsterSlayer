@@ -16,9 +16,11 @@ public class Player extends Entity {
 		this.gp = gp;
 		sprite = new Sprite();
 
-		screenX = gp.screenWidth / 2 - (GamePanel.TILESIZE / 2);
-		screenY = gp.screenHeight / 2 - (GamePanel.TILESIZE / 2);
-
+		screenX = gp.screenWidth / 2 - (GamePanel.TILESIZE/2);
+		screenY = gp.screenHeight / 2 - (GamePanel.TILESIZE/2);
+		System.err.println("width: "+gp.screenWidth+" height: "+gp.screenHeight);
+		System.err.println(screenX +" "+screenY);
+		
 		speed = 4;
 		this.worldX = x;
 		this.worldY = y;

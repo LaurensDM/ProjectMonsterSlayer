@@ -4,21 +4,18 @@ import java.security.SecureRandom;
 
 import domein.DomeinController;
 import gui.ScreenController;
-import gui.SpelScherm;
 import gui.WelcomeScreen;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.media.MediaView;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import resources.ResourceController;
 
 
 
 
 public class Main extends Application {
-	public static double rowMultiplier;
+//	public static double rowMultiplier;
 	
 	@Override
 	public void start(Stage primaryStage) {
@@ -36,7 +33,7 @@ public class Main extends Application {
 		primaryStage.show();
 		resources.playMusic(false);
 		ScreenController.screenWidth = (int) screen.getScene().getWidth();
-		rowMultiplier = screen.getScene().getWidth()/screen.getScene().getHeight();
+//		rowMultiplier = screen.getScene().getWidth()/screen.getScene().getHeight();
 		MediaView mediaview = new MediaView(resources.getMediaplayer());
 		((WelcomeScreen) scene.getRoot()).getChildren().add(mediaview);
 		} catch (Exception e) {

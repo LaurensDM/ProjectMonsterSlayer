@@ -30,7 +30,7 @@ public class GamePanel extends BorderPane {
 	AnimationTimer gameloop;
 	
 	public static final int maxScreenCol = 16;
-	public static final int maxScreenRow = (int) (maxScreenCol/Main.rowMultiplier);
+	public static final int maxScreenRow = (int) (maxScreenCol/WelcomeScreen.rowMultiplier) + 1;
 	public final static int TILESIZE = ScreenController.screenWidth/maxScreenCol;
 	//WORLD parameters
 	public final int maxWorldCol = 50;
@@ -49,6 +49,7 @@ public class GamePanel extends BorderPane {
 		this.rs = rs;
 		initialX = x;
 		initialY = y;
+		System.err.println(maxScreenRow);
 		screenWidth = maxScreenCol*TILESIZE;
 		screenHeight =maxScreenRow*TILESIZE;
 		buildGui();
@@ -56,7 +57,7 @@ public class GamePanel extends BorderPane {
 
 	private void buildGui() {
 
-		canvas = new Canvas(maxScreenCol*TILESIZE,maxScreenRow*TILESIZE);
+		canvas = new Canvas(screenWidth,screenHeight);
 		gc = canvas.getGraphicsContext2D();
 		player = new Player(this, initialX, initialY);
 		tileM = new TileManager(this);

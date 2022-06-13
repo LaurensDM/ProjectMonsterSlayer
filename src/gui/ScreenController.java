@@ -1,13 +1,5 @@
 package gui;
 
-
-import java.awt.PaintContext;
-import java.awt.Rectangle;
-import java.awt.RenderingHints;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.Rectangle2D;
-import java.awt.image.ColorModel;
-
 import domein.DomeinController;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -24,6 +16,7 @@ import resources.ResourceController;
 public class ScreenController {
 	
 	public static int screenWidth;
+	
 
 	public static void changeToGamePanel(Parent screen, ResourceController rs,int x,int y) {
 		screenWidth = (int) screen.getScene().getWidth();

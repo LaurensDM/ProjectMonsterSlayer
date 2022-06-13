@@ -1,12 +1,9 @@
 package gui;
 
-import domein.DomeinController;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 import resources.ResourceController;
 
 public class WelcomeScreen extends VBox {
@@ -15,6 +12,7 @@ public class WelcomeScreen extends VBox {
 	private Button play;
 	private Button settings;
 	private ResourceController rs;
+	public static double rowMultiplier;
 	
 	public WelcomeScreen(ResourceController rs) {
 		this.rs = rs;
@@ -27,6 +25,7 @@ public class WelcomeScreen extends VBox {
 		
 		play.setOnAction(evt -> {
 //			ScreenController.changeToSelectScreen(this, rs, new DomeinController());
+			rowMultiplier = this.getWidth()/this.getHeight();
 			ScreenController.changeToGamePanel(this,rs,GamePanel.TILESIZE*23,GamePanel.TILESIZE*21);
 			
 		});
