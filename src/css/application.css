@@ -1,0 +1,42 @@
+/* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
+.root{
+	-fx-background-color: black;
+}
+
+#title{
+	-fx-font-size: 90;
+	-fx-text-fill: white;
+	-fx-font-family: "Times New Roman";
+	-fx-font-style: normal;
+}
+
+.label{
+	-fx-font-size: 20;
+	-fx-text-fill: white;
+	-fx-font-family: "Times New Roman";
+	-fx-font-style: normal;
+}
+
+.button:hover{
+	-fx-background-color: green;
+	-fx-text-fill: black;
+}
+
+.button{
+	-fx-max-width: 200px;
+	-fx-background-color: black;
+	-fx-border-color: white;
+	-fx-font-size: 25;
+	-fx-text-fill: white;
+	-fx-font-family: "Times New Roman";
+	-fx-font-style: normal;
+}
+
+.slider .track{
+	-fx-background-color: linear-gradient(to left, #43f72f, #082e04);
+}
+
+.slider .thumb{
+	-fx-pref-height: 20px;
+	-fx-background-color: linear-gradient(to top,gray,lightgray);
+}

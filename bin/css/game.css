@@ -1,0 +1,54 @@
+/* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
+#game{
+	-fx-text-fill: white;
+}
+
+#list{
+	-fx-background-color: green;
+}
+
+#bodyCount{
+	-fx-font-size: 90;
+	-fx-text-fill: white;
+	-fx-font-family: "Times New Roman";
+}
+
+#power{
+	-fx-background-color: radial-gradient(focus-distance 0% , center 50% 50% , radius 55% , #000000, #E01619);
+	-fx-text-fill: white;
+}
+
+#enemyHealth{
+	-fx-pref-width:200px;
+	-fx-box-border: green;
+	-fx-accent: green;
+	-fx-control-inner-background: red;
+}
+
+#mana{
+	-fx-pref-width: 200px;
+}
+
+.button{
+	-fx-font-family: "Comic Sans MS";
+	-fx-pref-width: 100px;
+	-fx-background-color: green;
+}
+
+.button:hover{
+	-fx-background-color: brown;
+}
+
+#restart{
+	-fx-background-color: black;
+	-fx-text-fill: red;
+	-fx-font-family: "Verdana";
+	-fx-font-size: 30;
+	-fx-pref-width: 200px;
+}
+
+#restart:hover{
+	-fx-background-color: red;
+	-fx-text-fill: black;
+}
+
