@@ -1,17 +1,22 @@
 package gui;
 
-import application.Main;
 import javafx.animation.AnimationTimer;
+import javafx.geometry.Pos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Label;
+import javafx.scene.effect.BlendMode;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import resources.CollisionChecker;
 import resources.Player;
 import resources.ResourceController;
 import resources.TileManager;
 
-public class GamePanel extends BorderPane {
+public class GamePanel extends StackPane {
 
 	Canvas canvas;
 	
@@ -43,6 +48,7 @@ public class GamePanel extends BorderPane {
 	final int initialX;
 	final int initialY;
 	public Player player;
+	Label label;
 
 	public GamePanel(double width, double height, int x, int y, ResourceController rs) {
 		
@@ -64,11 +70,18 @@ public class GamePanel extends BorderPane {
 		tileM.createMap("world01");
 		collision = new CollisionChecker(this);
 		canvas.setFocusTraversable(true);
-		this.setCenter(canvas);
+
+		
 		
 		paintMap();
 		drawPlayer();
 		
+		label = new Label("Exploring the world");
+		
+		VBox vbox = new VBox();
+		vbox.getChildren().add(label);
+		vbox.setAlignment(Pos.BOTTOM_CENTER);
+		this.getChildren().addAll(canvas,vbox);
 		this.setOnKeyPressed(evt -> {
 			KeyCode code = evt.getCode();
 			if (code.equals(KeyCode.Z) || code.equals(KeyCode.UP))
@@ -125,6 +138,7 @@ public class GamePanel extends BorderPane {
 						update();
 						paintMap();
 						drawPlayer();
+						
 					
 //					delta--;
 //				}
@@ -137,6 +151,10 @@ public class GamePanel extends BorderPane {
 
 	private void paintMap() {
 		tileM.drawMap(gc);
+	}
+	
+	private void setLabel() {
+		
 	}
 
 	private void drawPlayer() {
