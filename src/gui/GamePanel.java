@@ -1,5 +1,6 @@
 package gui;
 
+import application.Main;
 import javafx.animation.AnimationTimer;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -29,7 +30,7 @@ public class GamePanel extends BorderPane {
 	AnimationTimer gameloop;
 	
 	public static final int maxScreenCol = 16;
-	public static final int maxScreenRow = 9;
+	public static final int maxScreenRow = (int) (maxScreenCol/Main.rowMultiplier);
 	public final static int TILESIZE = ScreenController.screenWidth/maxScreenCol;
 	//WORLD parameters
 	public final int maxWorldCol = 50;

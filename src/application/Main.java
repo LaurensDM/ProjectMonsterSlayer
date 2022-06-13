@@ -15,7 +15,11 @@ import javafx.stage.StageStyle;
 import resources.ResourceController;
 
 
+
+
 public class Main extends Application {
+	public static double rowMultiplier;
+	
 	@Override
 	public void start(Stage primaryStage) {
 		try {
@@ -32,6 +36,7 @@ public class Main extends Application {
 		primaryStage.show();
 		resources.playMusic(false);
 		ScreenController.screenWidth = (int) screen.getScene().getWidth();
+		rowMultiplier = screen.getScene().getWidth()/screen.getScene().getHeight();
 		MediaView mediaview = new MediaView(resources.getMediaplayer());
 		((WelcomeScreen) scene.getRoot()).getChildren().add(mediaview);
 		} catch (Exception e) {
