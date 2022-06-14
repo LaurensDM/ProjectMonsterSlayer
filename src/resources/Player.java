@@ -11,6 +11,7 @@ public class Player extends Entity {
 
 	public final int screenX;
 	public final int screenY;
+	int numberOfItem = 0;
 
 	public Player(GamePanel gp, int x, int y) {
 		this.gp = gp;
@@ -26,6 +27,8 @@ public class Player extends Entity {
 		this.worldY = y;
 		double newSize = GamePanel.TILESIZE / 1.5;
 		solidArea = new Rectangle((GamePanel.TILESIZE - newSize) / 2, GamePanel.TILESIZE - newSize, newSize, newSize);
+		solidAreaDefaultX = (int) solidArea.getX();
+		solidAreaDefaultY = (int) solidArea.getY();
 	}
 
 	public void sprint() {
@@ -64,6 +67,9 @@ public class Player extends Entity {
 		collisionOn = false;
 		if (up || down || left || right) {
 			gp.collision.checkTile(this);
+			
+			int index = gp.collision.checkObject(this, true);
+			pickUpObject(index);
 
 			if (collisionOn == false) {
 				switch (direction) {
@@ -83,6 +89,23 @@ public class Player extends Entity {
 			}
 		}
 		sprite.updateSpriteCounter();
+	}
+	
+	public void pickUpObject(int index) {
+		
+		if (index != 999) {
+			
+			String name = gp.obj[index].name;
+			
+			switch (name) {
+			case "":
+				numberOfItem++;
+				gp.obj[index] = null;
+				break;
+
+			}
+			
+		}
 	}
 
 	public void stopMoving() {

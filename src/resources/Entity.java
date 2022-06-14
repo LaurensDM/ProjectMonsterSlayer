@@ -6,6 +6,7 @@ public class Entity {
 		int worldX,worldY;
 		int speed;
 		Rectangle solidArea;
+		public int solidAreaDefaultX, solidAreaDefaultY;
 		public boolean collisionOn = false;
 		String direction;
 		
