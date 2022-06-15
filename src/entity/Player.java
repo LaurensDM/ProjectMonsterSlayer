@@ -1,4 +1,4 @@
-package resources;
+package entity;
 
 import gui.GamePanel;
 import javafx.scene.canvas.GraphicsContext;
@@ -6,22 +6,17 @@ import javafx.scene.shape.Rectangle;
 
 public class Player extends Entity {
 
-	Sprite sprite;
-	GamePanel gp;
-
 	public final int screenX;
 	public final int screenY;
 	int numberOfItem = 0;
 
 	public Player(GamePanel gp, int x, int y) {
-		this.gp = gp;
-		sprite = new Sprite();
+		super(gp);
+		sprite = new Sprite("wizard");
 
-		screenX = gp.screenWidth / 2 - (GamePanel.TILESIZE/2);
-		screenY = gp.screenHeight / 2 - (GamePanel.TILESIZE/2);
-		System.err.println("width: "+gp.screenWidth+" height: "+gp.screenHeight);
-		System.err.println(screenX +" "+screenY);
-		
+		screenX = gp.screenWidth / 2 - (GamePanel.TILESIZE / 2);
+		screenY = gp.screenHeight / 2 - (GamePanel.TILESIZE / 2);
+
 		speed = 4;
 		this.worldX = x;
 		this.worldY = y;
@@ -35,12 +30,12 @@ public class Player extends Entity {
 		speed = 6;
 		sprite.sprint();
 	}
-	
+
 	public void walk() {
-		speed=4;
+		speed = 4;
 		sprite.walk();
 	}
-	
+
 	public void update(boolean up, boolean down, boolean left, boolean right) {
 
 		if (up) {
@@ -67,9 +62,12 @@ public class Player extends Entity {
 		collisionOn = false;
 		if (up || down || left || right) {
 			gp.collision.checkTile(this);
-			
-			int index = gp.collision.checkObject(this, true);
-			pickUpObject(index);
+
+			int objectIndex = gp.collision.checkObject(this, true);
+			pickUpObject(objectIndex);
+
+			int npcIndex = gp.collision.checkEntity(this, gp.npc);
+			interactNPC(npcIndex);
 
 			if (collisionOn == false) {
 				switch (direction) {
@@ -90,13 +88,13 @@ public class Player extends Entity {
 		}
 		sprite.updateSpriteCounter();
 	}
-	
+
 	public void pickUpObject(int index) {
-		
+
 		if (index != 999) {
-			
+
 			String name = gp.obj[index].name;
-			
+
 			switch (name) {
 			case "":
 				numberOfItem++;
@@ -104,7 +102,13 @@ public class Player extends Entity {
 				break;
 
 			}
-			
+
+		}
+	}
+
+	public void interactNPC(int index) {
+		if (index != 999) {
+
 		}
 	}
 

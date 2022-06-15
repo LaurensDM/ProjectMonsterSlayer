@@ -1,5 +1,6 @@
 package resources;
 
+import entity.Entity;
 import gui.GamePanel;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
@@ -18,7 +19,8 @@ public class CollisionChecker {
 		int leftWorldX = (int) (entity.worldX + entity.solidArea.getX());
 		int rightWorldX = (int) (entity.worldX + entity.solidArea.getX() + entity.solidArea.getWidth());
 		int topWorldY = (int) (entity.worldY + entity.solidArea.getY());
-		int bottomWorldY = (int) (entity.worldY + entity.solidArea.getY() + entity.solidArea.getHeight());
+		int bottomWorldY = (int) (entity.worldY + entity.solidArea.getY() + entity.solidArea.getHeight()
+				- GamePanel.TILESIZE * 0.01);
 
 		int leftCol = leftWorldX / GamePanel.TILESIZE;
 		int rightCol = rightWorldX / GamePanel.TILESIZE;
@@ -134,6 +136,117 @@ public class CollisionChecker {
 		}
 
 		return index;
+	}
+
+	// npc or monster collision
+	public int checkEntity(Entity entity, Entity[] target) {
+		int index = 999;
+
+		for (int i = 0; i < target.length; i++) {
+
+			if (target[i] != null) {
+
+				entity.solidArea.setX(entity.worldX + entity.solidArea.getX());
+				entity.solidArea.setY(entity.worldY + entity.solidArea.getY());
+
+				target[i].solidArea.setX(target[i].worldX + target[i].solidArea.getX());
+				target[i].solidArea.setY(target[i].worldY + target[i].solidArea.getY());
+
+				switch (entity.direction) {
+
+				case "up":
+					entity.solidArea.setY(entity.solidArea.getY() - entity.speed);
+
+					if (entity.solidArea.getBoundsInParent().intersects(target[i].solidArea.getBoundsInParent())) {
+						entity.collisionOn = true;
+						index = i;
+					}
+					break;
+
+				case "down":
+					entity.solidArea.setY(entity.solidArea.getY() + entity.speed);
+
+					if (entity.solidArea.getBoundsInParent().intersects(target[i].solidArea.getBoundsInParent())) {
+						entity.collisionOn = true;
+						index = i;
+					}
+					break;
+
+				case "left":
+					entity.solidArea.setX(entity.solidArea.getX() - entity.speed);
+
+					if (entity.solidArea.getBoundsInParent().intersects(target[i].solidArea.getBoundsInParent())) {
+						entity.collisionOn = true;
+						index = i;
+					}
+					break;
+
+				case "right":
+					entity.solidArea.setX(entity.solidArea.getX() + entity.speed);
+
+					if (entity.solidArea.getBoundsInParent().intersects(target[i].solidArea.getBoundsInParent())) {
+						entity.collisionOn = true;
+						index = i;
+					}
+					break;
+				}
+
+				entity.solidArea.setX(entity.solidAreaDefaultX);
+				entity.solidArea.setY(entity.solidAreaDefaultY);
+				target[i].solidArea.setX(target[i].solidAreaDefaultX);
+				target[i].solidArea.setY(target[i].solidAreaDefaultY);
+			}
+		}
+
+		return index;
+	}
+
+	public void checkPlayer(Entity entity) {
+		entity.solidArea.setX(entity.worldX + entity.solidArea.getX());
+		entity.solidArea.setY(entity.worldY + entity.solidArea.getY());
+
+		gp.player.solidArea.setX(gp.player.worldX + gp.player.solidArea.getX());
+		gp.player.solidArea.setY(gp.player.worldY + gp.player.solidArea.getY());
+
+		switch (entity.direction) {
+
+		case "up":
+			entity.solidArea.setY(entity.solidArea.getY() - entity.speed);
+
+			if (entity.solidArea.getBoundsInParent().intersects(gp.player.solidArea.getBoundsInParent())) {
+				entity.collisionOn = true;
+			}
+			break;
+
+		case "down":
+			entity.solidArea.setY(entity.solidArea.getY() + entity.speed);
+
+			if (entity.solidArea.getBoundsInParent().intersects(gp.player.solidArea.getBoundsInParent())) {
+				entity.collisionOn = true;
+			}
+			break;
+
+		case "left":
+			entity.solidArea.setX(entity.solidArea.getX() - entity.speed);
+
+			if (entity.solidArea.getBoundsInParent().intersects(gp.player.solidArea.getBoundsInParent())) {
+				entity.collisionOn = true;
+			}
+			break;
+
+		case "right":
+			entity.solidArea.setX(entity.solidArea.getX() + entity.speed);
+
+			if (entity.solidArea.getBoundsInParent().intersects(gp.player.solidArea.getBoundsInParent())) {
+				entity.collisionOn = true;
+			}
+			break;
+		}
+
+		entity.solidArea.setX(entity.solidAreaDefaultX);
+		entity.solidArea.setY(entity.solidAreaDefaultY);
+		gp.player.solidArea.setX(gp.player.solidAreaDefaultX);
+		gp.player.solidArea.setY(gp.player.solidAreaDefaultY);
 	}
 
 }
