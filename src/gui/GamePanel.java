@@ -6,6 +6,7 @@ import javafx.animation.AnimationTimer;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
@@ -30,6 +31,7 @@ public class GamePanel extends StackPane {
 	private boolean moveDown;
 	private boolean moveLeft;
 	private boolean moveRight;
+	public boolean interact = false;
 
 	// SCREEN
 	public final int screenWidth;
@@ -38,6 +40,7 @@ public class GamePanel extends StackPane {
 	public static final int maxScreenRow = (int) Math.ceil(maxScreenCol / WelcomeScreen.rowMultiplier);
 	final int FPS = 60;
 	public final static int TILESIZE = ScreenController.screenWidth / maxScreenCol;
+	private boolean pause = false;
 
 //	boolean nextScreen = false;
 	AnimationTimer gameloop;
@@ -96,7 +99,7 @@ public class GamePanel extends StackPane {
 		drawGameScreen();
 
 		configureTopUI();
-		showNotification();
+		configureNotification();
 		configureBottomUI();
 		configureDialogue();
 
@@ -116,11 +119,12 @@ public class GamePanel extends StackPane {
 			if (code.equals(KeyCode.R)) {
 				notification.setVisible(true);
 			}
-			if (code.equals(KeyCode.H)) {
+			if (code.equals(KeyCode.E)) {
+				interact = true;
 				if (dialogue.isVisible()) {
 					dialogue.setVisible(false);
-				} else
-					dialogue.setVisible(true);
+					pause = false;
+				}
 			}
 		});
 
@@ -163,9 +167,16 @@ public class GamePanel extends StackPane {
 //				
 //				
 //				if (delta >= 2) {
+				if (pause == false) {
 				update();
 				drawGameScreen();
 				hideNotification();
+				if (interact) {
+					interact = false;
+				}
+				
+				}
+				
 //					delta--;
 //				}
 			}
@@ -239,8 +250,8 @@ public class GamePanel extends StackPane {
 		topUI.setAlignment(Pos.TOP_LEFT);
 	}
 
-	private void showNotification() {
-		Label noti = new Label("I will disappear, press R to reappear");
+	private void configureNotification() {
+		Label noti = new Label("");
 		HBox hbox = new HBox();
 
 		hbox.getChildren().add(noti);
@@ -248,7 +259,16 @@ public class GamePanel extends StackPane {
 		HBox.setMargin(noti, new Insets(0, 0, 0, TILESIZE));
 		notification.getChildren().add(hbox);
 		notification.setAlignment(Pos.CENTER_LEFT);
+		notification.setVisible(false);
 
+	}
+	
+	public void showNotification(String content) {
+		HBox hbox = (HBox) notification.getChildren().get(0);
+		Label label = (Label) hbox.getChildren().get(0);
+		label.setText(content);
+		
+		notification.setVisible(true);
 	}
 
 	private void hideNotification() {
@@ -264,7 +284,10 @@ public class GamePanel extends StackPane {
 	}
 
 	public void showDialogue(String content) {
-
+		Node label = dialogue.getChildren().get(0);
+		((Label) label).setText(content);
+		dialogue.setVisible(true);
+		pause = true;
 	}
 
 	public void configureDialogue() {
@@ -276,6 +299,7 @@ public class GamePanel extends StackPane {
 		dialogue.setAlignment(Pos.CENTER);
 		StackPane.setMargin(dialogue, new Insets(0, 0, screenHeight / 2 + 10, 0));
 		dialogue.setLayoutX(FPS);
+		dialogue.setVisible(false);
 	}
 
 	private void fillBag() {

@@ -68,6 +68,8 @@ public class Player extends Entity {
 
 			int npcIndex = gp.collision.checkEntity(this, gp.npc);
 			interactNPC(npcIndex);
+			
+			gp.interact = false;
 
 			if (collisionOn == false) {
 				switch (direction) {
@@ -108,7 +110,29 @@ public class Player extends Entity {
 
 	public void interactNPC(int index) {
 		if (index != 999) {
-
+			gp.showNotification("Press E to interact with NPC.");
+			if (gp.interact) {
+				switch (direction) {
+				case "up":
+					gp.npc[index].direction = "down";
+					gp.npc[index].sprite.moveDown();
+					break;
+				case "down":
+					gp.npc[index].direction = "up";
+					gp.npc[index].sprite.moveUp();
+					break;
+				case "left":
+					gp.npc[index].direction = "right";
+					gp.npc[index].sprite.moveRight();
+					break;
+				case "right":
+					gp.npc[index].direction = "left";
+					gp.npc[index].sprite.moveLeft();
+					break;
+				}
+				gp.showDialogue("A good day to you!");
+			}
+			
 		}
 	}
 
