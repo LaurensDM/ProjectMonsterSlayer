@@ -1,5 +1,9 @@
 package gui;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import entity.Entity;
 import entity.Player;
 import javafx.animation.AnimationTimer;
@@ -59,6 +63,7 @@ public class GamePanel extends StackPane {
 	final int initialX;
 	final int initialY;
 
+
 	// ENTITY AND OBJECT
 	public Player player;
 	public SuperObject obj[] = new SuperObject[10];
@@ -72,6 +77,7 @@ public class GamePanel extends StackPane {
 	private int messageCounter;
 	private VBox dialogue = new VBox();
 	private GridPane bag = new GridPane();
+	private SettingScreen settings;
 
 	public GamePanel(double width, double height, int x, int y, ResourceController rs) {
 
@@ -93,7 +99,7 @@ public class GamePanel extends StackPane {
 		collision = new CollisionChecker(this);
 		setter = new AssetSetter(this);
 		canvas.setFocusTraversable(true);
-
+		settings = new SettingScreen(rs,true);
 		setUpGame();
 
 		drawGameScreen();
@@ -102,17 +108,18 @@ public class GamePanel extends StackPane {
 		configureNotification();
 		configureBottomUI();
 		configureDialogue();
+		configureSettings();
 
-		this.getChildren().addAll(canvas, bottomUI, topUI, notification, dialogue);
+		this.getChildren().addAll(canvas, bottomUI, topUI, notification, dialogue, settings);
 		this.setOnKeyPressed(evt -> {
 			KeyCode code = evt.getCode();
-			if (code.equals(KeyCode.Z) || code.equals(KeyCode.UP))
+			if (code.equals(SettingScreen.keyCodes.get(0)) || code.equals(KeyCode.UP))
 				moveUp = true;
-			if (code.equals(KeyCode.S) || code.equals(KeyCode.DOWN))
+			if (code.equals(SettingScreen.keyCodes.get(1)) || code.equals(KeyCode.DOWN))
 				moveDown = true;
-			if (code.equals(KeyCode.Q) || code.equals(KeyCode.LEFT))
+			if (code.equals(SettingScreen.keyCodes.get(2)) || code.equals(KeyCode.LEFT))
 				moveLeft = true;
-			if (code.equals(KeyCode.D) || code.equals(KeyCode.RIGHT))
+			if (code.equals(SettingScreen.keyCodes.get(3)) || code.equals(KeyCode.RIGHT))
 				moveRight = true;
 			if (code.equals(KeyCode.SHIFT))
 				player.sprint();
@@ -126,23 +133,34 @@ public class GamePanel extends StackPane {
 					pause = false;
 				}
 			}
+
+			if (code.equals(KeyCode.ESCAPE)) {
+				if (settings.isVisible()) {
+					settings.setVisible(false);
+					pause = false;
+				} else {
+					settings.setVisible(true);
+					pause = true;
+				}
+				
+			}
 		});
 
 		this.setOnKeyReleased(evt -> {
 			KeyCode code = evt.getCode();
-			if (code.equals(KeyCode.Z) || code.equals(KeyCode.UP)) {
+			if (code.equals(SettingScreen.keyCodes.get(0)) || code.equals(KeyCode.UP)) {
 				moveUp = false;
 				player.stopMoving();
 			}
-			if (code.equals(KeyCode.S) || code.equals(KeyCode.DOWN)) {
+			if (code.equals(SettingScreen.keyCodes.get(1)) || code.equals(KeyCode.DOWN)) {
 				moveDown = false;
 				player.stopMoving();
 			}
-			if (code.equals(KeyCode.Q) || code.equals(KeyCode.LEFT)) {
+			if (code.equals(SettingScreen.keyCodes.get(2)) || code.equals(KeyCode.LEFT)) {
 				moveLeft = false;
 				player.stopMoving();
 			}
-			if (code.equals(KeyCode.D) || code.equals(KeyCode.RIGHT)) {
+			if (code.equals(SettingScreen.keyCodes.get(3)) || code.equals(KeyCode.RIGHT)) {
 				moveRight = false;
 				player.stopMoving();
 			}
@@ -168,15 +186,21 @@ public class GamePanel extends StackPane {
 //				
 //				if (delta >= 2) {
 				if (pause == false) {
-				update();
-				drawGameScreen();
-				hideNotification();
-				if (interact) {
-					interact = false;
+					update();
+					drawGameScreen();
+					hideNotification();
+					if (interact) {
+						interact = false;
+					}
+
 				}
 				
+				if (settings.isVisible()==false) {
+					if (pause==true) {
+						pause=false;
+					}
 				}
-				
+
 //					delta--;
 //				}
 			}
@@ -251,7 +275,7 @@ public class GamePanel extends StackPane {
 	}
 
 	private void configureNotification() {
-		Label noti = new Label("");
+		Label noti = new Label("Press ESC to show settings");
 		HBox hbox = new HBox();
 
 		hbox.getChildren().add(noti);
@@ -259,15 +283,15 @@ public class GamePanel extends StackPane {
 		HBox.setMargin(noti, new Insets(0, 0, 0, TILESIZE));
 		notification.getChildren().add(hbox);
 		notification.setAlignment(Pos.CENTER_LEFT);
-		notification.setVisible(false);
+		notification.setVisible(true);
 
 	}
-	
+
 	public void showNotification(String content) {
 		HBox hbox = (HBox) notification.getChildren().get(0);
 		Label label = (Label) hbox.getChildren().get(0);
 		label.setText(content);
-		
+
 		notification.setVisible(true);
 	}
 
@@ -322,4 +346,11 @@ public class GamePanel extends StackPane {
 
 	}
 
+	private void configureSettings() {
+		// TODO Auto-generated method stub
+		settings.setId("settings");
+		settings.setMaxWidth(0.8 * screenWidth);
+		settings.setMaxHeight(0.8 * screenHeight);
+		settings.setVisible(false);
+	}
 }

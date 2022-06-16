@@ -4,6 +4,7 @@ import domein.DomeinController;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
@@ -28,6 +29,7 @@ public class ScreenController {
 		stage.setScene(scene);
 		stage.setTitle("Game");
 		stage.setFullScreenExitHint("");
+		stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
 		stage.setFullScreen(true);
 		stage.show();
 		rs.worldMusic();
@@ -55,7 +57,7 @@ public class ScreenController {
 	}
 
 	public static void changeToSettingScreen(WelcomeScreen screen, ResourceController rs) {
-		SettingScreen setting = new SettingScreen(rs);
+		SettingScreen setting = new SettingScreen(rs,false);
 		Scene scene = new Scene(setting, screen.getScene().getWidth(), screen.getScene().getHeight());
 		scene.getStylesheets().add(screen.getClass().getResource("/css/application.css").toExternalForm());
 		Stage stage = (Stage) (screen.getScene().getWindow());
