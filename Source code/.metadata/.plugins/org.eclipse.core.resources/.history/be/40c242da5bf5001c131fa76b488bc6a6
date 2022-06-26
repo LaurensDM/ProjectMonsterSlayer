@@ -1,0 +1,51 @@
+package domein;
+
+public class Skills {
+
+	private boolean skill;
+
+	public Skills() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public void activateSkills(int skill) {
+		switch (skill) {
+		case 1:
+
+			break;
+
+		case 5:
+
+			break;
+		case 10:
+
+			break;
+		case 15:
+
+			break;
+		case 20:
+
+			break;
+		case 25:
+
+			break;
+		case 30:
+
+			break;
+		case 35:
+
+			break;
+		case 40:
+
+			break;
+		case 45:
+
+			break;
+		case 50:
+
+			break;
+
+		}
+	}
+
+}
