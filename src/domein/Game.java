@@ -5,7 +5,7 @@ import java.security.SecureRandom;
 public class Game {
 
 	SecureRandom sr = new SecureRandom();
-	private Player player;
+	private final Player player;
 	private Enemy enemy;
 	private Elements el;
 	private boolean fullpower = false;
@@ -16,24 +16,21 @@ public class Game {
 
 	protected double manapool;
 
+	public final double MAX_MANA;
+
 	public Game(Player player) {
 		this.player = player;
 		manapool = player.getLevel() * 100;
+		this.MAX_MANA = manapool;
 	}
 
 	public void registerEnemy(String enemy) {
 		switch (enemy.toLowerCase()) {
-		case "dragon":
-			this.enemy = new Dragon();
-			return;
+			case "dragon" -> this.enemy = new Dragon();
 
-		case "troll":
-			this.enemy = new Troll();
-			return;
+			case "troll" -> this.enemy = new Troll();
 
-		case "goblin":
-			this.enemy = new Goblin();
-			return;
+			case "goblin" -> this.enemy = new Goblin();
 		}
 	}
 
@@ -44,19 +41,13 @@ public class Game {
 		} else
 			weaponDamage = player.getWeapon().getDamage();
 
-		if (element.equals("Fire")) {
-			el = new Fire(manapool, player.getSkills(), player.getWeapon(), player.getArmor());
-		} else if (element.equals("Water")) {
-			el = new Water(manapool, player.getSkills(), player.getWeapon(), player.getArmor());
-		} else if (element.equals("Lightning")) {
-			el = new Lightning(manapool, player.getSkills(), player.getWeapon(), player.getArmor());
-		} else if (element.equals("Wind")) {
-			el = new Wind(manapool, player.getSkills(), player.getWeapon(), player.getArmor());
-		} else {
-			el = new Earth(manapool, player.getSkills(), player.getWeapon(), player.getArmor());
-		}
-		if (element.equals("True Magic")) {
-			el = new True_Magic(manapool, player.getSkills(), player.getWeapon(), player.getArmor());
+		switch (element) {
+			case "Fire" -> el = new Fire(manapool, player.getSkills(), MAX_MANA);
+			case "Water" -> el = new Water(manapool, player.getSkills(), MAX_MANA);
+			case "Lightning" -> el = new Lightning(manapool, player.getSkills(), MAX_MANA);
+			case "Wind" -> el = new Wind(manapool, player.getSkills(), MAX_MANA);
+			case "Earth" -> el = new Earth(manapool, player.getSkills(), MAX_MANA);
+			case "True Magic" -> el = new True_Magic(manapool, player.getSkills(), MAX_MANA);
 		}
 
 		if (fullpower) {
@@ -65,7 +56,7 @@ public class Game {
 		}
 		
 		if (judgement) {
-			el = new True_Magic(manapool, player.getSkills(), player.getWeapon(), player.getArmor());
+			el = new True_Magic(manapool, player.getSkills(), MAX_MANA);
 			el.deliverJudgement();
 		}
 
@@ -149,10 +140,7 @@ public class Game {
 	}
 
 	public boolean outOfMana() {
-		if (manapool <= 1) {
-			return true;
-		}
-		return false;
+		return manapool <= 1;
 	}
 
 	public boolean isDefeated() {

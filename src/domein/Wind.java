@@ -2,8 +2,8 @@ package domein;
 
 public class Wind extends Elements {
 
-	public Wind(double manapool, Skills playerSkills,Weapon weapon,Armor armor) {
-		super(manapool, playerSkills,weapon,armor);
+	public Wind(double manapool, Skills playerSkills,double maxMana) {
+		super(manapool, playerSkills,maxMana);
 		// TODO Auto-generated constructor stub
 	}
 

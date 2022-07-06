@@ -8,17 +8,19 @@ import java.util.List;
 public abstract class Elements {
 	private static SecureRandom sr = new SecureRandom();
 
-	protected double manapool = sr.nextInt(1500) + 250;
+	protected double manapool;
 	private double totalDamage = 0;
 	private boolean allOut = false;
 	private boolean judgement = false;
 	private Skills playerSkills;
+	private double maxMana;
 	public final static List<String> ELEMENTS = new ArrayList<>(
 			Arrays.asList("Fire", "Water", "Lightning", "Earth", "Wind"));
 
-	public Elements(double manapool, Skills playerSkills, Weapon weapon, Armor armor) {
+	public Elements(double manapool, Skills playerSkills, double maxMana) {
 		this.manapool = manapool;
 		this.playerSkills = playerSkills;
+		this.maxMana = maxMana;
 	}
 
 	public double attack(double value) {
@@ -28,22 +30,22 @@ public abstract class Elements {
 			return damage;
 		} else {
 			if (judgement) {
-				double damage = manapool*0.25 * attackFails() * value;
-				useAttack(manapool*0.25);
+				double damage = maxMana*0.25 * attackFails() * value;
+				useAttack(maxMana*0.25);
 				return damage;
 			}
 			double power = power();
 			useAttack(power);
 			return power * attackFails() * value;
 		}
-	};
+	}
 
 	protected void addToTotalDamage(double damage) {
 		totalDamage += damage;
 	}
 
 	public int power() {
-		return sr.nextInt(101) + 50;
+		return (int) (sr.nextInt((int) Math.round(maxMana*0.10)) + maxMana*0.05);
 	}
 
 	protected void useAttack(double power) {
@@ -66,7 +68,7 @@ public abstract class Elements {
 	}
 
 	private int attackFails() {
-		int chance = 1;
+		int chance;
 		if (allOut) {
 			if (playerSkills.getFullPowerStage() == 3) {
 				chance = sr.nextInt(50);
