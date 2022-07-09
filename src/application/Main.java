@@ -1,6 +1,8 @@
 package application;
 	
+import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.security.spec.InvalidKeySpecException;
 
 import domein.DomeinController;
 import gui.ScreenController;
@@ -9,6 +11,7 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
+import resources.HashClass;
 import resources.ResourceController;
 
 

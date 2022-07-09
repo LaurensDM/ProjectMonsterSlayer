@@ -4,11 +4,7 @@ import domein.DomeinController;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Hyperlink;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.GridPane;
@@ -18,7 +14,7 @@ public class SelectScreen extends GridPane{
 
 	private Label lblMessage;
 	private TextField txfUser;
-	private TextField txfGeboorteJaar;
+	private PasswordField txfGeboorteJaar;
 	private String naam;
 	private String geboorteJaar;
 	private DomeinController dc;
@@ -63,7 +59,7 @@ public class SelectScreen extends GridPane{
 		this.add(lblGeboorteJaar, 0, 2);
 
 		// invoerveld in de 2de kolom van de 3de rij plaatsen
-		txfGeboorteJaar = new TextField();
+		txfGeboorteJaar = new PasswordField();
 		txfGeboorteJaar.setPromptText("Password");
 		txfGeboorteJaar.setFocusTraversable(false);
 		this.add(txfGeboorteJaar, 1, 2);

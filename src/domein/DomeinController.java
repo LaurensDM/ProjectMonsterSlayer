@@ -30,7 +30,7 @@ public class DomeinController {
 	/**
 	 * attack an enemy
 	 * 
-	 * @param the element of the attack
+	 * @param element of the attack
 	 * @return a String which contains information about the damage dealt
 	 */
 	public String attack(String element) {
@@ -97,7 +97,7 @@ public class DomeinController {
 	/**
 	 * select an existing player
 	 * 
-	 * @param the players name and password
+	 * @param  players name and password
 	 */
 	public void selectPlayer(String name, String password) {
 		player = repo.selectPlayer(name, password);
@@ -106,16 +106,16 @@ public class DomeinController {
 	/**
 	 * create a new player
 	 * 
-	 * @param the players name, password and affinity
+	 * @param  players name, password and affinity
 	 */
-	public void registerPlayer(String name, String password, String affinity) {
-		repo.registerPlayer(new Player(name, password, affinity));
+	public void registerPlayer(String name, String password,String salt, String affinity) {
+		repo.registerPlayer(new Player(name, password,salt, affinity));
 	}
 
 	/**
 	 * add exp
 	 * 
-	 * @param how much experience was earned
+	 * @param  how much experience was earned
 	 */
 	public void gainExp(int value) {
 		player.gainExp(0);

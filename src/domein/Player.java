@@ -7,7 +7,8 @@ import java.util.Objects;
 public class Player {
 
 	private String name;
-	private String wachtwoord;
+	private String passwordHash;
+	private final String salt;
 	private String affinity;
 	private int level;
 	private int exp;
@@ -17,10 +18,11 @@ public class Player {
 	private Weapon weapon;
 	private Armor armor;
 
-	public Player(String name, String wachtwoord, String affinity, int level, int exp, int money, List<Items> bag,
+	public Player(String name, String passwordHash,String salt, String affinity, int level, int exp, int money, List<Items> bag,
 			Skills skills, Weapon weapon, Armor armor) {
 		setName(name);
-		setWachtwoord(wachtwoord);
+		this.passwordHash=passwordHash;
+		this.salt = salt;
 		setAffinity(affinity);
 		setLevel(level);
 		setExp(exp);
@@ -31,8 +33,8 @@ public class Player {
 		this.armor = armor;
 	}
 
-	public Player(String name, String wachtwoord, String affinity) {
-		this(name, wachtwoord, affinity, 1, 0, 100, new ArrayList<>(), new Skills(), null, null);
+	public Player(String name, String wachtwoord,String salt, String affinity) {
+		this(name, wachtwoord, salt,affinity, 1, 0, 100, new ArrayList<>(), new Skills(), null, null);
 	}
 
 	public String getName() {
@@ -47,7 +49,7 @@ public class Player {
 	}
 
 	public String getWachtwoord() {
-		return wachtwoord;
+		return passwordHash;
 	}
 
 	private void setWachtwoord(String wachtwoord) {
@@ -55,7 +57,7 @@ public class Player {
 			throw new IllegalArgumentException(
 					"Uw wachtwoord moet uit minstens 3 characters bestaan en minstens 2 cijfers bevatten!");
 		}
-		this.wachtwoord = wachtwoord;
+		this.passwordHash = wachtwoord;
 	}
 
 	public String getAffinity() {
