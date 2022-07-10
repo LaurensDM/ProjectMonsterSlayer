@@ -3,6 +3,16 @@
 	-fx-background-color: black;
 }
 
+.dialog-pane{
+    -fx-background-color: black;
+    -fx-text-fill: white;
+    -fx-font-family: "Times New Roman";
+}
+
+.dialog-pane:header .header-panel{
+    -fx-background-color: black;
+}
+
 #title{
 	-fx-font-size: 90;
 	-fx-text-fill: white;

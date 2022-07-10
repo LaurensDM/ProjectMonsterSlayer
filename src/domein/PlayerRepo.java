@@ -50,14 +50,13 @@ public class PlayerRepo {
 	 * @return the player
 	 */
 	public Player selectPlayer(String name, String password) {
-		Player player = givePlayerDetails(name, password);
-		
+		Player player = mapper.returnPlayer(name, password);
+		if (player==null){
+			throw new IllegalArgumentException("Login error, check username and password");
+		}
 
 		return player;
 	}
 	
-	private Player givePlayerDetails(String name, String password)
-	{
-		return mapper.returnPlayer(name, password);
-	}
+
 }

@@ -11,7 +11,7 @@ public class Dragon extends Enemy {
 	 * Instantiates a new Dragon.
 	 */
 	public Dragon() {
-		super(sr.nextInt(301) + 1000000, sr.nextDouble(0.46) + 0.35,
+		super(sr.nextInt(10000) + 10000, sr.nextDouble(0.46) + 0.35,
 				Elements.ELEMENTS.get(sr.nextInt(Elements.ELEMENTS.size())));
 
 		if (sr.nextInt(100) == 0) {
@@ -49,7 +49,7 @@ public class Dragon extends Enemy {
 
 	@Override
 	public void evolve() {
-		super.setHealth(800);
+		super.setHealth(100000);
 		super.setDefence(0.8);
 		super.setType("Golden");
 		super.evolved = true;
@@ -57,7 +57,7 @@ public class Dragon extends Enemy {
 
 	@Override
 	public int determineItemGrade(boolean fullpower) {
-		int grade = 1;
+		int grade;
 
 		if (getType().equals("Golden")) {
 			grade = sr.nextInt(2) + 4;

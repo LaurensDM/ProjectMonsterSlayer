@@ -223,7 +223,7 @@ public class Player extends Entity {
 	private void encounter() {
 		if (sr.nextInt(20) == 0) {
 			gp.gameloop.stop();
-			gp.rs.stopWorldMusic();
+			gp.rs.stopMusic();
 			ScreenController.changeToSpelScherm(gp, gp.rs, gp.dc, worldX, worldY);
 		}
 	}

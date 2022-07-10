@@ -157,7 +157,7 @@ public class ResourceController {
 	/**
 	 * Stop world music.
 	 */
-	public void stopWorldMusic() {
+	public void stopMusic() {
 		mediaplayer.stop();
 	}
 

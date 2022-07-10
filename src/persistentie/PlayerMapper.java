@@ -11,6 +11,7 @@ import domein.Player;
 import domein.Power_Potion;
 import domein.Skills;
 import domein.Weapon;
+import resources.HashClass;
 
 /**
  * The type Player mapper.
@@ -73,10 +74,15 @@ public class PlayerMapper {
 	 * @return the player
 	 */
 	public Player returnPlayer(String name, String password) {
+		Player selectedPlayer=null;
 		for (Player player : players) {
-			if (player.getName().equals(name) && player.getPasswordHash().equals(password)) {
-				return player;
+			if (player.getName().equals(name)) {
+				selectedPlayer = player;
 			}
+		}
+		String passwordToHash = HashClass.securePassword(password,selectedPlayer.getSalt());
+		if ( selectedPlayer!=null && selectedPlayer.getPasswordHash().equals(passwordToHash)){
+			return selectedPlayer;
 		}
 		return null;
 	}

@@ -17,9 +17,9 @@ public class SelectScreen extends GridPane{
 
 	private Label lblMessage;
 	private TextField txfUser;
-	private PasswordField txfGeboorteJaar;
+	private PasswordField passwordLbl;
 	private String naam;
-	private String geboorteJaar;
+	private String password;
 	private DomeinController dc;
 	private ResourceController rs;
 
@@ -68,10 +68,10 @@ public class SelectScreen extends GridPane{
 		this.add(lblGeboorteJaar, 0, 2);
 
 		// invoerveld in de 2de kolom van de 3de rij plaatsen
-		txfGeboorteJaar = new PasswordField();
-		txfGeboorteJaar.setPromptText("Password");
-		txfGeboorteJaar.setFocusTraversable(false);
-		this.add(txfGeboorteJaar, 1, 2);
+		passwordLbl = new PasswordField();
+		passwordLbl.setPromptText("Password");
+		passwordLbl.setFocusTraversable(false);
+		this.add(passwordLbl, 1, 2);
 
 
 		Button btnSelecteer = new Button("Select");
@@ -115,13 +115,13 @@ public class SelectScreen extends GridPane{
 //		 als men in txtUser zit te typen, bij het drukken van arrow down wordt txfGeboorte geselecteerd
 		txfUser.setOnKeyPressed(evt -> {
 			if (evt.getCode() == KeyCode.DOWN) {
-				txfGeboorteJaar.requestFocus();
+				passwordLbl.requestFocus();
 			}
 		});
 
 		// als men in txfGeboorte zit, bij drukken op arrow down wordt de speler
 		// geselecteerd, bij arrow up wordt txfUser geselecteerd
-		txfGeboorteJaar.setOnKeyPressed(arg0 -> {
+		passwordLbl.setOnKeyPressed(arg0 -> {
 			if (arg0.getCode() == KeyCode.DOWN) {
 				selecteer();
 			}
@@ -161,11 +161,11 @@ public class SelectScreen extends GridPane{
 	private void selecteer() {
 		try {
 			naam = txfUser.getText();
-			geboorteJaar = txfGeboorteJaar.getText();
-			dc.selectPlayer(naam, geboorteJaar);
+			password = passwordLbl.getText();
+			dc.selectPlayer(naam, password);
 			lblMessage.setText(dc.giveDetailsPlayer());
 			txfUser.clear();
-			txfGeboorteJaar.clear();
+			passwordLbl.clear();
 			txfUser.requestFocus();
 		} catch (NumberFormatException ne) {
 			Alert error = new Alert(AlertType.ERROR);
@@ -174,6 +174,8 @@ public class SelectScreen extends GridPane{
 		} catch (IllegalArgumentException e) {
 			Alert error = new Alert(AlertType.ERROR);
 			error.setContentText(e.getLocalizedMessage());
+			DialogPane dialogPane = error.getDialogPane();
+			dialogPane.getStylesheets().add(getClass().getResource("/css/application.css").toExternalForm());
 			error.show();
 		}
 	}

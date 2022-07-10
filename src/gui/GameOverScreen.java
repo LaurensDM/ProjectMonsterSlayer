@@ -30,7 +30,8 @@ public class GameOverScreen extends VBox {
 		tryAgain.setId("restart");
 		tryAgain.setOnAction(evt -> {
 			ScreenController.changeToSpelScherm(this, rs, dc,x,y);
-			rs.nextSong();
+			rs.stopMusic();
+			rs.playMusic(false);
 			
 		});
 		VBox.setMargin(tryAgain, new Insets(0, 0, 100, 0));

@@ -27,6 +27,13 @@ public abstract class Enemy {
 	 * The Enemies.
 	 */
 	public final static List<String> ENEMIES = Arrays.asList("Dragon", "Troll", "Goblin");
+	public final static List<String> STAGE_0 = Arrays.asList("Slime");
+	public final static List<String> STAGE_1 = Arrays.asList("Slime","Goblin");
+	public final static List<String> STAGE_2 = Arrays.asList("Troll","Goblin");
+	public final static List<String> STAGE_3 = Arrays.asList("Goblin","Troll","Golem");
+	public final static List<String> STAGE_4 = Arrays.asList("Troll","Golem");
+	public final static List<String> STAGE_5 = Arrays.asList("Golem","Dragon");
+
 
 	/**
 	 * Instantiates a new Enemy.

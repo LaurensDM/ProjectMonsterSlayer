@@ -96,6 +96,10 @@ public class Player {
 		this.passwordHash = wachtwoord;
 	}*/
 
+	public String getSalt() {
+		return salt;
+	}
+
 	/**
 	 * Gets affinity.
 	 *

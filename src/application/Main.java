@@ -6,8 +6,10 @@ import gui.ScreenController;
 import gui.WelcomeScreen;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import resources.ResourceController;
 
 
@@ -29,6 +31,7 @@ public class Main extends Application {
 		scene.getStylesheets().add(getClass().getResource("/css/application.css").toExternalForm());
 		primaryStage.setScene(scene);
 		primaryStage.setTitle("Monster Slayer");
+		primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream("/images/battlefield.png")));
 		primaryStage.setMaximized(true);
 		primaryStage.show();
 		resources.playMusic(false);
