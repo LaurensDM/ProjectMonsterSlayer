@@ -8,11 +8,13 @@ import domein.DomeinController;
 import javafx.animation.AnimationTimer;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 
+/**
+ * The type Sage dialogue.
+ */
 public class SageDialogue extends GridPane {
 
 	private Button lvl1Skill = new Button("Learn");
@@ -41,18 +43,35 @@ public class SageDialogue extends GridPane {
 	private Label lvl45SkillLbl = new Label("Full power mastery");
 	private Label lvl50SkillLbl = new Label("Fusion Magic");
 
+	/**
+	 * The list of all labels about skills.
+	 */
 	List<Label> skillListlbl = new ArrayList<>();
 
-	Label error = new Label();
+	/**
+	 * Label with information.
+	 */
+	Label informationLbl = new Label();
 
 	private int columnLabel = 0;
 	private int columnButton = 1;
 	private DomeinController dc;
+	/**
+	 * The Last row.
+	 */
 	int lastRow = 0;
 
+	/**
+	 * The Timer.
+	 */
 	AnimationTimer timer;
 	private int teller = 0;
 
+	/**
+	 * Instantiates a new Sage dialogue.
+	 *
+	 * @param dc the DomeinController
+	 */
 	public SageDialogue(DomeinController dc) {
 		this.dc = dc;
 		this.setVgap(10);
@@ -88,12 +107,12 @@ public class SageDialogue extends GridPane {
 			}
 		}
 
-		GridPane.setColumnSpan(error, 4);
-		GridPane.setHalignment(error, HPos.CENTER);
-		this.add(error, 0, lastRow + 2);
+		GridPane.setColumnSpan(informationLbl, 4);
+		GridPane.setHalignment(informationLbl, HPos.CENTER);
+		this.add(informationLbl, 0, lastRow + 2);
 		events();
 
-		error.setVisible(false);
+		informationLbl.setVisible(false);
 
 		for (int level = 5, i = 1; level <= 50; level += 5, i++) {
 			if (dc.getPlayerLevel() < level) {
@@ -108,8 +127,8 @@ public class SageDialogue extends GridPane {
 
 		lvl1Skill.setOnAction(evt -> {
 			resetTimer();
-			error.setVisible(true);
-			error.setText("You have succesfully improved your mana efficiëncy!");
+			informationLbl.setVisible(true);
+			informationLbl.setText("You have succesfully improved your mana efficiëncy!");
 			dc.addSkill(1);
 			timer();
 		});
@@ -117,13 +136,13 @@ public class SageDialogue extends GridPane {
 		lvl5Skill.setOnAction(evt -> {
 			resetTimer();
 			if (dc.getPlayerLevel() < 5) {
-				error.setVisible(true);
-				error.setText(
+				informationLbl.setVisible(true);
+				informationLbl.setText(
 						"It is too early for you to learn this technique, come back when you've reached level 5!");
 
 			} else {
 				dc.addSkill(5);
-				error.setText("You have succesfully improved your mana density!");
+				informationLbl.setText("You have succesfully improved your mana density!");
 			}
 
 			timer();
@@ -133,14 +152,14 @@ public class SageDialogue extends GridPane {
 		lvl10Skill.setOnAction(evt -> {
 			resetTimer();
 			if (dc.getPlayerLevel() < 10) {
-				error.setVisible(true);
-				error.setText("");
-				error.setText(
+				informationLbl.setVisible(true);
+				informationLbl.setText("");
+				informationLbl.setText(
 						"It is too early for you to learn this technique, come back when you've reached level 10!");
 
 			} else {
 				dc.addSkill(10);
-				error.setText("You have succesfully learned how to unleash a full power attack!");
+				informationLbl.setText("You have succesfully learned how to unleash a full power attack!");
 			}
 			timer();
 		});
@@ -148,18 +167,18 @@ public class SageDialogue extends GridPane {
 		lvl15Skill.setOnAction(evt -> {
 			resetTimer();
 			if (dc.getPlayerLevel() < 15) {
-				error.setVisible(true);
-				error.setText("");
-				error.setText(
+				informationLbl.setVisible(true);
+				informationLbl.setText("");
+				informationLbl.setText(
 						"It is too early for you to learn this technique, come back when you've reached level 15!");
 
 			} else {
 
 				if (dc.showEfficiencyLevel() > 0.8) {
-					error.setText("You need to learn the previous level of this skill first!");
+					informationLbl.setText("You need to learn the previous level of this skill first!");
 				} else {
 					dc.addSkill(15);
-					error.setText("You have succesfully learned the intermediate level of mana efficiëncy!");
+					informationLbl.setText("You have succesfully learned the intermediate level of mana efficiëncy!");
 				}
 			}
 			timer();
@@ -168,17 +187,17 @@ public class SageDialogue extends GridPane {
 		lvl20Skill.setOnAction(evt -> {
 			resetTimer();
 			if (dc.getPlayerLevel() < 20) {
-				error.setVisible(true);
-				error.setText("");
-				error.setText(
+				informationLbl.setVisible(true);
+				informationLbl.setText("");
+				informationLbl.setText(
 						"It is too early for you to learn this technique, come back when you've reached level 20!");
 
 			} else {
 				if (dc.showPowerLevel() < 1.125) {
-					error.setText("You need to learn the previous level of this skill first!");
+					informationLbl.setText("You need to learn the previous level of this skill first!");
 				} else {
 					dc.addSkill(20);
-					error.setText("You have succesfully learned the intermediate level of mana density!");
+					informationLbl.setText("You have succesfully learned the intermediate level of mana density!");
 				}
 			}
 			timer();
@@ -187,17 +206,17 @@ public class SageDialogue extends GridPane {
 		lvl25Skill.setOnAction(evt -> {
 			resetTimer();
 			if (dc.getPlayerLevel() < 25) {
-				error.setVisible(true);
-				error.setText("");
-				error.setText(
+				informationLbl.setVisible(true);
+				informationLbl.setText("");
+				informationLbl.setText(
 						"It is too early for you to learn this technique, come back when you've reached level 25!");
 
 			} else {
 				if (dc.showFullPowerStage() < 1) {
-					error.setText("You need to learn the previous level of this skill first!");
+					informationLbl.setText("You need to learn the previous level of this skill first!");
 				} else {
 					dc.addSkill(25);
-					error.setText("You have a deeper understanding of the full power attack!");
+					informationLbl.setText("You have a deeper understanding of the full power attack!");
 				}
 			}
 			timer();
@@ -206,14 +225,14 @@ public class SageDialogue extends GridPane {
 		lvl30Skill.setOnAction(evt -> {
 			resetTimer();
 			if (dc.getPlayerLevel() < 30) {
-				error.setVisible(true);
-				error.setText("");
-				error.setText(
+				informationLbl.setVisible(true);
+				informationLbl.setText("");
+				informationLbl.setText(
 						"It is too early for you to learn this technique, come back when you've reached level 30!");
 
 			} else {
 				dc.addSkill(30);
-				error.setText("You have succesfully learned the reflection shield!");
+				informationLbl.setText("You have succesfully learned the reflection shield!");
 			}
 			timer();
 		});
@@ -221,17 +240,17 @@ public class SageDialogue extends GridPane {
 		lvl35Skill.setOnAction(evt -> {
 			resetTimer();
 			if (dc.getPlayerLevel() < 35) {
-				error.setVisible(true);
-				error.setText("");
-				error.setText(
+				informationLbl.setVisible(true);
+				informationLbl.setText("");
+				informationLbl.setText(
 						"It is too early for you to learn this technique, come back when you've reached level 35!");
 
 			} else {
 				if (dc.showEfficiencyLevel() > 0.4) {
-					error.setText("You need to learn the previous level of this skill first!");
+					informationLbl.setText("You need to learn the previous level of this skill first!");
 				} else {
 					dc.addSkill(35);
-					error.setText("You have succesfully learned the advanced level of mana efficiëncy!");
+					informationLbl.setText("You have succesfully learned the advanced level of mana efficiëncy!");
 				}
 			}
 			timer();
@@ -240,17 +259,17 @@ public class SageDialogue extends GridPane {
 		lvl40Skill.setOnAction(evt -> {
 			resetTimer();
 			if (dc.getPlayerLevel() < 40) {
-				error.setVisible(true);
-				error.setText("");
-				error.setText(
+				informationLbl.setVisible(true);
+				informationLbl.setText("");
+				informationLbl.setText(
 						"It is too early for you to learn this technique, come back when you've reached level 40!");
 
 			} else {
 				if (dc.showPowerLevel() < 1.5) {
-					error.setText("You need to learn the previous level of this skill first!");
+					informationLbl.setText("You need to learn the previous level of this skill first!");
 				} else {
 					dc.addSkill(40);
-					error.setText("You have succesfully learned the advanced level of mana density!");
+					informationLbl.setText("You have succesfully learned the advanced level of mana density!");
 				}
 			}
 			timer();
@@ -259,16 +278,16 @@ public class SageDialogue extends GridPane {
 		lvl45Skill.setOnAction(evt -> {
 			resetTimer();
 			if (dc.getPlayerLevel() < 45) {
-				error.setVisible(true);
-				error.setText(
+				informationLbl.setVisible(true);
+				informationLbl.setText(
 						"It is too early for you to learn this technique, come back when you've reached level 45!");
 
 			} else {
 				if (dc.showFullPowerStage() < 2) {
-					error.setText("You need to learn the previous level of this skill first!");
+					informationLbl.setText("You need to learn the previous level of this skill first!");
 				} else {
 					dc.addSkill(45);
-					error.setText("You have succesfully mastered the use of the full power attack!");
+					informationLbl.setText("You have succesfully mastered the use of the full power attack!");
 				}
 			}
 			timer();
@@ -277,17 +296,17 @@ public class SageDialogue extends GridPane {
 		lvl50Skill.setOnAction(evt -> {
 			resetTimer();
 			if (dc.getPlayerLevel() < 50) {
-				error.setVisible(true);
-				error.setText(
+				informationLbl.setVisible(true);
+				informationLbl.setText(
 						"It is too early for you to learn this technique, come back when you've reached level 50!");
 
 			} else {
 				if (dc.showEfficiencyLevel() > 0.2 || dc.showFullPowerStage() < 3 || dc.showPowerLevel() < 2
 						|| dc.reflectionAcquired() == false) {
-					error.setText("You need to learn all the previous skills first!");
+					informationLbl.setText("You need to learn all the previous skills first!");
 				} else {
 					dc.addSkill(50);
-					error.setText("You have succesfully learned Fusion Magic");
+					informationLbl.setText("You have succesfully learned Fusion Magic");
 				}
 				
 			}
@@ -418,7 +437,7 @@ public class SageDialogue extends GridPane {
 			public void handle(long arg0) {
 				teller++;
 				if (teller == 300) {
-					error.setVisible(false);
+					informationLbl.setVisible(false);
 					teller = 0;
 					timer.stop();
 				}

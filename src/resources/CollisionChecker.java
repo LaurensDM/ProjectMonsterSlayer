@@ -4,15 +4,28 @@ import entity.Entity;
 import entity.Player;
 import gui.GamePanel;
 
+/**
+ * The type Collision checker.
+ */
 public class CollisionChecker {
 
 	private GamePanel gp;
 
+	/**
+	 * Instantiates a new Collision checker.
+	 *
+	 * @param gp the GamePanel
+	 */
 	public CollisionChecker(GamePanel gp) {
 		this.gp = gp;
 	}
 
-	// collision with tile
+	/**
+	 * Check tile.
+	 *
+	 * @param entity the entity
+	 */
+// collision with tile
 	public void checkTile(Entity entity) {
 
 		int leftWorldX = (int) (entity.worldX + entity.solidArea.getX());
@@ -84,7 +97,14 @@ public class CollisionChecker {
 		}
 	}
 
-	// collision with object
+	/**
+	 * Check object.
+	 *
+	 * @param entity the entity
+	 * @param player the player
+	 * @return index of which object was interacted with
+	 */
+// collision with object
 	public int checkObject(Entity entity, boolean player) {
 		int index = 999;
 
@@ -158,7 +178,14 @@ public class CollisionChecker {
 		return index;
 	}
 
-	// npc or monster collision
+	/**
+	 * Check entity.
+	 *
+	 * @param entity the entity
+	 * @param target the target
+	 * @return the index of which entity was interacted with
+	 */
+// npc or monster collision
 	public int checkEntity(Entity entity, Entity[] target) {
 		int index = 999;
 
@@ -221,7 +248,12 @@ public class CollisionChecker {
 		return index;
 	}
 
-	// NPC TO PLAYER COLLISION
+	/**
+	 * Check player.
+	 *
+	 * @param entity the entity
+	 */
+// NPC TO PLAYER COLLISION
 	public void checkPlayer(Entity entity) {
 		entity.solidArea.setX(entity.worldX + entity.solidArea.getX());
 		entity.solidArea.setY(entity.worldY + entity.solidArea.getY());

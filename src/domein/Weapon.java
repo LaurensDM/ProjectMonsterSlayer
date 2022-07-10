@@ -1,5 +1,8 @@
 package domein;
 
+/**
+ * The type Weapon.
+ */
 public class Weapon extends Items {
 	private double damage;
 	private boolean destroyable = true;
@@ -7,6 +10,12 @@ public class Weapon extends Items {
 	private double durability;
 	private String affinity;
 
+	/**
+	 * Instantiates a new Weapon.
+	 *
+	 * @param name  the name
+	 * @param grade the grade
+	 */
 	public Weapon(String name, int grade) {
 		super(name, grade);
 		switch (grade) {
@@ -74,10 +83,18 @@ public class Weapon extends Items {
 		affinity = "";
 	}
 
+	/**
+	 * Lower durability.
+	 *
+	 * @param value the value
+	 */
 	public void lowerDurability(double value) {
 		durability -= value * 0.8;
 	}
 
+	/**
+	 * Repair.
+	 */
 	public void repair() {
 		if (durability + 100 > MAX_DURABILITY) {
 			durability = MAX_DURABILITY;
@@ -86,26 +103,56 @@ public class Weapon extends Items {
 		durability += 100;
 	}
 
+	/**
+	 * Gets damage.
+	 *
+	 * @return the damage
+	 */
 	public double getDamage() {
 		return damage;
 	}
 
+	/**
+	 * Is destroyable boolean.
+	 *
+	 * @return the boolean
+	 */
 	public boolean isDestroyable() {
 		return destroyable;
 	}
 
+	/**
+	 * Gets max durability.
+	 *
+	 * @return the max durability
+	 */
 	public double getMAX_DURABILITY() {
 		return MAX_DURABILITY;
 	}
 
+	/**
+	 * Gets durability.
+	 *
+	 * @return the durability
+	 */
 	public double getDurability() {
 		return durability;
 	}
 
+	/**
+	 * Gets affinity.
+	 *
+	 * @return the affinity
+	 */
 	public String getAffinity() {
 		return affinity;
 	}
 
+	/**
+	 * Destroyed boolean.
+	 *
+	 * @return the boolean
+	 */
 	public boolean destroyed() {
 		if (durability <= 0) {
 			return true;

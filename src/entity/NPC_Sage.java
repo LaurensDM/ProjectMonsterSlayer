@@ -7,12 +7,29 @@ import java.util.List;
 
 import gui.GamePanel;
 
+/**
+ * The type Npc sage.
+ */
 public class NPC_Sage extends Entity {
 
+	/**
+	 * The Sr.
+	 */
 	SecureRandom sr = new SecureRandom();
+	/**
+	 * The Random.
+	 */
 	int random;
+	/**
+	 * The Directions.
+	 */
 	List<String> directions = new ArrayList<>(Arrays.asList("up", "down", "left", "right"));
 
+	/**
+	 * Instantiates a new Npc sage.
+	 *
+	 * @param gp the gamepanel
+	 */
 	public NPC_Sage(GamePanel gp) {
 		super(gp);
 

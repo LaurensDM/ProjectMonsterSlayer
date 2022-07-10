@@ -10,6 +10,9 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.GridPane;
 import resources.ResourceController;
 
+/**
+ * The type Select screen.
+ */
 public class SelectScreen extends GridPane{
 
 	private Label lblMessage;
@@ -20,6 +23,12 @@ public class SelectScreen extends GridPane{
 	private DomeinController dc;
 	private ResourceController rs;
 
+	/**
+	 * Instantiates a new Select screen.
+	 *
+	 * @param dc the DomeinController
+	 * @param rs the ResourceController
+	 */
 	public SelectScreen(DomeinController dc, ResourceController rs) {
 		// deze methode bouwt de gui op
 		this.dc=dc;

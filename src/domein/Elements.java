@@ -5,24 +5,46 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * The type Elements.
+ */
 public abstract class Elements {
 	private static SecureRandom sr = new SecureRandom();
 
+	/**
+	 * The Manapool.
+	 */
 	protected double manapool;
 	private double totalDamage = 0;
 	private boolean allOut = false;
 	private boolean judgement = false;
 	private Skills playerSkills;
 	private double maxMana;
+	/**
+	 * The constant ELEMENTS.
+	 */
 	public final static List<String> ELEMENTS = new ArrayList<>(
 			Arrays.asList("Fire", "Water", "Lightning", "Earth", "Wind"));
 
+	/**
+	 * Instantiates a new Elements.
+	 *
+	 * @param manapool     the manapool
+	 * @param playerSkills the player skills
+	 * @param maxMana      the max mana
+	 */
 	public Elements(double manapool, Skills playerSkills, double maxMana) {
 		this.manapool = manapool;
 		this.playerSkills = playerSkills;
 		this.maxMana = maxMana;
 	}
 
+	/**
+	 * Attack
+	 *
+	 * @param value additional damage boost
+	 * @return damage
+	 */
 	public double attack(double value) {
 		if (allOut) {
 			double damage = manapool * attackFails() * value;
@@ -40,14 +62,21 @@ public abstract class Elements {
 		}
 	}
 
-	protected void addToTotalDamage(double damage) {
-		totalDamage += damage;
-	}
 
+	/**
+	 * calculates the power of the normal attack
+	 *
+	 * @return attack power
+	 */
 	public int power() {
 		return (int) (sr.nextInt((int) Math.round(maxMana*0.10)) + maxMana*0.05);
 	}
 
+	/**
+	 * Use attack.
+	 *
+	 * @param power attack power
+	 */
 	protected void useAttack(double power) {
 		double attackPower = power;
 		if (manapool - power <= 0) {
@@ -64,7 +93,7 @@ public abstract class Elements {
 			allOut = false;
 			return;
 		}
-		changeMana(attackPower * playerSkills.getEfficiëncy());
+		changeMana(attackPower * playerSkills.getEfficiency());
 	}
 
 	private int attackFails() {
@@ -84,6 +113,11 @@ public abstract class Elements {
 		return 1;
 	}
 
+	/**
+	 * Activate shield.
+	 *
+	 * @param damage the damage
+	 */
 	public void activateShield(double damage) {
 		int chance = sr.nextInt(10);
 		if (playerSkills.isReflection()) {
@@ -102,14 +136,25 @@ public abstract class Elements {
 
 	}
 
+	/**
+	 * Go all out.
+	 */
 	public void goAllOut() {
 		allOut = true;
 	}
-	
+
+	/**
+	 * Deliver judgement.
+	 */
 	public void deliverJudgement() {
 		judgement = true;
 	}
 
+	/**
+	 * Is all out boolean.
+	 *
+	 * @return the boolean
+	 */
 	public boolean isAllOut() {
 		return allOut;
 	}
@@ -122,10 +167,20 @@ public abstract class Elements {
 		}
 	}
 
+	/**
+	 * Gets total damage.
+	 *
+	 * @return the total damage
+	 */
 	public double getTotalDamage() {
 		return totalDamage;
 	}
 
+	/**
+	 * Gets mana.
+	 *
+	 * @return the manapool
+	 */
 	public double getMana() {
 		return manapool;
 	}
@@ -134,6 +189,11 @@ public abstract class Elements {
 		return String.format("Your element is %s", this.getClass().getSimpleName());
 	}
 
+	/**
+	 * Attack.
+	 *
+	 * @return damage
+	 */
 	protected abstract double attack();
 
 }

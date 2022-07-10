@@ -9,10 +9,16 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.GridPane;
 
+/**
+ * The type Bag screen.
+ */
 public class BagScreen extends GridPane {
 
 	private List<String> bag = new ArrayList<>(Arrays.asList("item1","item2","item3","item4","item5"));
-	
+
+	/**
+	 * Instantiates a new Bag screen.
+	 */
 	public BagScreen() {
 		this.setBackground(Background.EMPTY);
 		this.setAlignment(Pos.CENTER);

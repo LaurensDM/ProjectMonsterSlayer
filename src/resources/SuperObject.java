@@ -5,17 +5,50 @@ import javafx.scene.image.Image;
 import javafx.scene.shape.Rectangle;
 import gui.GamePanel;
 
+/**
+ * The type Super object.
+ */
 //super class for every object
 public class SuperObject {
-	
+
+	/**
+	 * The Image.
+	 */
 	public Image image;
+	/**
+	 * The Name.
+	 */
 	public String name;
+	/**
+	 * The Collision.
+	 */
 	public boolean collision = false;
-	public int worldX, worldY;
+	/**
+	 * The World x.
+	 */
+	public int worldX, /**
+	 * The World y.
+	 */
+	worldY;
+	/**
+	 * The Solid area.
+	 */
 	public Rectangle solidArea = new Rectangle(0,0,GamePanel.TILESIZE,GamePanel.TILESIZE);
+	/**
+	 * The Solid area default x.
+	 */
 	public int solidAreaDefaultX = 0;
+	/**
+	 * The Solid area default y.
+	 */
 	public int solidAreaDefaultY = 0;
 
+	/**
+	 * Draw.
+	 *
+	 * @param gc the GraphicsContext
+	 * @param gp the GamePanel
+	 */
 	public void draw(GraphicsContext gc, GamePanel gp) {
 		
 		int screenX = worldX - gp.player.worldX + gp.player.screenX;

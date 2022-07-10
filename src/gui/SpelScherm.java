@@ -16,6 +16,9 @@ import resources.HealthBar;
 import resources.ResourceController;
 
 
+/**
+ * The type Spel scherm.
+ */
 //Responsable for battle mechanics
 public class SpelScherm extends GridPane {
 
@@ -35,6 +38,14 @@ public class SpelScherm extends GridPane {
 	private Label player = new Label("Player");
 	private Label lblEnemy = new Label();
 
+	/**
+	 * Instantiates a new Spel scherm.
+	 *
+	 * @param dc        the DomeinController
+	 * @param resources the ResourceController
+	 * @param x         the worldX
+	 * @param y         the worldY
+	 */
 	public SpelScherm(DomeinController dc, ResourceController resources, int x, int y) {
 		this.dc = dc;
 		this.resources = resources;
@@ -69,6 +80,9 @@ public class SpelScherm extends GridPane {
 		event();
 	}
 
+	/**
+	 * Event.
+	 */
 	void event() {
 		List<String> enemies = Enemy.ENEMIES;
 		Collections.shuffle(enemies);
@@ -99,11 +113,23 @@ public class SpelScherm extends GridPane {
 
 	}
 
+	/**
+	 * Enemy defeated boolean.
+	 *
+	 * @return the boolean
+	 */
 	public boolean enemyDefeated() {
 
 		return defeated;
 	}
 
+	/**
+	 * Attack event.
+	 *
+	 * @param type      the type
+	 * @param fullpower the full power
+	 * @param judgement the judgement
+	 */
 	public void attackEvent(String type, boolean fullpower, boolean judgement) {
 		try {
 			defeated = false;
@@ -211,6 +237,12 @@ public class SpelScherm extends GridPane {
 		enemyImg.setFitWidth(width);
 	}
 
+	/**
+	 * Change wizard.
+	 *
+	 * @param image     the image
+	 * @param fullpower the full power
+	 */
 	public void changeWizard(Image image, boolean fullpower) {
 		wizard.setImage(image);
 		if (fullpower) {

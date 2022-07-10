@@ -2,8 +2,14 @@ package domein;
 
 import java.security.SecureRandom;
 
+/**
+ * The type Game.
+ */
 public class Game {
 
+	/**
+	 * The Sr.
+	 */
 	SecureRandom sr = new SecureRandom();
 	private final Player player;
 	private Enemy enemy;
@@ -14,16 +20,32 @@ public class Game {
 	private boolean criticalHit = false;
 	private String damage = "";
 
+	/**
+	 * The Manapool.
+	 */
 	protected double manapool;
 
+	/**
+	 * The Max mana.
+	 */
 	public final double MAX_MANA;
 
+	/**
+	 * Instantiates a new Game.
+	 *
+	 * @param player the player
+	 */
 	public Game(Player player) {
 		this.player = player;
 		manapool = player.getLevel() * 100;
 		this.MAX_MANA = manapool;
 	}
 
+	/**
+	 * Register enemy.
+	 *
+	 * @param enemy the enemy
+	 */
 	public void registerEnemy(String enemy) {
 		switch (enemy.toLowerCase()) {
 			case "dragon" -> this.enemy = new Dragon();
@@ -34,6 +56,12 @@ public class Game {
 		}
 	}
 
+	/**
+	 * Attack.
+	 *
+	 * @param element the element
+	 * @return damage
+	 */
 	public double attack(String element) {
 		double weaponDamage;
 		if (player.getWeapon() == null) {
@@ -81,6 +109,11 @@ public class Game {
 		return totalDamage;
 	}
 
+	/**
+	 * Attack back.
+	 *
+	 * @return damage
+	 */
 	public double attackBack() {
 		double damage = enemy.attackBack();
 
@@ -111,10 +144,18 @@ public class Game {
 		return damage;
 	}
 
-	public void useAllOutAttck() {
+	/**
+	 * Use all out attack.
+	 */
+	public void useAllOutAttack() {
 		fullpower = true;
 	}
 
+	/**
+	 * Gets enemy health.
+	 *
+	 * @return the enemy health
+	 */
 	public double getEnemyHealth() {
 		return enemy.getHealth();
 	}
@@ -135,14 +176,29 @@ public class Game {
 		return 1;
 	}
 
+	/**
+	 * Is critical hit.
+	 *
+	 * @return the boolean
+	 */
 	public boolean isCriticalHit() {
 		return criticalHit;
 	}
 
+	/**
+	 * Out of mana boolean.
+	 *
+	 * @return the boolean
+	 */
 	public boolean outOfMana() {
 		return manapool <= 1;
 	}
 
+	/**
+	 * Is defeated boolean.
+	 *
+	 * @return the boolean
+	 */
 	public boolean isDefeated() {
 		if (enemy.getHealth() <= 0) {
 			dropItems();
@@ -159,22 +215,45 @@ public class Game {
 
 	}
 
+	/**
+	 * Gets manapool.
+	 *
+	 * @return the manapool
+	 */
 	public double getManapool() {
 		return manapool;
 	}
 
+	/**
+	 * Gets enemy.
+	 *
+	 * @return the enemy
+	 */
 	public String getEnemy() {
 		return enemy.toString();
 	}
 
+	/**
+	 * Gets affinity.
+	 *
+	 * @return the affinity
+	 */
 	public String getAffinity() {
 		return player.getAffinity();
 	}
 
+	/**
+	 * Gets damage.
+	 *
+	 * @return the damage
+	 */
 	public String getDamage() {
 		return damage;
 	}
 
+	/**
+	 * Use judgement.
+	 */
 	public void useJudgement() {
 		// TODO Auto-generated method stub
 		judgement = true;

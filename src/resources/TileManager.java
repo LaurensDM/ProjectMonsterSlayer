@@ -8,13 +8,30 @@ import gui.GamePanel;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
+/**
+ * The type Tile manager.
+ */
 //creates map and holds information about every tile
 public class TileManager {
 
+	/**
+	 * The Tiles.
+	 */
 	public Tile[] tiles = new Tile[35];
+	/**
+	 * The GamePanel.
+	 */
 	GamePanel gp;
+	/**
+	 * The Map.
+	 */
 	public int[][] map;
 
+	/**
+	 * Instantiates a new Tile manager.
+	 *
+	 * @param gp the GamePanel
+	 */
 	public TileManager(GamePanel gp) {
 		
 		
@@ -57,6 +74,11 @@ public class TileManager {
 		this.gp = gp;
 	}
 
+	/**
+	 * Create map.
+	 *
+	 * @param filename the filename
+	 */
 	public void createMap(String filename) {
 		map = new int[50][50];
 		try (Scanner input = new Scanner(Files.newInputStream(Paths.get("src/files/" + filename + ".txt")))) {
@@ -76,6 +98,11 @@ public class TileManager {
 
 	}
 
+	/**
+	 * Draw map.
+	 *
+	 * @param gc the GraphicsContext
+	 */
 	public void drawMap(GraphicsContext gc) {
 		int worldCol = 0;
 		int worldRow = 0;

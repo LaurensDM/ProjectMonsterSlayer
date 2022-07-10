@@ -1,7 +1,13 @@
 package domein;
 
+/**
+ * The type Troll.
+ */
 public class Troll extends Enemy {
 
+	/**
+	 * Instantiates a new Troll.
+	 */
 	public Troll() {
 		super(sr.nextInt(200) + 200, sr.nextDouble(0.15) + 0.1, "");
 		if (sr.nextInt(4) == 1) {

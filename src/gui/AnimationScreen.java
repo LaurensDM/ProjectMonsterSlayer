@@ -16,6 +16,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import resources.ResourceController;
 
+/**
+ * The type Animation screen.
+ */
 public class AnimationScreen extends BorderPane {
 
 	private Button attack;
@@ -33,10 +36,27 @@ public class AnimationScreen extends BorderPane {
 	private List<Button> buttons;
 	private int teller = 0;
 	private int bodyCount = 0;
+	/**
+	 * The Number defeated.
+	 */
 	Label numberDefeated;
+	/**
+	 * The Sr.
+	 */
 	SecureRandom sr = new SecureRandom();
+	/**
+	 * The Dc.
+	 */
 	DomeinController dc;
 
+	/**
+	 * Instantiates a new Animation screen.
+	 *
+	 * @param dc the DomeinController
+	 * @param rs the ResourceController
+	 * @param x  the worldX
+	 * @param y  the worldY
+	 */
 	public AnimationScreen(DomeinController dc, ResourceController rs, int x, int y) {
 		this.dc = dc;
 		SpelScherm spel = new SpelScherm(dc, rs, x, y);

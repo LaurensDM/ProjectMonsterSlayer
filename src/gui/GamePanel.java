@@ -21,52 +21,127 @@ import resources.ResourceController;
 import resources.SuperObject;
 import resources.TileManager;
 
+/**
+ * The type Game panel.
+ */
 public class GamePanel extends StackPane {
 
+	/**
+	 * The Canvas.
+	 */
 	Canvas canvas;
 	private GraphicsContext gc;
+	/**
+	 * The ResourceController.
+	 */
 	public ResourceController rs;
+	/**
+	 * The DomeinController.
+	 */
 	public DomeinController dc;
 	// booleans
 	private boolean moveUp;
 	private boolean moveDown;
 	private boolean moveLeft;
 	private boolean moveRight;
+	/**
+	 * Interact.
+	 */
 	public boolean interact = false;
 
-	// SCREEN
+	/**
+	 * The Screen width.
+	 */
+// SCREEN
 	public final int screenWidth;
+	/**
+	 * The Screen height.
+	 */
 	public final int screenHeight;
+	/**
+	 * The constant maxScreenCol.
+	 */
 	public static final int maxScreenCol = 16;
+	/**
+	 * The constant maxScreenRow.
+	 */
 	public static final int maxScreenRow = (int) Math.ceil(maxScreenCol / WelcomeScreen.rowMultiplier);
+	/**
+	 * The Fps.
+	 */
 	final int FPS = 60;
+	/**
+	 * The constant TILESIZE.
+	 */
 	public final static int TILESIZE = ScreenController.screenWidth / maxScreenCol;
 	private boolean pause = false;
 
+	/**
+	 * The Gameloop.
+	 */
 //	boolean nextScreen = false;
 	public AnimationTimer gameloop;
 
-	// WORLD parameters
+	/**
+	 * The Max world col.
+	 */
+// WORLD parameters
 	public final int maxWorldCol = 50;
+	/**
+	 * The Max world row.
+	 */
 	public final int MaxWorldRow = 50;
+	/**
+	 * The World width.
+	 */
 	public final int worldWidth = TILESIZE * maxWorldCol;
+	/**
+	 * The World height.
+	 */
 	public final int worldHeight = TILESIZE * MaxWorldRow;
 
-	// OTHER
+	/**
+	 * The Tile manager.
+	 */
+// OTHER
 	public TileManager tileM;
+	/**
+	 * The Collision.
+	 */
 	public CollisionChecker collision;
+	/**
+	 * The Setter.
+	 */
 	public AssetSetter setter;
+	/**
+	 * The Initial x.
+	 */
 //	public UI ui = new UI(this);
 	final int initialX;
+	/**
+	 * The Initial y.
+	 */
 	final int initialY;
 
 
-	// ENTITY AND OBJECT
+	/**
+	 * The Player.
+	 */
+// ENTITY AND OBJECT
 	public Player player;
+	/**
+	 * The Objects.
+	 */
 	public SuperObject obj[] = new SuperObject[10];
+	/**
+	 * The Npc's.
+	 */
 	public Entity npc[] = new Entity[10];
 
-	// UI
+	/**
+	 * The Label.
+	 */
+// UI
 	Label label;
 	private VBox bottomUI = new VBox();
 	private VBox topUI = new VBox();
@@ -76,6 +151,16 @@ public class GamePanel extends StackPane {
 	private GridPane inventory;
 	private SettingScreen settings;
 
+	/**
+	 * Instantiates a new Game panel.
+	 *
+	 * @param width  the screen width
+	 * @param height the screen height
+	 * @param x      the worldX
+	 * @param y      the worldY
+	 * @param rs     the ResourceController
+	 * @param dc     the DomeinController
+	 */
 	public GamePanel(double width, double height, int x, int y, ResourceController rs, DomeinController dc) {
 
 		this.rs = rs;
@@ -260,6 +345,11 @@ public class GamePanel extends StackPane {
 //		}
 //	}
 
+	/**
+	 * Update.
+	 *
+	 * @return whether an update is needed
+	 */
 	public boolean update() {
 		player.update(moveUp, moveDown, moveLeft, moveRight);
 		for (int i = 0; i < npc.length; i++) {
@@ -297,6 +387,11 @@ public class GamePanel extends StackPane {
 
 	}
 
+	/**
+	 * Show notification.
+	 *
+	 * @param content the content
+	 */
 	public void showNotification(String content) {
 		HBox hbox = (HBox) notification.getChildren().get(0);
 		Label label = (Label) hbox.getChildren().get(0);
@@ -317,6 +412,11 @@ public class GamePanel extends StackPane {
 		}
 	}
 
+	/**
+	 * Show dialogue.
+	 *
+	 * @param content the content
+	 */
 	public void showDialogue(String content) {
 //		Node label = dialogue.getChildren().get(0);
 //		((Label) label).setText(content);
@@ -324,6 +424,9 @@ public class GamePanel extends StackPane {
 		pause = true;
 	}
 
+	/**
+	 * Configure dialogue.
+	 */
 	public void configureDialogue() {
 //		Label label = new Label("This is a dialogue window!\n Press H to hide or make visible again!");
 //		dialogue.getChildren().add(label);
@@ -342,6 +445,9 @@ public class GamePanel extends StackPane {
 		inventory.setVisible(false);
 	}
 
+	/**
+	 * Show bag.
+	 */
 	public void showBag() {
 		inventory.setVisible(true);
 	}

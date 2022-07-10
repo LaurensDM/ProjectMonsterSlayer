@@ -4,8 +4,14 @@ import java.security.SecureRandom;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * The type Enemy.
+ */
 public abstract class Enemy {
 
+	/**
+	 * The constant sr.
+	 */
 	protected static SecureRandom sr = new SecureRandom();
 	private double health;
 	private double defence;
@@ -13,15 +19,34 @@ public abstract class Enemy {
 	private double tickDamage = 0;
 	private int freeze = 0;
 	private boolean frozen = false;
+	/**
+	 * The Evolved.
+	 */
 	protected boolean evolved = false;
+	/**
+	 * The Enemies.
+	 */
 	public final static List<String> ENEMIES = Arrays.asList("Dragon", "Troll", "Goblin");
 
+	/**
+	 * Instantiates a new Enemy.
+	 *
+	 * @param health  the health
+	 * @param defence the defence
+	 * @param type    the type
+	 */
 	public Enemy(double health, double defence, String type) {
 		setHealth(health);
 		setDefence(defence);
 		setType(type);
 	}
 
+	/**
+	 * Is strong against boolean.
+	 *
+	 * @param damageType the damage element
+	 * @return the boolean
+	 */
 	public boolean isStrongAgainst(String damageType) {
 		if (type.equals("Fire") && damageType.equals("Wind")) {
 			return true;
@@ -41,6 +66,12 @@ public abstract class Enemy {
 		return false;
 	}
 
+	/**
+	 * Is weakness boolean.
+	 *
+	 * @param damageType the damage element
+	 * @return the boolean
+	 */
 	public boolean isWeakness(String damageType) {
 
 		if (type.equals("Fire") && damageType.equals("Water")) {
@@ -65,28 +96,68 @@ public abstract class Enemy {
 		return false;
 	}
 
+	/**
+	 * Gets type.
+	 *
+	 * @return the type (element)
+	 */
 	public String getType() {
 		return type;
 	}
 
+	/**
+	 * Sets type.
+	 *
+	 * @param type the type (element)
+	 */
 	protected void setType(String type) {
 		this.type = type;
 	}
 
+	/**
+	 * Gets health.
+	 *
+	 * @return the health
+	 */
 	public double getHealth() {
 		return health;
 	}
 
+	/**
+	 * Register damage.
+	 *
+	 * @param totalDamage the total damage
+	 */
 	protected void registerDamage(double totalDamage) {
 		health -= totalDamage;
 	}
 
+	/**
+	 * Attack back.
+	 *
+	 * @return the damage
+	 */
 	public abstract double attackBack();
 
+	/**
+	 * Evolve.
+	 */
 	public abstract void evolve();
 
+	/**
+	 * Determine item grade int.
+	 *
+	 * @param fullpower whether full power is activated
+	 * @return the item grade
+	 */
 	protected abstract int determineItemGrade(boolean fullpower);
 
+	/**
+	 * Drop items.
+	 *
+	 * @param fullpower whether full power was activated
+	 * @return the items
+	 */
 	public Items[] dropItem(boolean fullpower) {
 
 		Items[] drops = new Items[sr.nextInt(4) + 1];
@@ -157,6 +228,11 @@ public abstract class Enemy {
 		return drops;
 	}
 
+	/**
+	 * Lower defence.
+	 *
+	 * @param shred by how much the defense is lowered, usually by 5%
+	 */
 	protected void lowerDefence(double shred) {
 		if (defence - shred > 0) {
 			defence -= shred;
@@ -165,6 +241,11 @@ public abstract class Enemy {
 		defence = 0;
 	}
 
+	/**
+	 * Sets health.
+	 *
+	 * @param health the health
+	 */
 	protected void setHealth(double health) {
 		if (health < 100) {
 			throw new IllegalArgumentException("A monster always has at least 100 health!");
@@ -172,18 +253,40 @@ public abstract class Enemy {
 		this.health = health;
 	}
 
+	/**
+	 * Gets defence.
+	 *
+	 * @return the defence
+	 */
 	public double getDefence() {
 		return defence;
 	}
 
+	/**
+	 * Gets tick damage.
+	 *
+	 * @return the tick damage
+	 */
 	public double getTickDamage() {
 		return tickDamage;
 	}
 
+	/**
+	 * Sets defence.
+	 *
+	 * @param defence the defence
+	 */
 	protected void setDefence(double defence) {
 		this.defence = defence;
 	}
 
+	/**
+	 * Take damage double.
+	 *
+	 * @param damageType the damage type
+	 * @param damage     the damage
+	 * @return how much damage was taken
+	 */
 	public double takeDamage(String damageType, double damage) {
 		if (damageType.equals(type)) {
 			registerDamage(damage * 0.5);
@@ -220,10 +323,18 @@ public abstract class Enemy {
 		return String.format("%s %s", type, this.getClass().getSimpleName());
 	}
 
+	/**
+	 * Is frozen boolean.
+	 *
+	 * @return the boolean
+	 */
 	public boolean isFrozen() {
 		return frozen;
 	}
 
+	/**
+	 * Break frozen.
+	 */
 	public void breakFrozen() {
 		frozen = false;
 	}

@@ -14,11 +14,26 @@ import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
 import resources.ResourceController;
 
+/**
+ * The type Screen controller.
+ */
 public class ScreenController {
-	
-	public static int screenWidth;
-	
 
+	/**
+	 * The constant screenWidth.
+	 */
+	public static int screenWidth;
+
+
+	/**
+	 * Change to game panel.
+	 *
+	 * @param screen the screen
+	 * @param rs     the rs
+	 * @param x      the x
+	 * @param y      the y
+	 * @param dc     the dc
+	 */
 	public static void changeToGamePanel(Parent screen, ResourceController rs,int x,int y, DomeinController dc) {
 		screenWidth = (int) screen.getScene().getWidth();
 		GamePanel panel = new GamePanel(screen.getScene().getWidth(),screen.getScene().getHeight(),x,y,rs, dc);
@@ -36,7 +51,16 @@ public class ScreenController {
 		MediaView mediaview = new MediaView(rs.getMediaplayer());
 		((GamePanel) scene.getRoot()).getChildren().add(mediaview);
 	}
-	
+
+	/**
+	 * Change to spel scherm.
+	 *
+	 * @param screen the screen
+	 * @param rs     the rs
+	 * @param dc     the dc
+	 * @param x      the x
+	 * @param y      the y
+	 */
 	public static void changeToSpelScherm(Parent screen, ResourceController rs, DomeinController dc, int x, int y) {
 		AnimationScreen spel = new AnimationScreen(dc, rs,x,y );
 		Scene scene = new Scene(spel, screen.getScene().getWidth(), screen.getScene().getHeight());
@@ -56,6 +80,12 @@ public class ScreenController {
 		((AnimationScreen) scene.getRoot()).getChildren().add(mediaview);
 	}
 
+	/**
+	 * Change to setting screen.
+	 *
+	 * @param screen the screen
+	 * @param rs     the rs
+	 */
 	public static void changeToSettingScreen(WelcomeScreen screen, ResourceController rs) {
 		SettingScreen setting = new SettingScreen(rs,false);
 		Scene scene = new Scene(setting, screen.getScene().getWidth(), screen.getScene().getHeight());
@@ -68,6 +98,12 @@ public class ScreenController {
 		((SettingScreen) scene.getRoot()).getChildren().add(mediaview);
 	}
 
+	/**
+	 * Change to welcome screen.
+	 *
+	 * @param screen the screen
+	 * @param rs     the rs
+	 */
 	public static void changeToWelcomeScreen(Parent screen, ResourceController rs) {
 		WelcomeScreen root = new WelcomeScreen(rs);
 		Scene scene = new Scene(root, screen.getScene().getWidth(), screen.getScene().getHeight());
@@ -80,6 +116,15 @@ public class ScreenController {
 		((WelcomeScreen) scene.getRoot()).getChildren().add(mediaview);
 	}
 
+	/**
+	 * Change to game over.
+	 *
+	 * @param screen the screen
+	 * @param rs     the rs
+	 * @param dc     the dc
+	 * @param x      the x
+	 * @param y      the y
+	 */
 	public static void changeToGameOver(SpelScherm screen, ResourceController rs, DomeinController dc, int x, int y) {
 		GameOverScreen gameOver = new GameOverScreen(dc, rs,x,y);
 		Scene scene = new Scene(gameOver, screen.getScene().getWidth(), screen.getScene().getHeight());
@@ -98,7 +143,14 @@ public class ScreenController {
 		((GameOverScreen) scene.getRoot()).getChildren().add(mediaview);
 		
 	}
-	
+
+	/**
+	 * Change to select screen.
+	 *
+	 * @param screen the screen
+	 * @param rs     the rs
+	 * @param dc     the dc
+	 */
 	public static void changeToSelectScreen(Parent screen, ResourceController rs, DomeinController dc) {
 		SelectScreen setting = new SelectScreen(dc,rs);
 		Scene scene = new Scene(setting, screen.getScene().getWidth(), screen.getScene().getHeight());

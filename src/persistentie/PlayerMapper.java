@@ -12,9 +12,15 @@ import domein.Power_Potion;
 import domein.Skills;
 import domein.Weapon;
 
+/**
+ * The type Player mapper.
+ */
 public class PlayerMapper {
 	private List<Player> players;
 
+	/**
+	 * Instantiates a new Player mapper.
+	 */
 	public PlayerMapper() {
 		players = new ArrayList<>();
 		List<Items> items = new ArrayList<>();
@@ -32,21 +38,43 @@ public class PlayerMapper {
 		players.add(new Player("Guy5", "18c7b08e02d18f2edc41f8bb86de0f539498f241460565072978da8ec954cca96539bcc2c60b56bd7d4fe5c19d5bbd5f1f9aa8b6324115b3ba321552a059bdd4","njZi2hpw4PMMpgWPJ9SwLg", "Earth"));
 	}
 
+	/**
+	 * Save player.
+	 *
+	 * @param player the player
+	 */
 	public void savePlayer(Player player) {
 
 	}
 
+	/**
+	 * Return list of players.
+	 *
+	 * @return the list of players
+	 */
 	public List<Player> returnList() {
 		return players;
 	}
 
+	/**
+	 * Add player.
+	 *
+	 * @param player the player
+	 */
 	public void addPlayer(Player player) {
 		players.add(player);
 	}
 
+	/**
+	 * Return player.
+	 *
+	 * @param name     the name
+	 * @param password the password
+	 * @return the player
+	 */
 	public Player returnPlayer(String name, String password) {
 		for (Player player : players) {
-			if (player.getName().equals(name) && player.getWachtwoord().equals(password)) {
+			if (player.getName().equals(name) && player.getPasswordHash().equals(password)) {
 				return player;
 			}
 		}

@@ -1,7 +1,13 @@
 package domein;
 
+/**
+ * The type Goblin.
+ */
 public class Goblin extends Enemy {
 
+	/**
+	 * Instantiates a new Goblin.
+	 */
 	public Goblin() {
 		super(sr.nextInt(100) + 100, sr.nextDouble(0.10), "");
 		if (sr.nextInt(2) == 1) {

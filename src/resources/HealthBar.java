@@ -7,6 +7,9 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 
+/**
+ * The type Health bar.
+ */
 public class HealthBar extends StackPane {
 
 	final private double maxvalue;
@@ -17,6 +20,11 @@ public class HealthBar extends StackPane {
 
 	final private static int DEFAULT_LABEL_PADDING = 5;
 
+	/**
+	 * Instantiates a new Health bar.
+	 *
+	 * @param value the value
+	 */
 	public HealthBar(final double value) {
 		this.maxvalue = value;
 
@@ -35,7 +43,12 @@ public class HealthBar extends StackPane {
 		getChildren().setAll(bar, text);
 	}
 
-	// synchronizes the progress.
+	/**
+	 * Update progress.
+	 *
+	 * @param value the value
+	 */
+// synchronizes the progress.
 	public void updateProgress(double value) {
 		content = String.format("%.2f/%.2f", value,maxvalue);
 		text.setText(content);

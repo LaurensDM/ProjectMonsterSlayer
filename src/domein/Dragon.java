@@ -2,8 +2,14 @@ package domein;
 
 import java.security.SecureRandom;
 
+/**
+ * The type Dragon.
+ */
 public class Dragon extends Enemy {
 
+	/**
+	 * Instantiates a new Dragon.
+	 */
 	public Dragon() {
 		super(sr.nextInt(301) + 1000000, sr.nextDouble(0.46) + 0.35,
 				Elements.ELEMENTS.get(sr.nextInt(Elements.ELEMENTS.size())));

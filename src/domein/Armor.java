@@ -1,5 +1,8 @@
 package domein;
 
+/**
+ * The type Armor.
+ */
 public class Armor extends Items {
 
 	private final double MAX_DURABILITY;
@@ -7,6 +10,12 @@ public class Armor extends Items {
 	private double damageReduction = 1;
 	private String resistance;
 
+	/**
+	 * Instantiates a new Armor.
+	 *
+	 * @param name  the name
+	 * @param grade the grade
+	 */
 	public Armor(String name, int grade) {
 		super(name, grade);
 		switch (grade) {
@@ -44,6 +53,11 @@ public class Armor extends Items {
 		}
 	}
 
+	/**
+	 * Determine resistance.
+	 *
+	 * @param name element of the armor
+	 */
 	public void determineResistance(String name) {
 		if (name.contains("Fire")) {
 			resistance = "Fire";
@@ -68,12 +82,20 @@ public class Armor extends Items {
 		resistance = "";
 	}
 
+	/**
+	 * Lower durability.
+	 *
+	 * @param value value by which durability lowers
+	 */
 	public void lowerDurability(double value) {
 
 		durability -= value * damageReduction;
 
 	}
 
+	/**
+	 * Repair armor.
+	 */
 	public void repairArmor() {
 		if (durability + 100 > MAX_DURABILITY) {
 			durability = MAX_DURABILITY;
@@ -82,24 +104,48 @@ public class Armor extends Items {
 		durability += 100;
 	}
 
+	/**
+	 * Gets durability.
+	 *
+	 * @return the durability
+	 */
 	public double getDurability() {
 		return MAX_DURABILITY;
 	}
-	
-	
 
+
+	/**
+	 * Gets max durability.
+	 *
+	 * @return the max durability
+	 */
 	public double getMAX_DURABILITY() {
 		return MAX_DURABILITY;
 	}
 
+	/**
+	 * Gets damage reduction.
+	 *
+	 * @return the damage reduction
+	 */
 	public double getDamageReduction() {
 		return damageReduction;
 	}
 
+	/**
+	 * Gets resistance.
+	 *
+	 * @return the resistance
+	 */
 	public String getResistance() {
 		return resistance;
 	}
 
+	/**
+	 * Destroyed boolean.
+	 *
+	 * @return the boolean
+	 */
 	public boolean destroyed() {
 		if (durability <= 0) {
 			return true;

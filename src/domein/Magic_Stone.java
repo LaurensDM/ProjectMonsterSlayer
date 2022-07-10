@@ -1,12 +1,26 @@
 package domein;
 
+/**
+ * The type Magic stone.
+ */
 public class Magic_Stone extends Items {
 
+	/**
+	 * Instantiates a new Magic stone.
+	 *
+	 * @param name  the name
+	 * @param grade the grade
+	 */
 	public Magic_Stone(String name, int grade) {
 		super(name, grade);
 		// TODO Auto-generated constructor stub
 	}
 
+	/**
+	 * Gets value.
+	 *
+	 * @return the value
+	 */
 	public double getValue() {
 		int totalValue = 0;
 		int monsterValue = 0;

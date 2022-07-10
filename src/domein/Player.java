@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * The type Player.
+ */
 public class Player {
 
 	private String name;
@@ -18,6 +21,21 @@ public class Player {
 	private Weapon weapon;
 	private Armor armor;
 
+	/**
+	 * Instantiates a new Player.
+	 *
+	 * @param name         the name
+	 * @param passwordHash the password hash
+	 * @param salt         the salt
+	 * @param affinity     the affinity
+	 * @param level        the level
+	 * @param exp          the exp
+	 * @param money        the money
+	 * @param bag          the bag
+	 * @param skills       the skills
+	 * @param weapon       the weapon
+	 * @param armor        the armor
+	 */
 	public Player(String name, String passwordHash,String salt, String affinity, int level, int exp, int money, List<Items> bag,
 			Skills skills, Weapon weapon, Armor armor) {
 		setName(name);
@@ -33,10 +51,23 @@ public class Player {
 		this.armor = armor;
 	}
 
-	public Player(String name, String wachtwoord,String salt, String affinity) {
-		this(name, wachtwoord, salt,affinity, 1, 0, 100, new ArrayList<>(), new Skills(), null, null);
+	/**
+	 * Instantiates a new Player.
+	 *
+	 * @param name       the name
+	 * @param passwordHash the passwordHash
+	 * @param salt       the salt
+	 * @param affinity   the affinity
+	 */
+	public Player(String name, String passwordHash,String salt, String affinity) {
+		this(name, passwordHash, salt,affinity, 1, 0, 100, new ArrayList<>(), new Skills(), null, null);
 	}
 
+	/**
+	 * Gets name.
+	 *
+	 * @return the name
+	 */
 	public String getName() {
 		return name;
 	}
@@ -48,18 +79,28 @@ public class Player {
 		this.name = name;
 	}
 
-	public String getWachtwoord() {
+	/**
+	 * Gets wachtwoord.
+	 *
+	 * @return the wachtwoord
+	 */
+	public String getPasswordHash() {
 		return passwordHash;
 	}
 
-	private void setWachtwoord(String wachtwoord) {
+	/*private void setWachtwoord(String wachtwoord) {
 		if (wachtwoord == null || wachtwoord.length() < 3 || !wachtwoord.matches("(\\w*\\d{1}){3,}")) {
 			throw new IllegalArgumentException(
 					"Uw wachtwoord moet uit minstens 3 characters bestaan en minstens 2 cijfers bevatten!");
 		}
 		this.passwordHash = wachtwoord;
-	}
+	}*/
 
+	/**
+	 * Gets affinity.
+	 *
+	 * @return the affinity
+	 */
 	public String getAffinity() {
 		return affinity;
 	}
@@ -68,6 +109,11 @@ public class Player {
 		this.affinity = affinity;
 	}
 
+	/**
+	 * Gets level.
+	 *
+	 * @return the level
+	 */
 	public int getLevel() {
 		return level;
 	}
@@ -76,6 +122,11 @@ public class Player {
 		this.level = level;
 	}
 
+	/**
+	 * Gets exp.
+	 *
+	 * @return the exp
+	 */
 	public int getExp() {
 		return exp;
 	}
@@ -84,6 +135,11 @@ public class Player {
 		this.exp = exp;
 	}
 
+	/**
+	 * Gets money.
+	 *
+	 * @return the money
+	 */
 	public int getMoney() {
 		return money;
 	}
@@ -92,22 +148,45 @@ public class Player {
 		this.money = money;
 	}
 
+	/**
+	 * Gets bag.
+	 *
+	 * @return the bag
+	 */
 	public List<Items> getBag() {
 		return bag;
 	}
 
+	/**
+	 * Gets skills.
+	 *
+	 * @return the skills
+	 */
 	public Skills getSkills() {
 		return skills;
 	}
 
+	/**
+	 * Gets weapon.
+	 *
+	 * @return the weapon
+	 */
 	public Weapon getWeapon() {
 		return weapon;
 	}
 
+	/**
+	 * Gets armor.
+	 *
+	 * @return the armor
+	 */
 	public Armor getArmor() {
 		return armor;
 	}
 
+	/**
+	 * Level up.
+	 */
 	public void levelUp() {
 
 		if (level < 50 && exp >= level * 1.5) {
@@ -116,10 +195,20 @@ public class Player {
 		}
 	}
 
+	/**
+	 * Add money.
+	 *
+	 * @param value the value
+	 */
 	protected void addMoney(int value) {
 		money += value;
 	}
 
+	/**
+	 * Gain exp.
+	 *
+	 * @param value the value
+	 */
 	protected void gainExp(int value) {
 		if (level < 50) {
 			exp += value;
@@ -127,18 +216,38 @@ public class Player {
 
 	}
 
+	/**
+	 * Add item to bag.
+	 *
+	 * @param item the item
+	 */
 	protected void addItemToBag(Items item) {
 		bag.add(item);
 	}
-	
+
+	/**
+	 * Equip weapon.
+	 *
+	 * @param weapon the weapon
+	 */
 	public void equipWeapon(Weapon weapon) {
 		this.weapon = weapon;
 	}
-	
+
+	/**
+	 * Equip armor.
+	 *
+	 * @param armor the armor
+	 */
 	public void equipArmor(Armor armor) {
 		this.armor = armor;
 	}
 
+	/**
+	 * Learn skill.
+	 *
+	 * @param skillLevel the skill level
+	 */
 	protected void learnSkill(int skillLevel) {
 		skills.activateSkills(skillLevel);
 	}

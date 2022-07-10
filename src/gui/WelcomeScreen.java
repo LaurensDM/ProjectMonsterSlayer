@@ -7,14 +7,25 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import resources.ResourceController;
 
+/**
+ * The type Welcome screen.
+ */
 public class WelcomeScreen extends VBox {
 
 	private Label title;
 	private Button play;
 	private Button settings;
 	private ResourceController rs;
+	/**
+	 * The constant rowMultiplier.
+	 */
 	public static double rowMultiplier;
-	
+
+	/**
+	 * Instantiates a new Welcome screen.
+	 *
+	 * @param rs the ResourceController
+	 */
 	public WelcomeScreen(ResourceController rs) {
 		this.rs = rs;
 		this.setAlignment(Pos.CENTER);

@@ -19,6 +19,9 @@ import javafx.scene.layout.GridPane;
 import javafx.util.Duration;
 import resources.ResourceController;
 
+/**
+ * The type Setting screen.
+ */
 public class SettingScreen extends GridPane {
 
 	private Slider volume;
@@ -26,13 +29,28 @@ public class SettingScreen extends GridPane {
 	private ResourceController rs;
 	private Label title;
 	private Button quit;
+	/**
+	 * The constant AZERTY.
+	 */
 	public final static List<KeyCode> AZERTY = new ArrayList<>(
 			Arrays.asList(KeyCode.Z, KeyCode.S, KeyCode.Q, KeyCode.D));
+	/**
+	 * The constant QWERTY.
+	 */
 	public final static List<KeyCode> QWERTY = new ArrayList<>(
 			Arrays.asList(KeyCode.W, KeyCode.S, KeyCode.A, KeyCode.D));
+	/**
+	 * The Key codes.
+	 */
 	public static List<KeyCode> keyCodes = AZERTY;
 	private boolean returnToPanel;
 
+	/**
+	 * Instantiates a new Setting screen.
+	 *
+	 * @param resource the ResourceController
+	 * @param game     whether the SettingScreen was called from the game
+	 */
 	public SettingScreen(ResourceController resource, boolean game) {
 		this.rs = resource;
 		this.setAlignment(Pos.CENTER);
@@ -132,6 +150,11 @@ public class SettingScreen extends GridPane {
 		this.add(quit, 0, 6);
 	}
 
+	/**
+	 * Return pressed boolean.
+	 *
+	 * @return the boolean
+	 */
 	public boolean returnPressed() {
 		if (returnToPanel) {
 			returnToPanel = false;

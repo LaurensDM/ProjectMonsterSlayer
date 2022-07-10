@@ -7,15 +7,43 @@ import gui.ScreenController;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.shape.Rectangle;
 
+/**
+ * The type Player.
+ */
 public class Player extends Entity {
 
+	/**
+	 * The Screen x.
+	 */
 	public final int screenX;
+	/**
+	 * The Screen y.
+	 */
 	public final int screenY;
+	/**
+	 * The Number of item.
+	 */
 	int numberOfItem = 0;
+	/**
+	 * The Encounter.
+	 */
 	public boolean encounter = false;
+	/**
+	 * The Counter.
+	 */
 	public int counter = 0;
+	/**
+	 * The Sr.
+	 */
 	SecureRandom sr;
 
+	/**
+	 * Instantiates a new Player.
+	 *
+	 * @param gp the gp
+	 * @param x  the x
+	 * @param y  the y
+	 */
 	public Player(GamePanel gp, int x, int y) {
 		super(gp);
 		sprite = new Sprite("wizard");
@@ -33,16 +61,30 @@ public class Player extends Entity {
 		sr = new SecureRandom();
 	}
 
+	/**
+	 * Sprint.
+	 */
 	public void sprint() {
 		speed = 6;
 		sprite.sprint();
 	}
 
+	/**
+	 * Walk.
+	 */
 	public void walk() {
 		speed = 4;
 		sprite.walk();
 	}
 
+	/**
+	 * Update.
+	 *
+	 * @param up    the up
+	 * @param down  the down
+	 * @param left  the left
+	 * @param right the right
+	 */
 	public void update(boolean up, boolean down, boolean left, boolean right) {
 
 		if (up) {
@@ -107,6 +149,11 @@ public class Player extends Entity {
 		sprite.updateSpriteCounter();
 	}
 
+	/**
+	 * Pick up object.
+	 *
+	 * @param index the index
+	 */
 	public void pickUpObject(int index) {
 
 		if (index != 999) {
@@ -124,6 +171,11 @@ public class Player extends Entity {
 		}
 	}
 
+	/**
+	 * Interact npc.
+	 *
+	 * @param index the index
+	 */
 	public void interactNPC(int index) {
 		if (index != 999) {
 			gp.showNotification("Press E to interact with NPC.");
@@ -152,10 +204,18 @@ public class Player extends Entity {
 		}
 	}
 
+	/**
+	 * Stop moving.
+	 */
 	public void stopMoving() {
 		sprite.stopMovement();
 	}
 
+	/**
+	 * Draw player.
+	 *
+	 * @param gc the GraphicsContext
+	 */
 	public void drawPlayer(GraphicsContext gc) {
 		gc.drawImage(sprite.getFrame(), screenX, screenY, GamePanel.TILESIZE, GamePanel.TILESIZE);
 	}

@@ -1,7 +1,16 @@
 package domein;
 
+/**
+ * The type Mana potion.
+ */
 public class Mana_Potion extends Potion {
 
+	/**
+	 * Instantiates a new Mana potion.
+	 *
+	 * @param name  the name
+	 * @param grade the grade
+	 */
 	public Mana_Potion(String name, int grade) {
 		super(name, grade);
 		// TODO Auto-generated constructor stub

@@ -1,7 +1,16 @@
 package domein;
 
+/**
+ * The type Power potion.
+ */
 public class Power_Potion extends Potion {
 
+	/**
+	 * Instantiates a new Power potion.
+	 *
+	 * @param name  the name
+	 * @param grade the grade
+	 */
 	public Power_Potion(String name, int grade) {
 		super(name, grade);
 		// TODO Auto-generated constructor stub

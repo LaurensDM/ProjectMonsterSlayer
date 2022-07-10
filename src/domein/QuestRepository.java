@@ -3,10 +3,16 @@ package domein;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The type Quest repository.
+ */
 public class QuestRepository {
 	
 	private List<Quest> questBord;
 
+	/**
+	 * Instantiates a new Quest repository.
+	 */
 	public QuestRepository() {
 		
 	}
