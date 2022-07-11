@@ -1,5 +1,8 @@
 package application;
 	
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.security.SecureRandom;
 import domein.DomeinController;
 import gui.ScreenController;
@@ -10,7 +13,10 @@ import javafx.scene.image.Image;
 import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import resources.OpenSimplexNoise;
 import resources.ResourceController;
+
+import javax.imageio.ImageIO;
 
 
 /**
@@ -18,6 +24,7 @@ import resources.ResourceController;
  */
 public class Main extends Application {
 //	public static double rowMultiplier;
+
 	
 	@Override
 	public void start(Stage primaryStage) {
@@ -50,6 +57,7 @@ public class Main extends Application {
 	 * @param args the input arguments
 	 */
 	public static void main(String[] args) {
+
 		launch(args);
 	}
 }

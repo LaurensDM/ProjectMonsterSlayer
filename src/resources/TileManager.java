@@ -1,5 +1,9 @@
 package resources;
 
+
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Scanner;
@@ -7,12 +11,19 @@ import java.util.Scanner;
 import gui.GamePanel;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.image.PixelReader;
+
+
+import javax.imageio.ImageIO;
 
 /**
  * The type Tile manager.
  */
 //creates map and holds information about every tile
 public class TileManager {
+	private static final int WIDTH = 512;
+	private static final int HEIGHT = 512;
+	private static final double FEATURE_SIZE = 24;
 
 	/**
 	 * The Tiles.
@@ -96,6 +107,78 @@ public class TileManager {
 			e.printStackTrace();
 		}
 
+	}
+
+	public void generateMapFromImage(Image image){
+		int w = (int)image.getWidth();
+		int h  = (int)image.getHeight();
+		map = new int[w][h];
+		for (int row = 0; row < h; row++) {
+			for (int column = 0; column < w; column++) {
+				PixelReader pixelR = image.getPixelReader();
+				int pixel = pixelR.getArgb(row,column);
+				int red = (pixel >> 16) & 0xff;
+				int green = (pixel >> 8) & 0xff;
+				int blue = (pixel) & 0xff;
+
+				if (red == 181 && green == 230 && blue == 29){
+					map[row][column] = 0;
+				}
+				if (red == 63 && green == 72 && blue == 204){
+					map[row][column] = 23;
+				}
+				if (red == 63 && green == 72 && blue == 204){
+					map[row][column] = 4;
+				}
+
+			}
+		}
+	}
+
+	public void generateRandomMap(){
+		BufferedImage img = new BufferedImage(WIDTH,HEIGHT,BufferedImage.TYPE_INT_RGB);
+
+		OpenSimplexNoise noise = new OpenSimplexNoise();
+		map = new int[WIDTH][HEIGHT];
+		int color;
+
+		for (int y = 0; y < HEIGHT; y++)
+		{
+			for (int x = 0; x < WIDTH; x++)
+			{
+				double value = noise.eval(x / FEATURE_SIZE, y / FEATURE_SIZE);
+				if (value < 0){
+					map[y][x] = 22;
+					color = 256*256*5+256*17+245;
+					img.setRGB(x,y,color);
+
+				}
+				/*if (value > -0.5 && value < 0){
+					map[y][x] = 4;
+					color = 256*256*33+256*89+4;
+					img.setRGB(x,y,color);
+				}*/
+
+				if (value > 0 && value <0.5){
+					map[y][x] = 5;
+					color = 256*256*128+256*77+15;
+					img.setRGB(x,y,color);
+				}
+
+				if (value > 0.5){
+					map[y][x] = 0;
+					color = 256*256*5+256*245+101;
+					img.setRGB(x,y,color);
+				}
+
+			}
+		}
+
+		try {
+			ImageIO.write(img,"png", new File("noise2.png"));
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	/**

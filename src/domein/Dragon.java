@@ -1,7 +1,5 @@
 package domein;
 
-import java.security.SecureRandom;
-
 /**
  * The type Dragon.
  */

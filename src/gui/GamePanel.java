@@ -86,11 +86,11 @@ public class GamePanel extends StackPane {
 	 * The Max world col.
 	 */
 // WORLD parameters
-	public final int maxWorldCol = 50;
+	public final int maxWorldCol = 512;
 	/**
 	 * The Max world row.
 	 */
-	public final int MaxWorldRow = 50;
+	public final int MaxWorldRow = 512;
 	/**
 	 * The World width.
 	 */
@@ -179,7 +179,8 @@ public class GamePanel extends StackPane {
 		gc = canvas.getGraphicsContext2D();
 		player = new Player(this, initialX, initialY);
 		tileM = new TileManager(this);
-		tileM.createMap("world01");
+//		tileM.createMap("world01");
+		tileM.generateRandomMap();
 		collision = new CollisionChecker(this);
 		setter = new AssetSetter(this);
 		canvas.setFocusTraversable(true);
