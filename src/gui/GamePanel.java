@@ -61,7 +61,7 @@ public class GamePanel extends StackPane {
 	/**
 	 * The constant maxScreenCol.
 	 */
-	public static final int maxScreenCol = 16;
+	public static final int maxScreenCol = 32;
 	/**
 	 * The constant maxScreenRow.
 	 */
@@ -86,11 +86,11 @@ public class GamePanel extends StackPane {
 	 * The Max world col.
 	 */
 // WORLD parameters
-	public final int maxWorldCol = 512;
+	public final int maxWorldCol = 50;
 	/**
 	 * The Max world row.
 	 */
-	public final int MaxWorldRow = 512;
+	public final int MaxWorldRow = 50;
 	/**
 	 * The World width.
 	 */
@@ -147,9 +147,15 @@ public class GamePanel extends StackPane {
 	private VBox topUI = new VBox();
 	private VBox notification = new VBox();
 	private int messageCounter;
-	private SageDialogue dialogue;
+	private GridPane dialogue;
 	private GridPane inventory;
 	private SettingScreen settings;
+	private SageDialogue sageDialogue;
+	private SkillPanel skills;
+	private MerchantDialogue merchantDialogue;
+	private GuildDialogue guildDialogue;
+	private RandomNPCDialogue randomDialogue;
+
 
 	/**
 	 * Instantiates a new Game panel.
@@ -168,7 +174,7 @@ public class GamePanel extends StackPane {
 		initialX = x;
 		initialY = y;
 		screenWidth = maxScreenCol * TILESIZE;
-		screenHeight = maxScreenRow * TILESIZE;
+		screenHeight = maxScreenRow * TILESIZE+TILESIZE;
 		buildGui();
 	}
 
@@ -179,8 +185,8 @@ public class GamePanel extends StackPane {
 		gc = canvas.getGraphicsContext2D();
 		player = new Player(this, initialX, initialY);
 		tileM = new TileManager(this);
-//		tileM.createMap("world01");
-		tileM.generateRandomMap();
+		tileM.createMap("world01");
+//		tileM.generateRandomMap();
 		collision = new CollisionChecker(this);
 		setter = new AssetSetter(this);
 		canvas.setFocusTraversable(true);
@@ -190,7 +196,7 @@ public class GamePanel extends StackPane {
 		setUpGame();
 		
 
-		this.getChildren().addAll(canvas, bottomUI, topUI, notification, dialogue, settings);
+		this.getChildren().addAll(canvas, bottomUI, topUI, notification, dialogue, inventory, settings);
 		
 		//KEYEVENTS
 		this.setOnKeyPressed(evt -> {
@@ -210,8 +216,8 @@ public class GamePanel extends StackPane {
 			}
 			if (code.equals(KeyCode.E)) {
 				interact = true;
-				if (dialogue.isVisible()) {
-					dialogue.setVisible(false);
+				if (this.getChildren().get(4).isVisible()) {
+					this.getChildren().get(4).setVisible(false);
 					pause = false;
 				}
 			}
@@ -225,6 +231,14 @@ public class GamePanel extends StackPane {
 					pause = true;
 				}
 				
+			}
+
+			if (code.equals(KeyCode.I)){
+				if (inventory.isVisible()){
+					inventory.setVisible(false);
+				} else{
+					inventory.setVisible(true);
+				}
 			}
 		});
 
@@ -416,9 +430,8 @@ public class GamePanel extends StackPane {
 	/**
 	 * Show dialogue.
 	 *
-	 * @param content the content
 	 */
-	public void showDialogue(String content) {
+	public void showDialogue() {
 //		Node label = dialogue.getChildren().get(0);
 //		((Label) label).setText(content);
 		dialogue.setVisible(true);
@@ -429,20 +442,43 @@ public class GamePanel extends StackPane {
 	 * Configure dialogue.
 	 */
 	public void configureDialogue() {
-//		Label label = new Label("This is a dialogue window!\n Press H to hide or make visible again!");
-//		dialogue.getChildren().add(label);
-		dialogue = new SageDialogue(dc);
+		dialogue = new SkillPanel(dc,this);
 		dialogue.setId("dialogue");
 		dialogue.setMaxWidth(screenWidth * 0.6);
 		dialogue.setMaxHeight(screenHeight * 0.3);
 		dialogue.setAlignment(Pos.CENTER);
 		StackPane.setMargin(dialogue, new Insets(10, 0,  10, 0));
-		dialogue.setLayoutX(FPS);
 		dialogue.setVisible(false);
+		sageDialogue = new SageDialogue(dc,this);
+		skills = new SkillPanel(dc,this);
+		merchantDialogue = new MerchantDialogue(dc,this);
+		guildDialogue = new GuildDialogue(dc,this);
+		randomDialogue = new RandomNPCDialogue(dc,this);
 	}
 
+	public void changeDialogue(int option){
+		switch(option){
+			case 0 -> this.getChildren().set(4,sageDialogue) ;
+			case 1 -> this.getChildren().set(4,skills);
+			case 2 -> this.getChildren().set(4,merchantDialogue);
+			case 3 -> this.getChildren().set(4,guildDialogue);
+			case 4 -> this.getChildren().set(4,randomDialogue);
+		}
+		GridPane grid = (GridPane) this.getChildren().get(4);
+		grid.setId("dialogue");
+		grid.setMaxWidth(screenWidth * 0.6);
+		grid.setMaxHeight(screenHeight * 0.3);
+		grid.setAlignment(Pos.CENTER);
+	}
+
+	/**
+	 * Configure Inventory.
+	 */
 	private void configureInventory() {
-		inventory = new BagScreen();
+		inventory = new BagScreen(dc);
+		inventory.setMaxWidth(screenWidth*0.2);
+		inventory.setMaxHeight(screenHeight*0.8);
+		StackPane.setAlignment(inventory,Pos.CENTER_RIGHT);
 		inventory.setVisible(false);
 	}
 

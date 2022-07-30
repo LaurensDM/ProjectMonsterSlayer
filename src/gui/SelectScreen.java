@@ -182,7 +182,7 @@ public class SelectScreen extends GridPane{
 
 	private void speel() {
 		try {
-			ScreenController.changeToGamePanel(this,rs,GamePanel.TILESIZE*256,GamePanel.TILESIZE*256, dc);
+			ScreenController.changeToGamePanel(this,rs,GamePanel.TILESIZE*24,GamePanel.TILESIZE*24, dc);
 		} catch (IllegalArgumentException ie) {
 			Alert error = new Alert(AlertType.ERROR);
 			error.setContentText(ie.getLocalizedMessage());

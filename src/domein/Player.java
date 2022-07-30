@@ -20,6 +20,8 @@ public class Player {
 	private Skills skills;
 	private Weapon weapon;
 	private Armor armor;
+	//rank from F to S
+	private String adventureRank;
 
 	/**
 	 * Instantiates a new Player.
@@ -37,7 +39,7 @@ public class Player {
 	 * @param armor        the armor
 	 */
 	public Player(String name, String passwordHash,String salt, String affinity, int level, int exp, int money, List<Items> bag,
-			Skills skills, Weapon weapon, Armor armor) {
+			Skills skills, Weapon weapon, Armor armor, String rank) {
 		setName(name);
 		this.passwordHash=passwordHash;
 		this.salt = salt;
@@ -49,6 +51,7 @@ public class Player {
 		this.skills = skills;
 		this.weapon = weapon;
 		this.armor = armor;
+		this.adventureRank = rank;
 	}
 
 	/**
@@ -60,7 +63,7 @@ public class Player {
 	 * @param affinity   the affinity
 	 */
 	public Player(String name, String passwordHash,String salt, String affinity) {
-		this(name, passwordHash, salt,affinity, 1, 0, 100, new ArrayList<>(), new Skills(), null, null);
+		this(name, passwordHash, salt,affinity, 1, 0, 100, new ArrayList<>(), new Skills(), null, null,"unranked");
 	}
 
 	/**

@@ -52,15 +52,7 @@
 	-fx-background-color: linear-gradient(to top,gray,lightgray);
 }
 
-#dialogue{
-	
-	-fx-background-color: black;
-	-fx-opacity: 0.8;
-	-fx-background-radius: 10px;
-	-fx-border-radius: 10px;
-	-fx-border-width: 5px;
-	-fx-border-color: white;
-}
+
 
 
 

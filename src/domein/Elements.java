@@ -69,7 +69,7 @@ public abstract class Elements {
 	 * @return attack power
 	 */
 	public int power() {
-		return (int) (sr.nextInt((int) Math.round(maxMana*0.10)) + maxMana*0.05);
+		return (int) (sr.nextInt((int) Math.round(maxMana*0.05)) + maxMana*0.05);
 	}
 
 	/**

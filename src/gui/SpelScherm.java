@@ -156,7 +156,7 @@ public class SpelScherm extends GridPane {
 
 			if (dc.isDefeated()) {
 				defeated = true;
-//				ScreenController.changeToGamePanel(this, resources, worldX, worldY, dc);
+				ScreenController.changeToGamePanel(this, resources, worldX, worldY, dc);
 			} else {
 				string += dc.attackBack();
 			}

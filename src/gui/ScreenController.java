@@ -39,7 +39,7 @@ public class ScreenController {
 		GamePanel panel = new GamePanel(screen.getScene().getWidth(),screen.getScene().getHeight(),x,y,rs, dc);
 		Scene scene = new Scene(panel, screen.getScene().getWidth(), screen.getScene().getHeight());
 //		Scene scene = new Scene(panel, 48*16, 48*9);
-		scene.getStylesheets().add(screen.getClass().getResource("/css/application.css").toExternalForm());
+		scene.getStylesheets().add(screen.getClass().getResource("/css/game.css").toExternalForm());
 		Stage stage = (Stage) (screen.getScene().getWindow());
 		stage.setScene(scene);
 		stage.setTitle("Game");

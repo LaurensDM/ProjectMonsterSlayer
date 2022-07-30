@@ -198,7 +198,22 @@ public class Player extends Entity {
 					gp.npc[index].sprite.moveLeft();
 					break;
 				}
-				gp.showDialogue("A good day to you!");
+
+
+				if(gp.npc[index] instanceof NPC_Sage) {
+					gp.changeDialogue(0);
+
+				}
+				if (gp.npc[index] instanceof NPC_Merchant){
+					gp.changeDialogue(2);
+				}
+				if (gp.npc[index] instanceof  NPC_Guild){
+					gp.changeDialogue(3);
+				}
+				if (gp.npc[index] instanceof  NPC_Random){
+					gp.changeDialogue(4);
+				}
+				gp.showDialogue();
 			}
 
 		}

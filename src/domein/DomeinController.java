@@ -1,5 +1,8 @@
 package domein;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * The type Domein controller.
  */
@@ -144,6 +147,14 @@ public class DomeinController {
 	 */
 	public void selectPlayer(String name, String password) {
 		player = repo.selectPlayer(name, password);
+	}
+
+	public List<String> giveBag(){
+		List<String> items = new ArrayList<>();
+		for (Items item: player.getBag()) {
+			items.add(item.toString());
+		}
+		return items;
 	}
 
 	/**

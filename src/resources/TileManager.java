@@ -21,8 +21,8 @@ import javax.imageio.ImageIO;
  */
 //creates map and holds information about every tile
 public class TileManager {
-	private static final int WIDTH = 512;
-	private static final int HEIGHT = 512;
+	private static final int WIDTH = 1024;
+	private static final int HEIGHT = 1024;
 	private static final double FEATURE_SIZE = 24;
 
 	/**
@@ -147,31 +147,45 @@ public class TileManager {
 			for (int x = 0; x < WIDTH; x++)
 			{
 				double value = noise.eval(x / FEATURE_SIZE, y / FEATURE_SIZE);
+
+
 				if (value < 0){
-					map[y][x] = 22;
+					map[x][y] = 22;
 					color = 256*256*5+256*17+245;
 					img.setRGB(x,y,color);
 
 				}
-				/*if (value > -0.5 && value < 0){
-					map[y][x] = 4;
+				if (value > -0.5 && value < -0.25){
+					map[x][y] = 4;
 					color = 256*256*33+256*89+4;
 					img.setRGB(x,y,color);
-				}*/
+				}
 
-				if (value > 0 && value <0.5){
-					map[y][x] = 5;
+				if (value > -0.25 && value < 0){
+					map[x][y] = 0;
+				}
+
+				if (value > 0 && value <0.3){
+					map[x][y] = 5;
 					color = 256*256*128+256*77+15;
 					img.setRGB(x,y,color);
 				}
 
-				if (value > 0.5){
-					map[y][x] = 0;
+				if (value > 0.3 && value < 0.9){
+					map[x][y] = 3;
 					color = 256*256*5+256*245+101;
 					img.setRGB(x,y,color);
 				}
 
+				if (value>0.98){
+					map[x][y] = 19;
+					color = 256*256*237+28*256+36;
+					img.setRGB(x,y,color);
+					System.err.print(value+" ");
+				}
+
 			}
+
 		}
 
 		try {

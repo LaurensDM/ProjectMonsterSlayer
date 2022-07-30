@@ -38,8 +38,8 @@ public class Goblin extends Enemy {
 
 	@Override
 	public int determineItemGrade(boolean fullpower) {
-		int grade = 1;
-		grade = 1;
+		int grade=1;
+
 		if (getType().equals("Hob")) {
 			grade = sr.nextInt(2) + 1;
 		}

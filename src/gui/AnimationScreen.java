@@ -60,7 +60,7 @@ public class AnimationScreen extends BorderPane {
 	public AnimationScreen(DomeinController dc, ResourceController rs, int x, int y) {
 		this.dc = dc;
 		SpelScherm spel = new SpelScherm(dc, rs, x, y);
-		BagScreen bag = new BagScreen();
+		BagScreen bag = new BagScreen(dc);
 		this.setCenter(spel);
 		this.setRight(bag);
 		bag.setVisible(false);

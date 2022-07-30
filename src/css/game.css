@@ -7,11 +7,33 @@
 	-fx-background-color: green;
 }
 
-#bodyCount{
-	-fx-font-size: 90;
-	-fx-text-fill: white;
-	-fx-font-family: "Times New Roman";
+#settings{
+    -fx-background-color: black;
+    -fx-background-radius: 10px;
+    -fx-border-radius: 10px;
+    -fx-border-width: 5px;
+    -fx-border-color: white;
+    -fx-opacity: 0.8;
 }
+
+#bag {
+    -fx-background-color: black;
+    -fx-background-radius: 10px;
+    -fx-border-radius: 10px;
+    -fx-border-width: 5px;
+    -fx-border-color: white;
+    -fx-opacity: 0.8;
+
+}
+
+#bag .label{
+    -fx-font-size: 12;
+    -fx-text-fill: white;
+    -fx-padding 2px;
+}
+
+
+
 
 #power{
 	-fx-background-color: radial-gradient(focus-distance 0% , center 50% 50% , radius 55% , #000000, #E01619);
@@ -52,3 +74,31 @@
 	-fx-text-fill: black;
 }
 
+#dialogue {
+	-fx-background-color: black;
+	-fx-opacity: 0.8;
+	-fx-background-radius: 10px;
+	-fx-border-radius: 10px;
+	-fx-border-width: 5px;
+	-fx-border-color: white;
+
+}
+
+#dialogue .label{
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+}
+
+#dialogue .button{
+        -fx-padding: 2px;
+    	-fx-background-color: black;
+    	-fx-border-color: white;
+    	-fx-font-size: 12;
+    	-fx-text-fill: white;
+    	-fx-font-style: normal;
+}
+
+#dialogue .button:hover{
+    -fx-background-color: green;
+    -fx-text-fill: black;
+}
