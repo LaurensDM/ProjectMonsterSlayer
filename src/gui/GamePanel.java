@@ -76,6 +76,8 @@ public class GamePanel extends StackPane {
 	public final static int TILESIZE = ScreenController.screenWidth / maxScreenCol;
 	private boolean pause = false;
 
+	public static boolean inGame = true;
+
 	/**
 	 * The Gameloop.
 	 */
@@ -216,9 +218,11 @@ public class GamePanel extends StackPane {
 			}
 			if (code.equals(KeyCode.E)) {
 				interact = true;
+
 				if (this.getChildren().get(4).isVisible()) {
 					this.getChildren().get(4).setVisible(false);
 					pause = false;
+
 				}
 			}
 
@@ -234,9 +238,11 @@ public class GamePanel extends StackPane {
 			}
 
 			if (code.equals(KeyCode.I)){
-				if (inventory.isVisible()){
+				if (inventory.isVisible()) {
+					inGame = true;
 					inventory.setVisible(false);
-				} else{
+				} else {
+					inGame = false;
 					inventory.setVisible(true);
 				}
 			}

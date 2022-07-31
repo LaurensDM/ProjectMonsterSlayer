@@ -87,7 +87,6 @@ public class SpelScherm extends GridPane {
 		List<String> enemies = Enemy.ENEMIES;
 		Collections.shuffle(enemies);
 		resources.playSoundEffect("");
-		dc.startGame();
 		dc.registerEnemy(enemies.get(0));
 
 		lblEnemy.setText(dc.getEnemy());

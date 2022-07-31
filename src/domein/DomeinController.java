@@ -149,12 +149,16 @@ public class DomeinController {
 		player = repo.selectPlayer(name, password);
 	}
 
-	public List<String> giveBag(){
+	public List<String> giveBag() {
 		List<String> items = new ArrayList<>();
-		for (Items item: player.getBag()) {
+		for (Items item : player.getBag()) {
 			items.add(item.toString());
 		}
 		return items;
+	}
+
+	public String selectItem(String itemDesc, boolean inGame) {
+		return game.selectItem(itemDesc, inGame);
 	}
 
 	/**
@@ -165,7 +169,7 @@ public class DomeinController {
 	 * @param salt     the salt
 	 * @param affinity the affinity
 	 */
-	public void registerPlayer(String name, String password,String salt, String affinity) {
+	public void registerPlayer(String name, String password, String salt, String affinity) {
 		repo.registerPlayer(new Player(name, password,salt, affinity));
 	}
 

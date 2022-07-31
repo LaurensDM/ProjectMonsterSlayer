@@ -173,7 +173,7 @@ public abstract class Enemy {
         String item;
 
         grade = determineItemGrade(fullpower);
-        drops[0] = new Magic_Stone(getType() + this.getClass().getSimpleName() + " Stone", grade);
+        drops[0] = new Magic_Stone(getType() + " " + this.getClass().getSimpleName() + " Stone", grade);
 
         for (int i = 1; i < drops.length; i++) {
 

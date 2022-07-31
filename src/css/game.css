@@ -16,6 +16,25 @@
     -fx-opacity: 0.8;
 }
 
+#settings .label{
+        -fx-font-size: 16;
+        -fx-text-fill: white;
+        -fx-padding: 2px;
+}
+
+#settings .button{
+         -fx-padding: 2px;
+         -fx-background-color: black;
+         -fx-border-color: white;
+         -fx-font-size: 12;
+         -fx-text-fill: white;
+}
+
+#settings .button:hover{
+         -fx-background-color: green;
+         -fx-text-fill: black;
+ }
+
 #bag {
     -fx-background-color: black;
     -fx-background-radius: 10px;
@@ -27,12 +46,25 @@
 }
 
 #bag .label{
-    -fx-font-size: 12;
+    -fx-min-height: 50px;
     -fx-text-fill: white;
-    -fx-padding 2px;
 }
 
+#bag .button{
+    -fx-background-color: black;
+    -fx-font-size: 12;
+    -fx-text-fill: white;
+    -fx-padding: 5px;
+    -fx-border-width: 2px;
+    -fx-border-color: white;
+    -fx-min-width: 250px;
+    -fx-min-height: 50px;
+}
 
+#bag .button:hover{
+    -fx-background-color: red;
+    -fx-text-fill: black;
+}
 
 
 #power{
