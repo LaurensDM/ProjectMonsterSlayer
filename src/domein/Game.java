@@ -158,6 +158,7 @@ public class Game {
                 player.equipWeapon((Weapon) item);
                 return item + " equipped!";
             }
+
             if (item instanceof Armor) {
                 if (inGame == true) throw new IllegalArgumentException("Armor cannot be equipped mid battle!");
                 player.equipArmor((Armor) item);

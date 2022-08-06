@@ -50,13 +50,18 @@ public class Weapon extends Items {
 			MAX_DURABILITY=500000;
 			destroyable = false;
 			break;
-		default:
-			MAX_DURABILITY = 100;
-			break;
+			default:
+				MAX_DURABILITY = 100;
+				break;
 		}
 		durability = MAX_DURABILITY;
 
 		determineAffinity();
+	}
+
+	public Weapon(String name, int grade, double durability) {
+		this(name, grade);
+		this.durability = durability;
 	}
 
 	private void determineAffinity() {

@@ -281,4 +281,7 @@ public class Player {
 		return "Player [name=" + name + ", affinity=" + affinity + "]";
 	}
 
+	public String getAdventureRank() {
+		return adventureRank;
+	}
 }

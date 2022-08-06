@@ -43,14 +43,19 @@ public class Armor extends Items {
 			MAX_DURABILITY = 5000;
 			damageReduction = 0.2;
 			break;
-		case 6:
-			MAX_DURABILITY = 500000;
-			damageReduction = 0.002;
-			break;
-		default:
-			MAX_DURABILITY = 100;
-			break;
+			case 6:
+				MAX_DURABILITY = 500000;
+				damageReduction = 0.002;
+				break;
+			default:
+				MAX_DURABILITY = 100;
+				break;
 		}
+	}
+
+	public Armor(String name, int grade, double durability) {
+		this(name, grade);
+		this.durability = durability;
 	}
 
 	/**
