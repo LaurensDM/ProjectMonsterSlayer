@@ -20,15 +20,17 @@ public class HealthBar extends StackPane {
 
 	final private static int DEFAULT_LABEL_PADDING = 5;
 
+
 	/**
 	 * Instantiates a new Health bar.
 	 *
 	 * @param value the value
 	 */
-	public HealthBar(final double value) {
+	public HealthBar(double currentValue, final double value) {
 		this.maxvalue = value;
 
-		updateProgress(maxvalue);
+
+		updateProgress(currentValue);
 //		workDone.addListener(new ChangeListener<Number>() {
 //			@Override 
 //			public void changed(ObservableValue<? extends Number> observableValue, Number number, Number number2) {

@@ -21,7 +21,6 @@ public class PlayerRepo {
 	 */
 	public PlayerRepo() {
 		mapper = new PlayerMapper();
-		players = mapper.returnList();
 	}
 
 	/**
@@ -30,7 +29,7 @@ public class PlayerRepo {
 	 * @param player the player
 	 */
 	public void savePlayer(Player player) {
-		
+		mapper.savePlayer(player);
 	}
 
 	/**

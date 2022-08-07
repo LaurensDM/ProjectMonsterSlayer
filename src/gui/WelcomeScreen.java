@@ -15,34 +15,36 @@ public class WelcomeScreen extends VBox {
 	private Label title;
 	private Button play;
 	private Button settings;
-	private ResourceController rs;
+    private DomeinController dc;
+    private ResourceController rs;
 	/**
 	 * The constant rowMultiplier.
 	 */
 	public static double rowMultiplier;
 
-	/**
-	 * Instantiates a new Welcome screen.
-	 *
-	 * @param rs the ResourceController
-	 */
-	public WelcomeScreen(ResourceController rs) {
-		this.rs = rs;
-		this.setAlignment(Pos.CENTER);
-		this.setSpacing(50);
-		title = new Label("Monster Slayer");
-		title.setId("title");
-		play = new Button("Play");
-		settings = new Button("Settings");
-		
-		play.setOnAction(evt -> {
-			ScreenController.changeToSelectScreen(this, rs, new DomeinController());
-			rowMultiplier = this.getWidth()/this.getHeight();
+    /**
+     * Instantiates a new Welcome screen.
+     *
+     * @param rs the ResourceController
+     */
+    public WelcomeScreen(DomeinController dc, ResourceController rs) {
+        this.dc = dc;
+        this.rs = rs;
+        this.setAlignment(Pos.CENTER);
+        this.setSpacing(50);
+        title = new Label("Monster Slayer");
+        title.setId("title");
+        play = new Button("Play");
+        settings = new Button("Settings");
+
+        play.setOnAction(evt -> {
+            ScreenController.changeToSelectScreen(this, rs, dc);
+            rowMultiplier = this.getWidth() / this.getHeight();
 //			ScreenController.changeToGamePanel(this,rs,GamePanel.TILESIZE*23,GamePanel.TILESIZE*21);
 			
 		});
 		settings.setOnAction(etv -> {
-			ScreenController.changeToSettingScreen(this, rs);
+            ScreenController.changeToSettingScreen(this,dc, rs);
 		});
 		
 		this.getChildren().addAll(title,play,settings);

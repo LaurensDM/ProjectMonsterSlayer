@@ -9,7 +9,7 @@ public class Dragon extends Enemy {
 	 * Instantiates a new Dragon.
 	 */
 	public Dragon() {
-		super(sr.nextInt(10000) + 10000, sr.nextDouble(0.46) + 0.35,
+		super(sr.nextInt(10000) + 10000, sr.nextDouble(0.46) + 0.25,
 				Elements.ELEMENTS.get(sr.nextInt(Elements.ELEMENTS.size())));
 
 		if (sr.nextInt(100) == 0) {
@@ -58,9 +58,9 @@ public class Dragon extends Enemy {
 		int grade;
 
 		if (getType().equals("Golden")) {
-			grade = sr.nextInt(2) + 4;
+			grade = sr.nextInt(2) + 5;
 		} else
-			grade = sr.nextInt(3) + 2;
+			grade = sr.nextInt(3) + 3;
 		if (fullpower) {
 			if (sr.nextInt(4) == 0) {
 				grade = 0;
@@ -68,6 +68,15 @@ public class Dragon extends Enemy {
 		}
 
 		return grade;
+	}
+
+	/**
+	 * @return exp
+	 */
+	@Override
+	public int dropExp() {
+		int powerLevel = (int) (getHealth() + getHealth() * getDefence());
+		return (int) (powerLevel * 0.5);
 	}
 
 }

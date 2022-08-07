@@ -127,8 +127,6 @@ public class AnimationScreen extends BorderPane {
 						attack.setVisible(true);
 						run.setVisible(true);
 						teller = 0;
-						bodyCount++;
-						updateCounter();
 					}
 					changeIdButtons(null);
 					judgementAttack = false;

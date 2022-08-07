@@ -1,6 +1,7 @@
 package domein;
 
 import java.security.SecureRandom;
+import java.util.Collections;
 
 /**
  * The type Game.
@@ -28,7 +29,7 @@ public class Game {
     /**
      * The Max mana.
      */
-    public final double MAX_MANA;
+    private final double MAX_MANA;
 
     /**
      * Instantiates a new Game.
@@ -43,16 +44,43 @@ public class Game {
 
     /**
      * Register enemy.
-     *
-     * @param enemy the enemy
      */
-    public void registerEnemy(String enemy) {
+    public void registerEnemy() {
+        String enemy = "";
+        if (player.getLevel() < 5) {
+            enemy = "Slime";
+        }
+        if (player.getLevel() < 10 && player.getLevel() >= 5) {
+            Collections.shuffle(Enemy.STAGE_1);
+            enemy = Enemy.STAGE_1.get(0);
+        }
+        if (player.getLevel() < 20 && player.getLevel() >= 10) {
+            Collections.shuffle(Enemy.STAGE_2);
+            enemy = Enemy.STAGE_2.get(0);
+        }
+        if (player.getLevel() < 30 && player.getLevel() >= 20) {
+            Collections.shuffle(Enemy.STAGE_3);
+            enemy = Enemy.STAGE_3.get(0);
+        }
+        if (player.getLevel() < 40 && player.getLevel() >= 30) {
+            Collections.shuffle(Enemy.STAGE_4);
+            enemy = Enemy.STAGE_4.get(0);
+        }
+        if (player.getLevel() >= 40) {
+            Collections.shuffle(Enemy.STAGE_5);
+            enemy = Enemy.STAGE_5.get(0);
+        }
+
         switch (enemy.toLowerCase()) {
             case "dragon" -> this.enemy = new Dragon();
+
+            case "golem" -> this.enemy = new Golem();
 
             case "troll" -> this.enemy = new Troll();
 
             case "goblin" -> this.enemy = new Goblin();
+
+            case "slime" -> this.enemy = new Slime();
         }
     }
 
@@ -86,6 +114,7 @@ public class Game {
         if (judgement) {
             el = new True_Magic(manapool, player.getSkills(), MAX_MANA);
             el.deliverJudgement();
+            judgement = false;
         }
 
         if (el instanceof Wind || el instanceof True_Magic) {
@@ -235,11 +264,28 @@ public class Game {
      */
     public boolean isDefeated() {
         if (enemy.getHealth() <= 0) {
+            critChance = 0;
             dropItems();
-            manapool = MAX_MANA;
+            gainExp();
+            levelUp();
             return true;
         }
         return false;
+    }
+
+    /**
+     * add exp
+     */
+    private void gainExp() {
+        player.gainExp(enemy.dropExp());
+    }
+
+    /**
+     * if the amount of exp reaches a threshold, the player gains 1 level, exp gets
+     * reset
+     */
+    private void levelUp() {
+        player.levelUp();
     }
 
     private void dropItems() {
@@ -258,6 +304,11 @@ public class Game {
     public double getManapool() {
         return manapool;
     }
+
+    public double getMAX_MANA() {
+        return MAX_MANA;
+    }
+
 
     /**
      * Gets enemy.
@@ -292,6 +343,19 @@ public class Game {
     public void useJudgement() {
         // TODO Auto-generated method stub
         judgement = true;
+    }
+
+    public void restoreMana(double restoration) {
+        manapool += MAX_MANA * restoration;
+    }
+
+    public void regenerateMana() {
+        if (manapool < MAX_MANA) {
+            manapool += MAX_MANA * 0.001;
+        }
+        if (manapool + MAX_MANA * 0.001 > getMAX_MANA() && manapool < getMAX_MANA()) {
+            manapool = getMAX_MANA();
+        }
     }
 
 }

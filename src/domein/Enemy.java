@@ -166,8 +166,13 @@ public abstract class Enemy {
      * @return the items
      */
     public Items[] dropItem(boolean fullpower) {
+        Items[] drops;
+        if (getClass().getSimpleName().equals("Slime")) {
+            drops = new Items[1];
+        } else {
+            drops = new Items[sr.nextInt(4) + 1];
+        }
 
-        Items[] drops = new Items[sr.nextInt(4) + 1];
         int grade;
         String name;
         String item;
@@ -234,6 +239,8 @@ public abstract class Enemy {
 
         return drops;
     }
+
+    public abstract int dropExp();
 
     /**
      * Lower defence.

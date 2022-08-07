@@ -24,10 +24,19 @@ public class Golem extends Enemy{
 
     @Override
     protected int determineItemGrade(boolean fullpower) {
-        if (fullpower){
-            if (sr.nextInt(10)==0) return 0;
+        if (fullpower) {
+            if (sr.nextInt(10) == 0) return 0;
         }
         if (getType().equals("Ancient")) return 4;
-        return sr.nextInt(2)+2;
+        return sr.nextInt(2) + 2;
+    }
+
+    /**
+     * @return
+     */
+    @Override
+    public int dropExp() {
+        int powerLevel = (int) (getHealth() + getHealth() * getDefence());
+        return (int) (powerLevel * 0.5);
     }
 }

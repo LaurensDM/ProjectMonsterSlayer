@@ -49,4 +49,10 @@ public class Goblin extends Enemy {
 		return grade;
 	}
 
+	@Override
+	public int dropExp() {
+		int powerLevel = (int) (getHealth() + getHealth() * getDefence());
+		return (int) (powerLevel * 0.5);
+	}
+
 }

@@ -149,24 +149,27 @@ public class GamePanel extends StackPane {
 	private VBox topUI = new VBox();
 	private VBox notification = new VBox();
 	private int messageCounter;
-	private GridPane dialogue;
-	private GridPane inventory;
-	private SettingScreen settings;
-	private SageDialogue sageDialogue;
-	private SkillPanel skills;
-	private MerchantDialogue merchantDialogue;
-	private GuildDialogue guildDialogue;
-	private RandomNPCDialogue randomDialogue;
+    private GridPane dialogue;
+    private GridPane inventory;
+    private SettingScreen settings;
+    private Status status;
+    private SageDialogue sageDialogue;
+    private SkillPanel skills;
+    private MerchantDialogue merchantDialogue;
+    private GuildDialogue guildDialogue;
+    private RandomNPCDialogue randomDialogue;
+
+    private int manaCounter = 0;
 
 
-	/**
-	 * Instantiates a new Game panel.
-	 *
-	 * @param width  the screen width
-	 * @param height the screen height
-	 * @param x      the worldX
-	 * @param y      the worldY
-	 * @param rs     the ResourceController
+    /**
+     * Instantiates a new Game panel.
+     *
+     * @param width  the screen width
+     * @param height the screen height
+     * @param x      the worldX
+     * @param y      the worldY
+     * @param rs     the ResourceController
 	 * @param dc     the DomeinController
 	 */
 	public GamePanel(double width, double height, int x, int y, ResourceController rs, DomeinController dc) {
@@ -182,28 +185,28 @@ public class GamePanel extends StackPane {
 
 	private void buildGui() {
 
-		//CREATE OBJECTS
-		canvas = new Canvas(screenWidth, screenHeight);
-		gc = canvas.getGraphicsContext2D();
-		player = new Player(this, initialX, initialY);
-		tileM = new TileManager(this);
-		tileM.createMap("world01");
+        //CREATE OBJECTS
+        canvas = new Canvas(screenWidth, screenHeight);
+        gc = canvas.getGraphicsContext2D();
+        player = new Player(this, initialX, initialY);
+        tileM = new TileManager(this);
+        tileM.createMap("world01");
 //		tileM.generateRandomMap();
-		collision = new CollisionChecker(this);
-		setter = new AssetSetter(this);
-		canvas.setFocusTraversable(true);
-		settings = new SettingScreen(rs,true);
-		
-		//GAME AND UI SETUP
-		setUpGame();
-		
+        collision = new CollisionChecker(this);
+        setter = new AssetSetter(this);
+        canvas.setFocusTraversable(true);
+        settings = new SettingScreen(dc, rs, true);
+        status = new Status(dc);
+        //GAME AND UI SETUP
+        setUpGame();
 
-		this.getChildren().addAll(canvas, bottomUI, topUI, notification, dialogue, inventory, settings);
-		
-		//KEYEVENTS
-		this.setOnKeyPressed(evt -> {
-			KeyCode code = evt.getCode();
-			if (code.equals(SettingScreen.keyCodes.get(0)) || code.equals(KeyCode.UP))
+
+        this.getChildren().addAll(canvas, bottomUI, topUI, notification, dialogue, inventory, status, settings);
+
+        //KEYEVENTS
+        this.setOnKeyPressed(evt -> {
+            KeyCode code = evt.getCode();
+            if (code.equals(SettingScreen.keyCodes.get(0)) || code.equals(KeyCode.UP))
 				moveUp = true;
 			if (code.equals(SettingScreen.keyCodes.get(1)) || code.equals(KeyCode.DOWN))
 				moveDown = true;
@@ -237,16 +240,24 @@ public class GamePanel extends StackPane {
 				
 			}
 
-			if (code.equals(KeyCode.I)){
-				if (inventory.isVisible()) {
-					inGame = true;
-					inventory.setVisible(false);
-				} else {
-					inGame = false;
-					inventory.setVisible(true);
-				}
-			}
-		});
+            if (code.equals(KeyCode.I)) {
+                if (inventory.isVisible()) {
+                    inGame = true;
+                    inventory.setVisible(false);
+                } else {
+                    inGame = false;
+                    inventory.setVisible(true);
+                }
+            }
+
+            if (code.equals(KeyCode.K)) {
+                if (status.isVisible()) status.setVisible(false);
+                else {
+                    status.update();
+                    status.setVisible(true);
+                }
+            }
+        });
 
 		this.setOnKeyReleased(evt -> {
 			KeyCode code = evt.getCode();
@@ -292,7 +303,8 @@ public class GamePanel extends StackPane {
 				if (pause == false) {
 					update();
 					drawGameScreen();
-					hideNotification();
+                    hideNotification();
+                    manaTimer();
 					if (interact) {
 						interact = false;
 					}
@@ -303,26 +315,35 @@ public class GamePanel extends StackPane {
 					if (pause==true) {
 						pause=false;
 					}
-				}
+                }
 
 //					delta--;
 //				}
-			}
-		};
+            }
+        };
 
-		gameloop.start();
+        gameloop.start();
 
-	}
+    }
 
-	//DRAW GAME ON SCREEN
-	private void drawGameScreen() {
-		// MAP
-		tileM.drawMap(gc);
-		
-		// OBJECT
-		for (int i = 0; i < obj.length; i++) {
-			if (obj[i] != null) {
-				obj[i].draw(gc, this);
+    private void manaTimer() {
+        manaCounter++;
+        if (manaCounter == 250) {
+            dc.regenerateMana();
+            manaCounter = 0;
+        }
+
+    }
+
+    //DRAW GAME ON SCREEN
+    private void drawGameScreen() {
+        // MAP
+        tileM.drawMap(gc);
+
+        // OBJECT
+        for (int i = 0; i < obj.length; i++) {
+            if (obj[i] != null) {
+                obj[i].draw(gc, this);
 			}
 		}
 		
@@ -352,8 +373,8 @@ public class GamePanel extends StackPane {
 		configureDialogue();
 		configureSettings();
 		configureInventory();
-		
 	}
+
 
 //	private void encounter() {
 //		if (playerX > 16 * 64 || playerX < 15 * 64) {

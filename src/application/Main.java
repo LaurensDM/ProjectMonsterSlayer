@@ -37,7 +37,7 @@ public class Main extends Application {
             SecureRandom sr = new SecureRandom();
             DomeinController dc = new DomeinController();
             ResourceController resources = new ResourceController();
-            WelcomeScreen screen = new WelcomeScreen(resources);
+            WelcomeScreen screen = new WelcomeScreen(new DomeinController(), resources);
             Scene scene = new Scene(screen);
             scene.getStylesheets().add(getClass().getResource("/css/application.css").toExternalForm());
             primaryStage.setScene(scene);

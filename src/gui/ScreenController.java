@@ -86,8 +86,8 @@ public class ScreenController {
 	 * @param screen the screen
 	 * @param rs     the rs
 	 */
-	public static void changeToSettingScreen(WelcomeScreen screen, ResourceController rs) {
-		SettingScreen setting = new SettingScreen(rs,false);
+	public static void changeToSettingScreen(WelcomeScreen screen, DomeinController dc, ResourceController rs) {
+		SettingScreen setting = new SettingScreen(dc, rs, false);
 		Scene scene = new Scene(setting, screen.getScene().getWidth(), screen.getScene().getHeight());
 		scene.getStylesheets().add(screen.getClass().getResource("/css/application.css").toExternalForm());
 		Stage stage = (Stage) (screen.getScene().getWindow());
@@ -104,8 +104,8 @@ public class ScreenController {
 	 * @param screen the screen
 	 * @param rs     the rs
 	 */
-	public static void changeToWelcomeScreen(Parent screen, ResourceController rs) {
-		WelcomeScreen root = new WelcomeScreen(rs);
+	public static void changeToWelcomeScreen(Parent screen, DomeinController dc, ResourceController rs) {
+		WelcomeScreen root = new WelcomeScreen(dc, rs);
 		Scene scene = new Scene(root, screen.getScene().getWidth(), screen.getScene().getHeight());
 		scene.getStylesheets().add(screen.getClass().getResource("/css/application.css").toExternalForm());
 		Stage stage = (Stage) (screen.getScene().getWindow());
@@ -152,14 +152,26 @@ public class ScreenController {
 	 * @param dc     the dc
 	 */
 	public static void changeToSelectScreen(Parent screen, ResourceController rs, DomeinController dc) {
-		SelectScreen setting = new SelectScreen(dc,rs);
+		SelectScreen setting = new SelectScreen(dc, rs);
 		Scene scene = new Scene(setting, screen.getScene().getWidth(), screen.getScene().getHeight());
 		scene.getStylesheets().add(screen.getClass().getResource("/css/application.css").toExternalForm());
 		Stage stage = (Stage) (screen.getScene().getWindow());
 		stage.setScene(scene);
-		stage.setTitle("Settings");
+		stage.setTitle("Select a player");
 		stage.show();
 		MediaView mediaview = new MediaView(rs.getMediaplayer());
 		((SelectScreen) scene.getRoot()).getChildren().add(mediaview);
+	}
+
+	public static void changeToRegisterScreen(SelectScreen screen, DomeinController dc, ResourceController rs) {
+		RegisterScreen setting = new RegisterScreen(dc, rs);
+		Scene scene = new Scene(setting, screen.getScene().getWidth(), screen.getScene().getHeight());
+		scene.getStylesheets().add(screen.getClass().getResource("/css/application.css").toExternalForm());
+		Stage stage = (Stage) (screen.getScene().getWindow());
+		stage.setScene(scene);
+		stage.setTitle("Create a new player");
+		stage.show();
+		MediaView mediaview = new MediaView(rs.getMediaplayer());
+		((RegisterScreen) scene.getRoot()).getChildren().add(mediaview);
 	}
 }

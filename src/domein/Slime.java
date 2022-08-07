@@ -17,9 +17,17 @@ public class Slime extends Enemy{
 
     @Override
     protected int determineItemGrade(boolean fullpower) {
-        if (fullpower){
+        if (fullpower) {
             return 0;
         }
         return 1;
+    }
+
+    /**
+     * @return exp
+     */
+    @Override
+    public int dropExp() {
+        return (int) (getHealth() * 0.5);
     }
 }

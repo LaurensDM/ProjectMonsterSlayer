@@ -52,4 +52,13 @@ public class Troll extends Enemy {
 		return grade;
 	}
 
+	/**
+	 * @return
+	 */
+	@Override
+	public int dropExp() {
+		int powerLevel = (int) (getHealth() + getHealth() * getDefence());
+		return (int) (powerLevel * 0.5);
+	}
+
 }

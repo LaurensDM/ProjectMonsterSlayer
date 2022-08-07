@@ -52,10 +52,13 @@ public abstract class Elements {
 			return damage;
 		} else {
 			if (judgement) {
-				double damage = maxMana*0.25 * attackFails() * value;
-				useAttack(maxMana*0.25);
-				return damage;
-			}
+                if (manapool - maxMana * 0.25 >= 0) {
+                    double damage = maxMana * 0.25 * attackFails() * value;
+                    useAttack(maxMana * 0.25);
+                    return damage;
+                }
+                judgement = false;
+            }
 			double power = power();
 			useAttack(power);
 			return power * attackFails() * value;
@@ -80,15 +83,17 @@ public abstract class Elements {
 	protected void useAttack(double power) {
 		double attackPower = power;
 		if (manapool - power <= 0) {
-			manapool = 0;
-			attackPower = manapool;
+            attackPower = manapool;
+            manapool = 0;
 		}
+
 		if (judgement) {
-			manapool-=manapool*0.25;
-			judgement = false;
+            manapool -= maxMana * 0.25;
+            judgement = false;
 			return;
 		}
-		if (allOut) {
+
+        if (allOut) {
 			manapool = 0;
 			allOut = false;
 			return;

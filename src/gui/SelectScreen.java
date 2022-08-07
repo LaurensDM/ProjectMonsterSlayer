@@ -144,11 +144,11 @@ public class SelectScreen extends GridPane{
 
 		// bij het drukken van de knop gaat men terug naar het WelkomScherm
 		btnAnnuleer.setOnAction(evt -> {
-			ScreenController.changeToWelcomeScreen(this, rs);
+			ScreenController.changeToWelcomeScreen(this, dc, rs);
 		});
 
 		linkRegistreer.setOnAction(evt -> {
-//			ScreenController.setSceneShow(this, dc,rs);
+            ScreenController.changeToRegisterScreen(this, dc, rs);
 		});
 
 		// Bij het drukken van de knop gaat men naar het ZatreScherm

@@ -30,9 +30,20 @@
          -fx-text-fill: white;
 }
 
+
+
 #settings .button:hover{
          -fx-background-color: green;
          -fx-text-fill: black;
+ }
+
+ #status{
+        -fx-background-color: black;
+        -fx-background-radius: 10px;
+        -fx-border-radius: 10px;
+        -fx-border-width: 5px;
+        -fx-border-color: white;
+        -fx-opacity: 0.8;
  }
 
 #bag {

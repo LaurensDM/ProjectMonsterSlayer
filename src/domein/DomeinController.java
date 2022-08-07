@@ -27,13 +27,13 @@ public class DomeinController {
 	}
 
 	/**
-	 * creates an enemy
-	 *
-	 * @param enemy the enemy
-	 */
-	public void registerEnemy(String enemy) {
-		game.registerEnemy(enemy);
-	}
+     * creates an enemy
+     *
+     * @param enemy the enemy
+     */
+    public void registerEnemy() {
+        game.registerEnemy();
+    }
 
 	/**
 	 * attack an enemy
@@ -110,24 +110,28 @@ public class DomeinController {
 	 */
 	public boolean isDefeated() {
 		return game.isDefeated();
-	}
+    }
 
-	/**
-	 * Gets manapool.
-	 *
-	 * @return the manapool
-	 */
-	public double getManapool() {
-		return game.getManapool();
-	}
+    /**
+     * Gets manapool.
+     *
+     * @return the manapool
+     */
+    public double getManapool() {
+        return game.getManapool();
+    }
 
-	/**
-	 * Gets enemy.
-	 *
-	 * @return the enemy
-	 */
-	public String getEnemy() {
-		return game.getEnemy();
+    public double getMaxMana() {
+        return game.getMAX_MANA();
+    }
+
+    /**
+     * Gets enemy.
+     *
+     * @return the enemy
+     */
+    public String getEnemy() {
+        return game.getEnemy();
 	}
 
 	/**
@@ -174,54 +178,45 @@ public class DomeinController {
 	}
 
 	/**
-	 * add exp
-	 *
-	 * @param value exp
-	 */
-	public void gainExp(int value) {
-		player.gainExp(0);
-	}
-
-	/**
-	 * if the amount of exp reaches a threshold, the player gains 1 level, exp gets
-	 * reset
-	 */
-	public void levelUp() {
-		player.levelUp();
-	}
-
-	/**
 	 * turns magic stones into money
 	 */
 	public void convertStonesToMoney() {
 		int value = 0;
-		player.addMoney(value);
-	}
+        player.addMoney(value);
+    }
 
-	/**
-	 * gives the details of the current player
-	 *
-	 * @return a players details
-	 */
-	public String giveDetailsPlayer() {
-		return player.toString();
-	}
+    /**
+     * gives the details of the current player
+     *
+     * @return a players details
+     */
+    public String giveDetailsPlayer() {
+        return player.toString();
+    }
 
-	/**
-	 * Gets player level.
-	 *
-	 * @return the player level
-	 */
-	public int getPlayerLevel() {
-		return player.getLevel();
-	}
+    public String getPlayerName() {
+        return player.getName();
+    }
 
-	/**
-	 * Show damage string.
-	 *
-	 * @return damage
-	 */
-	public String showDamage() {
+    /**
+     * Gets player level.
+     *
+     * @return the player level
+     */
+    public int getPlayerLevel() {
+        return player.getLevel();
+    }
+
+    public int getPlayerExp() {
+        return player.getExp();
+    }
+
+    /**
+     * Show damage string.
+     *
+     * @return damage
+     */
+    public String showDamage() {
 		return game.getDamage();
 	}
 
@@ -286,15 +281,25 @@ public class DomeinController {
 	 * @return whether true magic is acquired
 	 */
 	public boolean trueMagicAqcuired() {
-		return player.getSkills().isTrueMagic();
+        return player.getSkills().isTrueMagic();
+    }
+
+    /**
+     * Judgement acquired boolean.
+     *
+     * @return whether judgement is acquired
+     */
+    public boolean judgementAcquired() {
+        return player.getSkills().isJudgement();
+    }
+
+    public void savePlayer() {
+        repo.savePlayer(player);
+    }
+
+	public void regenerateMana(){
+		game.regenerateMana();
 	}
 
-	/**
-	 * Judgement acquired boolean.
-	 *
-	 * @return whether judgement is acquired
-	 */
-	public boolean judgementAcquired() {
-		return player.getSkills().isJudgement();
-	}
+
 }

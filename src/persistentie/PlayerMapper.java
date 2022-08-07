@@ -37,7 +37,7 @@ public class PlayerMapper {
     public void savePlayer(Player player) {
         try (Connection con = DriverManager.getConnection(JDBConnection.JDBC);
              PreparedStatement query1 = con.prepareStatement("UPDATE monsterslayer.Player SET level=?, exp= ?, money=?, adventureRank=? WHERE name=?");
-             PreparedStatement query2 = con.prepareStatement("INSERT INTO monsterslayer.items (name,grade,className,itemName, durability)");
+             PreparedStatement query2 = con.prepareStatement("INSERT INTO monsterslayer.items (name,grade,className,itemName, durability) + VALUES(?,?,?,?,?)");
              PreparedStatement query3 = con.prepareStatement("UPDATE monsterslayer.Skills SET fullPowerStage=?,efficiency=?,power=?,reflection=?,trueMagic=?,judgement=? WHERE name=?");
              PreparedStatement query4 = con.prepareStatement("UPDATE monsterslayer.Weapon SET weaponName=?,weaponGrade=?,weaponDurability=? WHERE name=?");
              PreparedStatement query5 = con.prepareStatement("UPDATE monsterslayer.Armor SET armorName=?,armorGrade=?,armorDurability=? WHERE name=?")) {
@@ -59,6 +59,8 @@ public class PlayerMapper {
                 query2.setInt(2, item.getGrade());
                 query2.setString(3, item.getClass().getSimpleName());
                 query2.setString(4, item.getName());
+                System.err.println("Before the weapons and armor");
+                query2.setDouble(5, 0);
                 if (item instanceof Weapon) {
                     query2.setDouble(5, ((Weapon) item).getDurability());
                 }
@@ -67,6 +69,8 @@ public class PlayerMapper {
                 }
                 query2.executeUpdate();
             }
+
+            System.err.println("Past all items");
 
             query3.setInt(1, player.getSkills().getFullPowerStage());
             query3.setDouble(2, player.getSkills().getEfficiency());
@@ -106,11 +110,11 @@ public class PlayerMapper {
      */
     public void addPlayer(Player player) {
         try (Connection con = DriverManager.getConnection(JDBConnection.JDBC);
-             PreparedStatement query1 = con.prepareStatement("INSERT INTO monsterslayer.Player (name,password,salt,affinity,level,exp,money,adventureRank)");
-             PreparedStatement query2 = con.prepareStatement("INSERT INTO monsterslayer.items (name,grade,className,itemName, durability)");
-             PreparedStatement query3 = con.prepareStatement("INSERT INTO monsterslayer.Skills (name,fullPowerStage,efficiency,power,reflection,trueMagic,judgement)");
-             PreparedStatement query4 = con.prepareStatement("INSERT INTO monsterslayer.Weapon (name,weaponName,weaponGrade,weaponDurability)");
-             PreparedStatement query5 = con.prepareStatement("INSERT INTO monsterslayer.Armor (name,armorName,armorGrade,armorDurability)")) {
+             PreparedStatement query1 = con.prepareStatement("INSERT INTO monsterslayer.Player (name,password,salt,affinity,level,exp,money,adventureRank) VALUES(?,?,?,?,?,?,?,?)");
+             PreparedStatement query2 = con.prepareStatement("INSERT INTO monsterslayer.items (name,grade,className,itemName, durability) VALUES(?,?,?,?,?)");
+             PreparedStatement query3 = con.prepareStatement("INSERT INTO monsterslayer.Skills (name,fullPowerStage,efficiency,power,reflection,trueMagic,judgement) VALUES(?,?,?,?,?,?,?)");
+             PreparedStatement query4 = con.prepareStatement("INSERT INTO monsterslayer.Weapon (name,weaponName,weaponGrade,weaponDurability) VALUES(?,?,?,?)");
+             PreparedStatement query5 = con.prepareStatement("INSERT INTO monsterslayer.Armor (name,armorName,armorGrade,armorDurability) VALUES(?,?,?,?)")) {
 
             query1.setString(1, player.getName());
             query1.setString(2, player.getPasswordHash());
