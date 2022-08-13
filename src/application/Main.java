@@ -45,7 +45,7 @@ public class Main extends Application {
             primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream("/images/battlefield.png")));
             primaryStage.setMaximized(true);
             primaryStage.show();
-            resources.playMusic(false);
+            resources.mainMenuMusic();
             ScreenController.screenWidth = (int) screen.getScene().getWidth();
 //		rowMultiplier = screen.getScene().getWidth()/screen.getScene().getHeight();
             MediaView mediaview = new MediaView(resources.getMediaplayer());

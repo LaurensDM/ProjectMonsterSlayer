@@ -29,8 +29,6 @@ public class GameOverScreen extends VBox {
 		Button tryAgain = new Button("Restart");
 		tryAgain.setId("restart");
 		tryAgain.setOnAction(evt -> {
-			rs.stopMusic();
-			rs.playMusic(false);
 			ScreenController.changeToSpelScherm(this, rs, dc,x,y);
 
 			

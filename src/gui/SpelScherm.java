@@ -146,13 +146,17 @@ public class SpelScherm extends GridPane {
                 ScreenController.changeToGameOver(this, resources, dc, worldX, worldY);
             }
 
-
-            if (dc.isDefeated()) {
-                defeated = true;
-                ScreenController.changeToGamePanel(this, resources, worldX, worldY, dc);
-            } else {
-                string += dc.attackBack();
+            try {
+                if (dc.isDefeated()) {
+                    defeated = true;
+                    ScreenController.changeToGamePanel(this, resources, worldX, worldY, dc, null);
+                } else {
+                    string += dc.attackBack();
+                }
+            } catch (IllegalArgumentException e) {
+                ScreenController.changeToGamePanel(this, resources, worldX, worldY, dc, e.getLocalizedMessage());
             }
+
         } catch (IllegalArgumentException e) {
             System.err.println(e.getLocalizedMessage());
         }
@@ -221,7 +225,7 @@ public class SpelScherm extends GridPane {
         } else if (string.contains("slime")) {
 
             enemyImg.setImage(new Image(getClass().getResourceAsStream("/images/slime.gif")));
-
+            adjustSize(200, 300);
         } else if (string.contains("golem")) {
 
             if (string.contains("fire")) {

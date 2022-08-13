@@ -5,11 +5,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCombination;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundImage;
-import javafx.scene.layout.BackgroundPosition;
-import javafx.scene.layout.BackgroundRepeat;
-import javafx.scene.layout.BackgroundSize;
+import javafx.scene.layout.*;
 import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
 import resources.ResourceController;
@@ -34,9 +30,9 @@ public class ScreenController {
 	 * @param y      the y
 	 * @param dc     the dc
 	 */
-	public static void changeToGamePanel(Parent screen, ResourceController rs,int x,int y, DomeinController dc) {
+	public static void changeToGamePanel(Parent screen, ResourceController rs, int x, int y, DomeinController dc, String notification) {
 		screenWidth = (int) screen.getScene().getWidth();
-		GamePanel panel = new GamePanel(screen.getScene().getWidth(),screen.getScene().getHeight(),x,y,rs, dc);
+		GamePanel panel = new GamePanel(x, y, rs, dc, notification);
 		Scene scene = new Scene(panel, screen.getScene().getWidth(), screen.getScene().getHeight());
 //		Scene scene = new Scene(panel, 48*16, 48*9);
 		scene.getStylesheets().add(screen.getClass().getResource("/css/game.css").toExternalForm());
@@ -75,7 +71,7 @@ public class ScreenController {
 		stage.setFullScreenExitHint("");
 		stage.setFullScreen(true);
 		stage.show();
-		rs.playMusic(false);
+		rs.battleMusic();
 		MediaView mediaview = new MediaView(rs.getMediaplayer());
 		((AnimationScreen) scene.getRoot()).getChildren().add(mediaview);
 	}

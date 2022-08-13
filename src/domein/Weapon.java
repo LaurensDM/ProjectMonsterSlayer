@@ -90,11 +90,9 @@ public class Weapon extends Items {
 
 	/**
 	 * Lower durability.
-	 *
-	 * @param value the value
 	 */
-	public void lowerDurability(double value) {
-		durability -= value * 0.8;
+	public void lowerDurability() {
+		durability -= 10;
 	}
 
 	/**

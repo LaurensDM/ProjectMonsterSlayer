@@ -5,21 +5,23 @@ package domein;
  */
 public class Quest {
 
-	private String description;
-	private double reward;
-	private int progress;
 	private final int MAX_PROGRESS;
+	private String description;
+	private int reward;
+	private int exp;
+	private int progress;
 
 	/**
 	 * Instantiates a new Quest.
 	 *
-	 * @param description  the description
-	 * @param reward       the reward
+	 * @param description the description
+	 * @param reward      the reward
 	 * @param maxProgress the max progress
 	 */
-	public Quest(String description, double reward, int maxProgress) {
+	public Quest(String description, int reward, int exp, int maxProgress) {
 		this.description = description;
 		this.reward = reward;
+		this.exp = exp;
 		MAX_PROGRESS = maxProgress;
 	}
 

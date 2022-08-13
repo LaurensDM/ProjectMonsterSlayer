@@ -89,12 +89,10 @@ public class Armor extends Items {
 
     /**
      * Lower durability.
-     *
-     * @param value value by which durability lowers
      */
-    public void lowerDurability(double value) {
+    public void lowerDurability() {
 
-        durability -= value * damageReduction;
+        durability -= 10;
 
     }
 

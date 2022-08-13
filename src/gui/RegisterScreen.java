@@ -45,7 +45,7 @@ public class RegisterScreen extends GridPane {
         this.add(nameTxt, 2, 2);
 
         Label password = new Label("Password: ");
-        TextField passwordTxt = new TextField();
+        PasswordField passwordTxt = new PasswordField();
         passwordTxt.setPromptText("Type a password here");
         Tooltip passwordTip = new Tooltip("The password must contain at least 3 numbers");
         passwordTxt.setTooltip(passwordTip);
@@ -76,7 +76,9 @@ public class RegisterScreen extends GridPane {
             } catch (IllegalArgumentException ie) {
                 Alert error = new Alert(Alert.AlertType.ERROR);
                 error.setContentText(ie.getLocalizedMessage());
-                error.showAndWait();
+                DialogPane dialogPane = error.getDialogPane();
+                dialogPane.getStylesheets().add(getClass().getResource("/css/application.css").toExternalForm());
+                error.show();
             }
 
         });

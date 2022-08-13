@@ -194,27 +194,34 @@ public class Player {
     /**
      * Level up.
      */
-    public void levelUp() {
+    public boolean levelUp() {
         if (level < 10 && exp >= level * 100) {
             exp -= level * 100;
             level++;
+            return true;
         }
-        if (level < 20 && exp >= level * 200) {
+        if (level < 20 && exp >= level * 200 && level >= 10) {
             exp -= level * 200;
             level++;
+            return true;
         }
-        if (level < 30 && exp >= level * 400) {
+        if (level < 30 && exp >= level * 400 && level >= 20) {
             exp -= level * 400;
             level++;
+            return true;
         }
-        if (level < 40 && exp >= level * 800) {
+        if (level < 40 && exp >= level * 800 && level >= 30) {
             exp -= level * 800;
             level++;
+            return true;
         }
-        if (level < 50 && exp >= level * 1600) {
+        if (level < 50 && exp >= level * 1600 && level >= 40) {
             exp -= level * 1600;
             level++;
+            return true;
         }
+
+        return false;
     }
 
     /**
@@ -244,7 +251,12 @@ public class Player {
      * @param item the item
      */
     protected void addItemToBag(Items item) {
-        bag.add(item);
+        if (bag.size() <= 34) {
+            bag.add(item);
+        } else {
+            throw new IllegalArgumentException("Bag is full!");
+        }
+
     }
 
     /**
@@ -256,6 +268,11 @@ public class Player {
         this.weapon = weapon;
     }
 
+    public void unequipWeapon() {
+        addItemToBag(weapon);
+        weapon = null;
+    }
+
     /**
      * Equip armor.
      *
@@ -263,6 +280,11 @@ public class Player {
      */
     public void equipArmor(Armor armor) {
         this.armor = armor;
+    }
+
+    public void unequipArmor() {
+        addItemToBag(armor);
+        armor = null;
     }
 
     /**

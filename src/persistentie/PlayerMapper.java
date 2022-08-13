@@ -37,7 +37,7 @@ public class PlayerMapper {
     public void savePlayer(Player player) {
         try (Connection con = DriverManager.getConnection(JDBConnection.JDBC);
              PreparedStatement query1 = con.prepareStatement("UPDATE monsterslayer.Player SET level=?, exp= ?, money=?, adventureRank=? WHERE name=?");
-             PreparedStatement query2 = con.prepareStatement("INSERT INTO monsterslayer.items (name,grade,className,itemName, durability) + VALUES(?,?,?,?,?)");
+             PreparedStatement query2 = con.prepareStatement("INSERT INTO monsterslayer.items (name,grade,className,itemName, durability) VALUES(?,?,?,?,?)");
              PreparedStatement query3 = con.prepareStatement("UPDATE monsterslayer.Skills SET fullPowerStage=?,efficiency=?,power=?,reflection=?,trueMagic=?,judgement=? WHERE name=?");
              PreparedStatement query4 = con.prepareStatement("UPDATE monsterslayer.Weapon SET weaponName=?,weaponGrade=?,weaponDurability=? WHERE name=?");
              PreparedStatement query5 = con.prepareStatement("UPDATE monsterslayer.Armor SET armorName=?,armorGrade=?,armorDurability=? WHERE name=?")) {
@@ -60,7 +60,9 @@ public class PlayerMapper {
                 query2.setString(3, item.getClass().getSimpleName());
                 query2.setString(4, item.getName());
                 System.err.println("Before the weapons and armor");
-                query2.setDouble(5, 0);
+                if (!(item instanceof Weapon) && !(item instanceof Armor)) {
+                    query2.setDouble(5, 0);
+                }
                 if (item instanceof Weapon) {
                     query2.setDouble(5, ((Weapon) item).getDurability());
                 }
@@ -87,6 +89,10 @@ public class PlayerMapper {
                 query4.setDouble(3, player.getWeapon().getDurability());
                 query4.setString(4, player.getName());
                 query4.executeUpdate();
+            } else {
+                PreparedStatement weaponQuery = con.prepareStatement("DELETE FROM monsterslayer.weapon WHERE name=?");
+                weaponQuery.setString(1, player.getName());
+                weaponQuery.executeUpdate();
             }
 
             if (player.getArmor() != null) {
@@ -95,6 +101,10 @@ public class PlayerMapper {
                 query5.setDouble(3, player.getArmor().getDurability());
                 query5.setString(4, player.getName());
                 query5.executeUpdate();
+            } else {
+                PreparedStatement armorQuery = con.prepareStatement("DELETE FROM monsterslayer.armor WHERE name=?");
+                armorQuery.setString(1, player.getName());
+                armorQuery.executeUpdate();
             }
 
         } catch (SQLException e) {
@@ -278,6 +288,7 @@ public class PlayerMapper {
             case "Power_Potion" -> item = new Power_Potion(itemName, grade);
             case "Weapon" -> item = new Weapon(itemName, grade, durability);
             case "Armor" -> item = new Armor(itemName, grade, durability);
+            case "Magic_Stone" -> item = new Magic_Stone(itemName, grade);
         }
         return item;
     }

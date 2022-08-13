@@ -1,10 +1,5 @@
 package gui;
 
-import java.security.SecureRandom;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
-
 import domein.DomeinController;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -15,6 +10,11 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import resources.ResourceController;
+
+import java.security.SecureRandom;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * The type Animation screen.
@@ -162,7 +162,7 @@ public class AnimationScreen extends BorderPane {
 				changeIdButtons(null);
 				fullpower = false;
 				teller = 0;
-				ScreenController.changeToGamePanel(this, rs, x, y, dc);
+				ScreenController.changeToGamePanel(this, rs, x, y, dc, null);
 			}
 
 		});

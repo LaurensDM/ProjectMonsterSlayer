@@ -14,7 +14,9 @@ public abstract class Enemy {
      */
     protected static SecureRandom sr = new SecureRandom();
     private double health;
+    public final double MAX_HEALTH;
     private double defence;
+    public final double MAX_DEFENCE;
     private String type;
     private double tickDamage = 0;
     private int freeze = 0;
@@ -46,6 +48,8 @@ public abstract class Enemy {
         setHealth(health);
         setDefence(defence);
         setType(type);
+        MAX_HEALTH = health;
+        MAX_DEFENCE = defence;
     }
 
     /**
@@ -261,9 +265,7 @@ public abstract class Enemy {
      * @param health the health
      */
     protected void setHealth(double health) {
-        if (health < 100) {
-            throw new IllegalArgumentException("A monster always has at least 100 health!");
-        }
+
         this.health = health;
     }
 

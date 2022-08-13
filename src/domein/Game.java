@@ -8,11 +8,19 @@ import java.util.Collections;
  */
 public class Game {
 
+    private final Player player;
+    /**
+     * The Manapool.
+     */
+    protected double manapool;
+    /**
+     * The Max mana.
+     */
+    private double maxMana;
     /**
      * The Sr.
      */
     SecureRandom sr = new SecureRandom();
-    private final Player player;
     private Enemy enemy;
     private Elements el;
     private boolean fullpower = false;
@@ -22,16 +30,6 @@ public class Game {
     private String damage = "";
 
     /**
-     * The Manapool.
-     */
-    protected double manapool;
-
-    /**
-     * The Max mana.
-     */
-    private final double MAX_MANA;
-
-    /**
      * Instantiates a new Game.
      *
      * @param player the player
@@ -39,7 +37,7 @@ public class Game {
     public Game(Player player) {
         this.player = player;
         manapool = player.getLevel() * 100;
-        this.MAX_MANA = manapool;
+        this.maxMana = manapool;
     }
 
     /**
@@ -98,12 +96,12 @@ public class Game {
             weaponDamage = player.getWeapon().getDamage();
 
         switch (element) {
-            case "Fire" -> el = new Fire(manapool, player.getSkills(), MAX_MANA);
-            case "Water" -> el = new Water(manapool, player.getSkills(), MAX_MANA);
-            case "Lightning" -> el = new Lightning(manapool, player.getSkills(), MAX_MANA);
-            case "Wind" -> el = new Wind(manapool, player.getSkills(), MAX_MANA);
-            case "Earth" -> el = new Earth(manapool, player.getSkills(), MAX_MANA);
-            case "True Magic" -> el = new True_Magic(manapool, player.getSkills(), MAX_MANA);
+            case "Fire" -> el = new Fire(manapool, player.getSkills(), maxMana);
+            case "Water" -> el = new Water(manapool, player.getSkills(), maxMana);
+            case "Lightning" -> el = new Lightning(manapool, player.getSkills(), maxMana);
+            case "Wind" -> el = new Wind(manapool, player.getSkills(), maxMana);
+            case "Earth" -> el = new Earth(manapool, player.getSkills(), maxMana);
+            case "True Magic" -> el = new True_Magic(manapool, player.getSkills(), maxMana);
         }
 
         if (fullpower) {
@@ -112,7 +110,7 @@ public class Game {
         }
 
         if (judgement) {
-            el = new True_Magic(manapool, player.getSkills(), MAX_MANA);
+            el = new True_Magic(manapool, player.getSkills(), maxMana);
             el.deliverJudgement();
             judgement = false;
         }
@@ -131,7 +129,7 @@ public class Game {
         double totalDamage = enemy.takeDamage(element, damage);
         manapool = el.getMana();
         if (player.getWeapon() != null) {
-            player.getWeapon().lowerDurability(totalDamage);
+            player.getWeapon().lowerDurability();
         }
 
         this.damage = "You did " + totalDamage + " damage!";
@@ -167,7 +165,7 @@ public class Game {
         el.activateShield(damage * damageReduction);
         manapool = el.getMana();
         if (player.getArmor() != null) {
-            player.getArmor().lowerDurability(damage * player.getArmor().getDamageReduction());
+            player.getArmor().lowerDurability();
         }
 
         return damage;
@@ -185,21 +183,27 @@ public class Game {
             if (item instanceof Weapon) {
                 if (inGame == true) throw new IllegalArgumentException("Weapons cannot be equipped mid battle!");
                 player.equipWeapon((Weapon) item);
+                player.getBag().remove(item);
                 return item + " equipped!";
             }
 
             if (item instanceof Armor) {
                 if (inGame == true) throw new IllegalArgumentException("Armor cannot be equipped mid battle!");
                 player.equipArmor((Armor) item);
+                player.getBag().remove(item);
                 return item + " equipped!";
             }
             //TODO: potion effects still to be implemented
             if (item instanceof Power_Potion) {
                 if (inGame == false) throw new IllegalArgumentException("Potions shouldn't be used outside of battle!");
+
+                player.getBag().remove(item);
                 return item + " used!";
             }
             if (item instanceof Mana_Potion) {
                 if (inGame == false) throw new IllegalArgumentException("Potions shouldn't be used outside of battle!");
+
+                player.getBag().remove(item);
                 return item + " used!";
             }
         }
@@ -285,7 +289,32 @@ public class Game {
      * reset
      */
     private void levelUp() {
-        player.levelUp();
+        if (player.levelUp()) {
+            manapool = player.getLevel() * 100;
+            maxMana = manapool;
+        }
+    }
+
+    public int getPlayerMaxExp() {
+        int maxExp = 100;
+
+        if (player.getLevel() < 10) {
+            maxExp -= player.getLevel() * 100;
+        }
+        if (player.getLevel() < 20 && player.getLevel() >= 10) {
+            maxExp -= player.getLevel() * 200;
+        }
+        if (player.getLevel() < 30 && player.getLevel() >= 20) {
+            maxExp -= player.getLevel() * 400;
+        }
+        if (player.getLevel() < 40 && player.getLevel() >= 30) {
+            maxExp -= player.getLevel() * 800;
+        }
+        if (player.getLevel() < 50 && player.getLevel() >= 40) {
+            maxExp -= player.getLevel() * 1600;
+        }
+
+        return maxExp;
     }
 
     private void dropItems() {
@@ -305,8 +334,8 @@ public class Game {
         return manapool;
     }
 
-    public double getMAX_MANA() {
-        return MAX_MANA;
+    public double getMaxMana() {
+        return maxMana;
     }
 
 
@@ -346,15 +375,15 @@ public class Game {
     }
 
     public void restoreMana(double restoration) {
-        manapool += MAX_MANA * restoration;
+        manapool += maxMana * restoration;
     }
 
     public void regenerateMana() {
-        if (manapool < MAX_MANA) {
-            manapool += MAX_MANA * 0.001;
+        if (manapool < maxMana) {
+            manapool += maxMana * 0.001;
         }
-        if (manapool + MAX_MANA * 0.001 > getMAX_MANA() && manapool < getMAX_MANA()) {
-            manapool = getMAX_MANA();
+        if (manapool + maxMana * 0.001 > getMaxMana() && manapool < getMaxMana()) {
+            manapool = getMaxMana();
         }
     }
 

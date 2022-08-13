@@ -1,14 +1,14 @@
 package domein;
 
-public class Slime extends Enemy{
+public class Slime extends Enemy {
 
     public Slime() {
-        super(sr.nextInt(50)+50, 0, "");
+        super(sr.nextInt(50) + 50, 0, "");
     }
 
     @Override
     public double attackBack() {
-        return 0.05*getHealth();
+        return 0.05 * getHealth();
     }
 
     @Override
@@ -28,6 +28,7 @@ public class Slime extends Enemy{
      */
     @Override
     public int dropExp() {
-        return (int) (getHealth() * 0.5);
+        int value = (int) (MAX_HEALTH * 0.5);
+        return value;
     }
 }
