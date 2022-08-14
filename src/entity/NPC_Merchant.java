@@ -10,5 +10,9 @@ public class NPC_Merchant extends Entity{
      */
     public NPC_Merchant(GamePanel gp) {
         super(gp);
+        direction = "down";
+        speed = 0;
+        sprite = new Sprite("merchant");
+
     }
 }

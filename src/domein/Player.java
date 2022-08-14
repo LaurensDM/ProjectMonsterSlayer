@@ -233,6 +233,13 @@ public class Player {
         money += value;
     }
 
+    protected void removeMoney(int value) {
+        if (money - value < 0) {
+            throw new IllegalArgumentException("You do not have enough money to purchase this item!");
+        }
+        money -= value;
+    }
+
     /**
      * Gain exp.
      *
@@ -251,12 +258,14 @@ public class Player {
      * @param item the item
      */
     protected void addItemToBag(Items item) {
-        if (bag.size() <= 34) {
+        if (bag.size() < 34) {
             bag.add(item);
-        } else {
-            throw new IllegalArgumentException("Bag is full!");
         }
 
+    }
+
+    protected void removeItemFromBag(Items item) {
+        bag.remove(item);
     }
 
     /**

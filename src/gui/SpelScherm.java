@@ -22,7 +22,6 @@ public class SpelScherm extends GridPane {
     private int worldX;
     private int worldY;
     private String enemy;
-    private String string = "";
     private ResourceController resources;
     private boolean defeated = false;
     private HealthBar healthBarEnemy;
@@ -33,6 +32,7 @@ public class SpelScherm extends GridPane {
     private ImageView enemyImg;
     private Label player = new Label();
     private Label lblEnemy = new Label();
+    private boolean bagFull = false;
 
     /**
      * Instantiates a new Spel scherm.
@@ -50,6 +50,7 @@ public class SpelScherm extends GridPane {
         worldY = y;
         buildGui();
     }
+
 
     private void buildGui() {
         this.setAlignment(Pos.BOTTOM_CENTER);
@@ -100,9 +101,8 @@ public class SpelScherm extends GridPane {
         manaBar.setVisible(true);
 
         enemy = dc.getEnemy();
-        string = enemy;
         geefImageType(enemy);
-        string += "\n" + dc.geefAffinity() + "\n";
+
 
     }
 
@@ -128,17 +128,15 @@ public class SpelScherm extends GridPane {
             defeated = false;
             if (fullpower) {
                 dc.useAllOutAttack();
-                string += dc.attack(type);
-                fullpower = false;
+                dc.attack(type);
                 wizard.setImage(new Image(this.getClass().getResourceAsStream("/images/Wizard Stand.gif")));
                 wizard.setFitWidth(125);
                 wizard.setFitHeight(225);
             } else {
                 if (judgement) {
                     dc.useJudgement();
-                    judgement = false;
                 }
-                string += dc.attack(type);
+                dc.attack(type);
             }
 
 
@@ -146,15 +144,11 @@ public class SpelScherm extends GridPane {
                 ScreenController.changeToGameOver(this, resources, dc, worldX, worldY);
             }
 
-            try {
-                if (dc.isDefeated()) {
+
+            if (dc.isDefeated()) {
                     defeated = true;
-                    ScreenController.changeToGamePanel(this, resources, worldX, worldY, dc, null);
                 } else {
-                    string += dc.attackBack();
-                }
-            } catch (IllegalArgumentException e) {
-                ScreenController.changeToGamePanel(this, resources, worldX, worldY, dc, e.getLocalizedMessage());
+                dc.attackBack();
             }
 
         } catch (IllegalArgumentException e) {

@@ -37,27 +37,17 @@ public class DomeinController {
      * attack an enemy
      *
      * @param element element of the attack
-     * @return a String which contains information about the damage dealt
      */
-    public String attack(String element) {
-        double damage = game.attack(element);
-        if (damage == 0) {
-            return "Your attack failed!\n";
-        }
-        return String.format("%sYour attack did %.2f damage!%n", game.isCriticalHit() ? "Critical hit!\n" : "", damage);
+    public void attack(String element) {
+        game.attack(element);
+
     }
 
     /**
      * The enemy attacks back at your shield
-     *
-     * @return a String which contains information about damage dealt to your mana shield
      */
-    public String attackBack() {
-        double damage = game.attackBack();
-        if (damage == 0) {
-            return "The enemy is frozen\n";
-        }
-        return String.format("Your shield withstood %.2f damage!%n", damage);
+    public void attackBack() {
+        game.attackBack();
     }
 
     /**
@@ -83,14 +73,6 @@ public class DomeinController {
         return game.getEnemyHealth();
     }
 
-    /**
-     * Geef enemy health string.
-     *
-     * @return the string
-     */
-    public String geefEnemyHealth() {
-        return String.format("The enemy has %.2f health left%n", game.getEnemyHealth());
-    }
 
     /**
      * Out of mana boolean.
@@ -108,6 +90,10 @@ public class DomeinController {
      */
     public boolean isDefeated() {
         return game.isDefeated();
+    }
+
+    public boolean bagIsFull() {
+        return game.isBagFull();
     }
 
     /**
@@ -132,14 +118,6 @@ public class DomeinController {
         return game.getEnemy();
     }
 
-    /**
-     * Geef affinity string.
-     *
-     * @return your affinity
-     */
-    public String geefAffinity() {
-        return "Your affinity is " + game.getAffinity();
-    }
 
     /**
      * select an existing player
@@ -188,8 +166,23 @@ public class DomeinController {
      * turns magic stones into money
      */
     public void convertStonesToMoney() {
-        int value = 0;
-        player.addMoney(value);
+        game.convertStonesToMoney();
+    }
+
+    public int getPriceItem(String item) {
+        return game.getPriceItem(item);
+    }
+
+    public void buyItem(String item) {
+        game.buyItem(item);
+    }
+
+    public List<String> getMerchantStock() {
+        List<String> stock = new ArrayList<>();
+        for (Items item : game.merchantStock()) {
+            stock.add(item.toString());
+        }
+        return stock;
     }
 
     /**
@@ -231,15 +224,10 @@ public class DomeinController {
         return game.getDamage();
     }
 
-    /**
-     * add an item to the bag
-     *
-     * @param itemName the item name
-     * @param grade    the grade
-     */
-    public void addItemtoBag(String itemName, int grade) {
-        player.addItemToBag(new Items(itemName, grade));
+    public boolean isCriticalHit() {
+        return game.isCriticalHit();
     }
+
 
     public String getWeaponDetails() {
         return player.getWeapon().toString();

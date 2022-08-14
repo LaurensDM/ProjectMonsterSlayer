@@ -39,8 +39,8 @@ public class PlayerMapper {
              PreparedStatement query1 = con.prepareStatement("UPDATE monsterslayer.Player SET level=?, exp= ?, money=?, adventureRank=? WHERE name=?");
              PreparedStatement query2 = con.prepareStatement("INSERT INTO monsterslayer.items (name,grade,className,itemName, durability) VALUES(?,?,?,?,?)");
              PreparedStatement query3 = con.prepareStatement("UPDATE monsterslayer.Skills SET fullPowerStage=?,efficiency=?,power=?,reflection=?,trueMagic=?,judgement=? WHERE name=?");
-             PreparedStatement query4 = con.prepareStatement("UPDATE monsterslayer.Weapon SET weaponName=?,weaponGrade=?,weaponDurability=? WHERE name=?");
-             PreparedStatement query5 = con.prepareStatement("UPDATE monsterslayer.Armor SET armorName=?,armorGrade=?,armorDurability=? WHERE name=?")) {
+             PreparedStatement query4 = con.prepareStatement("INSERT INTO monsterslayer.Weapon (name,weaponName,weaponGrade,weaponDurability) VALUES(?,?,?,?)");
+             PreparedStatement query5 = con.prepareStatement("INSERT INTO monsterslayer.Armor (name,armorName,armorGrade,armorDurability) VALUES(?,?,?,?)")) {
 
             query1.setInt(1, player.getLevel());
             query1.setInt(2, player.getExp());
@@ -59,7 +59,6 @@ public class PlayerMapper {
                 query2.setInt(2, item.getGrade());
                 query2.setString(3, item.getClass().getSimpleName());
                 query2.setString(4, item.getName());
-                System.err.println("Before the weapons and armor");
                 if (!(item instanceof Weapon) && !(item instanceof Armor)) {
                     query2.setDouble(5, 0);
                 }
@@ -72,7 +71,6 @@ public class PlayerMapper {
                 query2.executeUpdate();
             }
 
-            System.err.println("Past all items");
 
             query3.setInt(1, player.getSkills().getFullPowerStage());
             query3.setDouble(2, player.getSkills().getEfficiency());
@@ -83,28 +81,30 @@ public class PlayerMapper {
             query3.setString(7, player.getName());
             query3.executeUpdate();
 
+
+            PreparedStatement weaponQuery = con.prepareStatement("DELETE FROM monsterslayer.weapon WHERE name=?");
+            weaponQuery.setString(1, player.getName());
+            weaponQuery.executeUpdate();
+
             if (player.getWeapon() != null) {
-                query4.setString(1, player.getWeapon().getName());
-                query4.setInt(2, player.getWeapon().getGrade());
-                query4.setDouble(3, player.getWeapon().getDurability());
-                query4.setString(4, player.getName());
+                query4.setString(1, player.getName());
+                query4.setString(2, player.getWeapon().getName());
+                query4.setInt(3, player.getWeapon().getGrade());
+                query4.setDouble(4, player.getWeapon().getDurability());
+
                 query4.executeUpdate();
-            } else {
-                PreparedStatement weaponQuery = con.prepareStatement("DELETE FROM monsterslayer.weapon WHERE name=?");
-                weaponQuery.setString(1, player.getName());
-                weaponQuery.executeUpdate();
             }
 
+            PreparedStatement armorQuery = con.prepareStatement("DELETE FROM monsterslayer.armor WHERE name=?");
+            armorQuery.setString(1, player.getName());
+            armorQuery.executeUpdate();
+
             if (player.getArmor() != null) {
-                query5.setString(1, player.getArmor().getName());
-                query5.setInt(2, player.getArmor().getGrade());
-                query5.setDouble(3, player.getArmor().getDurability());
-                query5.setString(4, player.getName());
+                query5.setString(1, player.getName());
+                query5.setString(2, player.getArmor().getName());
+                query5.setInt(3, player.getArmor().getGrade());
+                query5.setDouble(4, player.getArmor().getDurability());
                 query5.executeUpdate();
-            } else {
-                PreparedStatement armorQuery = con.prepareStatement("DELETE FROM monsterslayer.armor WHERE name=?");
-                armorQuery.setString(1, player.getName());
-                armorQuery.executeUpdate();
             }
 
         } catch (SQLException e) {

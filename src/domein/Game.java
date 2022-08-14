@@ -1,7 +1,9 @@
 package domein;
 
 import java.security.SecureRandom;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 /**
  * The type Game.
@@ -14,13 +16,13 @@ public class Game {
      */
     protected double manapool;
     /**
-     * The Max mana.
-     */
-    private double maxMana;
-    /**
      * The Sr.
      */
     SecureRandom sr = new SecureRandom();
+    /**
+     * The Max mana.
+     */
+    private double maxMana;
     private Enemy enemy;
     private Elements el;
     private boolean fullpower = false;
@@ -86,9 +88,8 @@ public class Game {
      * Attack.
      *
      * @param element the element
-     * @return damage
      */
-    public double attack(String element) {
+    public void attack(String element) {
         double weaponDamage;
         if (player.getWeapon() == null) {
             weaponDamage = 1;
@@ -132,21 +133,15 @@ public class Game {
             player.getWeapon().lowerDurability();
         }
 
-        this.damage = "You did " + totalDamage + " damage!";
-        return totalDamage;
+        this.damage = String.format("You did %.0f damage!", totalDamage);
     }
 
     /**
      * Attack back.
-     *
-     * @return damage
      */
-    public double attackBack() {
+    public void attackBack() {
         double damage = enemy.attackBack();
 
-        if (damage == 0) {
-            return 0;
-        }
 
         if (player.getSkills().isReflection()) {
             if (sr.nextInt(5) == 0) {
@@ -168,7 +163,6 @@ public class Game {
             player.getArmor().lowerDurability();
         }
 
-        return damage;
     }
 
     public String selectItem(String itemDesc, boolean inGame) {
@@ -374,6 +368,14 @@ public class Game {
         judgement = true;
     }
 
+    public boolean isBagFull() {
+
+        if (player.getBag().size() >= 34) {
+            return true;
+        }
+        return false;
+    }
+
     public void restoreMana(double restoration) {
         manapool += maxMana * restoration;
     }
@@ -385,6 +387,92 @@ public class Game {
         if (manapool + maxMana * 0.001 > getMaxMana() && manapool < getMaxMana()) {
             manapool = getMaxMana();
         }
+    }
+
+    public List<Items> merchantStock() {
+        List<Items> stock = new ArrayList<>();
+        if (player.getLevel() < 10) {
+            stock.add(new Weapon("Novice Staff", 1));
+            stock.add(new Armor("Novice Robe", 1));
+        }
+        if (player.getLevel() < 20 && player.getLevel() >= 10) {
+
+        }
+        if (player.getLevel() < 30 && player.getLevel() >= 20) {
+
+        }
+        if (player.getLevel() < 40 && player.getLevel() >= 30) {
+
+        }
+        if (player.getLevel() < 50 && player.getLevel() >= 40) {
+
+        }
+        return stock;
+    }
+
+    public int getPriceItem(String item) {
+        double price = 0;
+        String grade = item.split(" ")[0];
+        SecureRandom sr = new SecureRandom();
+
+        switch (grade.toLowerCase()) {
+            case "damaged" -> price = 0;
+            case "common" -> price = sr.nextInt(75) + 75;
+            case "uncommon" -> price = sr.nextInt(250) + 250;
+            case "rare" -> price = sr.nextInt(850) + 850;
+            case "epic" -> price = sr.nextInt(6450) + 6450;
+            case "legendary" -> price = sr.nextInt(40000) + 175000;
+            case "mythical" -> price = 5000000;
+        }
+
+
+        switch (player.getAdventureRank()) {
+            case "F" -> price -= price * 0;
+            case "E" -> price -= price * 0.01;
+            case "D" -> price -= price * 0.05;
+            case "C" -> price -= price * 0.1;
+            case "B" -> price -= price * 0.15;
+            case "A" -> price -= price * 0.2;
+            case "S" -> price -= price * 0.3;
+            case "S+" -> price -= price * 0.4;
+            case "LR" -> price -= price * 0.8;
+        }
+        return (int) Math.round(price);
+    }
+
+    public void buyItem(String item) {
+        int price = getPriceItem(item);
+        player.removeMoney(price);
+        player.addItemToBag(new Items("Oi", 0));
+    }
+
+    public void convertStonesToMoney() {
+
+        List<Items> stones = new ArrayList<>();
+        for (Items item : player.getBag()) {
+            if (item instanceof Magic_Stone) {
+                stones.add(item);
+            }
+        }
+
+        for (Items stone : stones) {
+            player.removeItemFromBag(stone);
+        }
+
+        int value = 0;
+
+        for (Items stone : stones) {
+            switch (stone.getGrade()) {
+                case 0 -> value += 0;
+                case 1 -> value += sr.nextInt(75) + 75;
+                case 2 -> value += sr.nextInt(250) + 250;
+                case 3 -> value += sr.nextInt(850) + 850;
+                case 4 -> value += sr.nextInt(6450) + 6450;
+                case 5 -> value += sr.nextInt(40000) + 175000;
+                case 6 -> value += 5000000;
+            }
+        }
+        player.addMoney(value);
     }
 
 }

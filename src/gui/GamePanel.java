@@ -248,6 +248,8 @@ public class GamePanel extends StackPane {
             }
         });
 
+
+//KEY RELEASE EVENTS
         this.setOnKeyReleased(evt -> {
             KeyCode code = evt.getCode();
             if (code.equals(SettingScreen.keyCodes.get(0)) || code.equals(KeyCode.UP)) {

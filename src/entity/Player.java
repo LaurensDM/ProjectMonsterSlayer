@@ -1,11 +1,11 @@
 package entity;
 
-import java.security.SecureRandom;
-
 import gui.GamePanel;
 import gui.ScreenController;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.shape.Rectangle;
+
+import java.security.SecureRandom;
 
 /**
  * The type Player.
@@ -180,24 +180,25 @@ public class Player extends Entity {
 		if (index != 999) {
 			gp.showNotification("Press E to interact with NPC.");
 			if (gp.interact) {
-				switch (direction) {
-				case "up":
-					gp.npc[index].direction = "down";
-					gp.npc[index].sprite.moveDown();
-					break;
-				case "down":
-					gp.npc[index].direction = "up";
-					gp.npc[index].sprite.moveUp();
-					break;
-				case "left":
-					gp.npc[index].direction = "right";
-					gp.npc[index].sprite.moveRight();
-					break;
-				case "right":
-					gp.npc[index].direction = "left";
-					gp.npc[index].sprite.moveLeft();
-					break;
-				}
+				if (!(gp.npc[index] instanceof NPC_Merchant))
+					switch (direction) {
+						case "up":
+							gp.npc[index].direction = "down";
+							gp.npc[index].sprite.moveDown();
+							break;
+						case "down":
+							gp.npc[index].direction = "up";
+							gp.npc[index].sprite.moveUp();
+							break;
+						case "left":
+							gp.npc[index].direction = "right";
+							gp.npc[index].sprite.moveRight();
+							break;
+						case "right":
+							gp.npc[index].direction = "left";
+							gp.npc[index].sprite.moveLeft();
+							break;
+					}
 
 
 				if(gp.npc[index] instanceof NPC_Sage) {

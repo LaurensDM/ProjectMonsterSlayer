@@ -51,7 +51,7 @@ public class Goblin extends Enemy {
 
 	@Override
 	public int dropExp() {
-		int powerLevel = (int) (getHealth() + getHealth() * getDefence());
+		int powerLevel = (int) (MAX_HEALTH + MAX_HEALTH * MAX_DEFENCE);
 		return (int) (powerLevel * 0.5);
 	}
 

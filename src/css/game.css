@@ -1,11 +1,28 @@
 /* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
-#game{
-	-fx-text-fill: white;
+.label{
+    -fx-font-size: 16px;
+    -fx-text-fill: white;
+}
+
+#game .label{
+    -fx-text-fill: #CFD3CD;
+    -fx-font-size: 16px;
 }
 
 #list{
 	-fx-background-color: green;
 }
+
+#damage .label{
+    -fx-text-fill: white;
+    -fx-font-size: 24px;
+}
+
+#crit {
+    -fx-text-fill: #690c05;
+    -fx-font-weight: bolder;
+}
+
 
 #settings{
     -fx-background-color: black;
@@ -113,6 +130,7 @@
 	-fx-font-family: "Comic Sans MS";
 	-fx-pref-width: 100px;
 	-fx-background-color: green;
+	-fx-font-size: 14;
 }
 
 .button:hover{

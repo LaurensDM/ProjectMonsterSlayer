@@ -64,6 +64,7 @@ public class BagScreen extends GridPane {
                 try {
                     String confirmation = dc.selectItem(bagLbl.getText(), GamePanel.inGame);
                     error.setText(confirmation);
+                    update();
                 } catch (IllegalArgumentException e) {
                     error.setText(e.getLocalizedMessage());
                 }

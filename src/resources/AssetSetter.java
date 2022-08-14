@@ -1,5 +1,6 @@
 package resources;
 
+import entity.NPC_Merchant;
 import entity.NPC_Sage;
 import gui.GamePanel;
 
@@ -42,6 +43,9 @@ public class AssetSetter {
 		gp.npc[0] = new NPC_Sage(gp);
 		gp.npc[0].worldX = GamePanel.TILESIZE * 21;
 		gp.npc[0].worldY = GamePanel.TILESIZE * 21;
+		gp.npc[1] = new NPC_Merchant(gp);
+		gp.npc[1].worldX = GamePanel.TILESIZE * 11;
+		gp.npc[1].worldY = GamePanel.TILESIZE * 10;
 	}
 
 }
