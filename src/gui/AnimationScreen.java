@@ -10,6 +10,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import resources.ResourceController;
 
 import java.security.SecureRandom;
@@ -68,6 +69,7 @@ public class AnimationScreen extends BorderPane {
         this.setCenter(spel);
         this.setRight(bag);
         bag.setVisible(false);
+
 
         VBox vbox = new VBox();
 
@@ -215,7 +217,11 @@ public class AnimationScreen extends BorderPane {
                 bag.setVisible(false);
             } else {
                 bag.setVisible(true);
+                if (bag.potionUsed()) {
+                    spel.updateMana(dc.getManapool());
+                }
             }
+
         });
 
         hbox.setAlignment(Pos.CENTER);
@@ -227,11 +233,13 @@ public class AnimationScreen extends BorderPane {
         HBox hbox2 = new HBox();
         critLbl = new Label();
         critLbl.setId("crit");
+        critLbl.setTextFill(Color.RED);
         damageLbl = new Label();
+        damageLbl.setId("damage");
         hbox2.getChildren().addAll(critLbl, damageLbl);
-        hbox2.setAlignment(Pos.CENTER);
-        hbox2.setId("damage");
+        hbox2.setAlignment(Pos.BOTTOM_CENTER);
         hbox2.setSpacing(20);
+        BorderPane.setMargin(hbox2, new Insets(20, 0, 0, 0));
         this.setTop(hbox2);
 
     }

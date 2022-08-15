@@ -24,7 +24,7 @@ public class MerchantDialogue extends GridPane {
         this.dc = dc;
         this.gp = gamePanel;
         this.setAlignment(Pos.CENTER);
-        this.setId("Dialogue");
+        this.setId("dialogue");
         content.setText("Welcome to my humble shop!");
         configureShop();
 
@@ -45,7 +45,7 @@ public class MerchantDialogue extends GridPane {
         int counter = 0;
         stock = dc.getMerchantStock();
         for (String item : stock) {
-            Label itemLbl = new Label(item);
+            Button itemLbl = new Button(item);
             Tooltip tooltip = new Tooltip("This item costs " + dc.getPriceItem(item) + " gold");
             tooltip.setShowDelay(Duration.ZERO);
             tooltip.setHideDelay(Duration.ZERO);
@@ -54,6 +54,16 @@ public class MerchantDialogue extends GridPane {
             itemLbl.setTooltip(tooltip);
             shop.add(itemLbl, 0, counter);
             counter++;
+
+            itemLbl.setOnAction(evt -> {
+                try {
+                    dc.buyItem(item);
+                    content.setText("Thank you for purchasing the " + item + ".");
+                } catch (IllegalArgumentException ie) {
+                    content.setText("You do not have enough gold to buy this item!\nGet your poor hands off of it!");
+                }
+
+            });
         }
 
     }

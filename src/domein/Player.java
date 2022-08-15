@@ -282,6 +282,14 @@ public class Player {
         weapon = null;
     }
 
+    public void destroyWeapon() {
+        weapon = null;
+    }
+
+    public void destroyArmor() {
+        armor = null;
+    }
+
     /**
      * Equip armor.
      *

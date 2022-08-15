@@ -13,14 +13,15 @@
 	-fx-background-color: green;
 }
 
-#damage .label{
-    -fx-text-fill: white;
+#damage {
+    -fx-text-fill: black;
     -fx-font-size: 24px;
 }
 
 #crit {
-    -fx-text-fill: #690c05;
+    -fx-font-size: 24px;
     -fx-font-weight: bolder;
+    -fx-text-fill: red;
 }
 
 

@@ -217,6 +217,8 @@ public abstract class Enemy {
                         name += " Rock Armor";
                     if (getClass().getSimpleName().equals("Troll"))
                         name += " Hide Armor";
+                    if (getClass().getSimpleName().equals("Goblin"))
+                        name += " Cloth Armor";
                     if (grade == 5)
                         name = "Robe of Power";
                     if (grade == 6)
@@ -232,6 +234,8 @@ public abstract class Enemy {
                         name += " Core Staff";
                     if (getClass().getSimpleName().equals("Troll"))
                         name += " Bone Staff";
+                    if (getClass().getSimpleName().equals("Goblin"))
+                        name = " Wooden Staff";
                     if (grade == 5)
                         name = "Staff of Power";
                     if (grade == 6)

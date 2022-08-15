@@ -212,6 +212,7 @@ public class PlayerMapper {
                 level = rs1.getInt("level");
                 exp = rs1.getInt("exp");
                 money = rs1.getInt("money");
+                adventureRank = rs1.getString("adventureRank");
             }
 
             List<Items> bag = new ArrayList<>();

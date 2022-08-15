@@ -22,22 +22,22 @@ public class Mana_Potion extends Potion {
 
 		switch (grade) {
 		case 0:
-			effect = -0.1;
+			effect = -100;
 			break;
 		case 1:
-			effect = 0.1;
+            effect = 100;
 			break;
 		case 2:
-			effect = 0.2;
+            effect = 200;
 			break;
 		case 3:
-			effect = 0.35;
+            effect = 0.25;
 			break;
 		case 4:
-			effect = 0.5;
+            effect = 0.4;
 			break;
 		case 5:
-			effect = 0.8;
+            effect = 0.7;
 			break;
 		case 6:
 			effect = 1;

@@ -167,7 +167,7 @@ public class SpelScherm extends GridPane {
         healthBarEnemy.updateProgress(health);
     }
 
-    private void updateMana(double mana) {
+    public void updateMana(double mana) {
         manaBar.updateProgress(mana);
     }
 

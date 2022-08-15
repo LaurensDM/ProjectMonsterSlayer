@@ -9,11 +9,11 @@ public class Goblin extends Enemy {
 	 * Instantiates a new Goblin.
 	 */
 	public Goblin() {
-		super(sr.nextInt(100) + 100, sr.nextDouble(0.10), "");
-		if (sr.nextInt(2) == 1) {
-			evolve();
-		}
-	}
+        super(sr.nextInt(301) + 300, sr.nextDouble(0.10), "");
+        if (sr.nextInt(3) == 1) {
+            evolve();
+        }
+    }
 
 	@Override
 	public double attackBack() {
@@ -30,8 +30,8 @@ public class Goblin extends Enemy {
 
 	@Override
 	public void evolve() {
-		super.setHealth(200);
-		super.setDefence(0.10);
+        super.setHealth(600);
+        super.setDefence(0.10);
 		super.setType("Hob");
 		super.evolved = true;
 	}

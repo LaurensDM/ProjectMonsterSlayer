@@ -25,7 +25,7 @@ public class GamePanel extends StackPane {
     /**
      * The constant maxScreenCol.
      */
-    public static final int maxScreenCol = 32;
+    public static final int maxScreenCol = 16;
     /**
      * The constant maxScreenRow.
      */
@@ -180,6 +180,7 @@ public class GamePanel extends StackPane {
         tileM = new TileManager(this);
         tileM.createMap("world01");
 //		tileM.generateRandomMap();
+//      tileM.generateMapFromImage(new Image(getClass().getResourceAsStream("/files/mapV1.png")));
         collision = new CollisionChecker(this);
         setter = new AssetSetter(this);
         canvas.setFocusTraversable(true);
@@ -464,7 +465,7 @@ public class GamePanel extends StackPane {
     public void showDialogue() {
 //		Node label = dialogue.getChildren().get(0);
 //		((Label) label).setText(content);
-        dialogue.setVisible(true);
+        this.getChildren().get(4).setVisible(true);
         pause = true;
     }
 

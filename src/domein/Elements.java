@@ -47,7 +47,7 @@ public abstract class Elements {
 	 */
 	public double attack(double value) {
 		if (allOut) {
-			double damage = manapool * attackFails() * value;
+			double damage = manapool * attackFails() * value * 2;
 			useAttack(manapool);
 			return damage;
 		} else {

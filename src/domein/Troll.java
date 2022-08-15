@@ -9,7 +9,7 @@ public class Troll extends Enemy {
 	 * Instantiates a new Troll.
 	 */
 	public Troll() {
-		super(sr.nextInt(200) + 200, sr.nextDouble(0.15) + 0.1, "");
+		super(sr.nextInt(1200) + 800, sr.nextDouble(0.15) + 0.1, "");
 		if (sr.nextInt(4) == 1) {
 			evolve();
 		}
@@ -30,7 +30,7 @@ public class Troll extends Enemy {
 
 	@Override
 	public void evolve() {
-		super.setHealth(400);
+		super.setHealth(2000);
 		super.setDefence(0.25);
 		super.setType("Rock");
 		super.evolved = true;

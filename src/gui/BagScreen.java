@@ -24,6 +24,7 @@ public class BagScreen extends GridPane {
     private Label error;
     private DomeinController dc;
     private List<Button> lblList = new LinkedList<>();
+    private boolean potionUsed = false;
 
     /**
      * Instantiates a new Bag screen.
@@ -61,9 +62,11 @@ public class BagScreen extends GridPane {
             lblList.add(bagLbl);
 
             bagLbl.setOnAction(evt -> {
+                potionUsed = false;
                 try {
                     String confirmation = dc.selectItem(bagLbl.getText(), GamePanel.inGame);
                     error.setText(confirmation);
+                    potionUsed = true;
                     update();
                 } catch (IllegalArgumentException e) {
                     error.setText(e.getLocalizedMessage());
@@ -80,6 +83,12 @@ public class BagScreen extends GridPane {
         }
 
 
+    }
+
+    public boolean potionUsed() {
+        boolean bool = potionUsed;
+        potionUsed = false;
+        return bool;
     }
 
     public void update() {
@@ -111,6 +120,9 @@ public class BagScreen extends GridPane {
     private String giveItemInformation(String item) {
         String info = "";
 
+        if (item.contains("Magic Stone")) {
+            info = "This item can be sold to a merchant for a nice price!";
+        }
 
         if (item.contains("Power Potion") || item.contains("Blood")) {
             info = "This item will boost your power";
@@ -135,24 +147,30 @@ public class BagScreen extends GridPane {
         if (item.contains("Mana Potion") || item.contains("Essence")) {
             info = "This item will restore your mana by ";
 
+            if (item.contains("Common")) {
+                info += "100 mana points.";
+            }
             if (item.contains("Uncommon")) {
-
+                info += "200 mana points.";
             }
 
             if (item.contains("Rare")) {
-
+                info += "25 percent.";
             }
 
             if (item.contains("Epic")) {
-
+                info += "40 percent.";
             }
 
             if (item.contains("Legendary")) {
-
+                info += "70 percent";
+            }
+            if (item.contains("Mythical")) {
+                info = "This item will fully restore your mana";
             }
 
         }
-        if (item.contains("Armor")) {
+        if (item.contains("Armor") || item.contains("Robe")) {
             info = "This armor will give you more protection";
 
             if (item.contains("Uncommon")) {

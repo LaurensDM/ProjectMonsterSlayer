@@ -30,6 +30,7 @@ public class Game {
     private int critChance = 0;
     private boolean criticalHit = false;
     private String damage = "";
+    private double powerBoost = 1;
 
     /**
      * Instantiates a new Game.
@@ -93,8 +94,8 @@ public class Game {
         double weaponDamage;
         if (player.getWeapon() == null) {
             weaponDamage = 1;
-        } else
-            weaponDamage = player.getWeapon().getDamage();
+        } else weaponDamage = player.getWeapon().getDamage();
+
 
         switch (element) {
             case "Fire" -> el = new Fire(manapool, player.getSkills(), maxMana);
@@ -107,7 +108,6 @@ public class Game {
 
         if (fullpower) {
             el.goAllOut();
-            fullpower = false;
         }
 
         if (judgement) {
@@ -120,7 +120,7 @@ public class Game {
             critChance++;
         }
 
-        double damage = el.attack() * activateCrit();
+        double damage = el.attack() * activateCrit() * powerBoost;
 
         if (element.equals(player.getAffinity())) {
             damage *= 2;
@@ -130,9 +130,13 @@ public class Game {
         double totalDamage = enemy.takeDamage(element, damage);
         manapool = el.getMana();
         if (player.getWeapon() != null) {
-            player.getWeapon().lowerDurability();
+            player.getWeapon().lowerDurability(fullpower);
+            if (player.getWeapon().getDurability() <= 0) {
+                player.destroyWeapon();
+            }
         }
 
+        fullpower = false;
         this.damage = String.format("You did %.0f damage!", totalDamage);
     }
 
@@ -155,14 +159,16 @@ public class Game {
         double damageReduction;
         if (player.getArmor() == null) {
             damageReduction = 1;
-        } else
+        } else {
             damageReduction = player.getArmor().getDamageReduction();
-        el.activateShield(damage * damageReduction);
-        manapool = el.getMana();
-        if (player.getArmor() != null) {
             player.getArmor().lowerDurability();
+            if (player.getArmor().getDurability() <= 0) {
+                player.destroyArmor();
+            }
         }
 
+        el.activateShield(damage * damageReduction);
+        manapool = el.getMana();
     }
 
     public String selectItem(String itemDesc, boolean inGame) {
@@ -190,13 +196,13 @@ public class Game {
             //TODO: potion effects still to be implemented
             if (item instanceof Power_Potion) {
                 if (inGame == false) throw new IllegalArgumentException("Potions shouldn't be used outside of battle!");
-
+                activatePowerBoost(((Power_Potion) item).effect());
                 player.getBag().remove(item);
                 return item + " used!";
             }
             if (item instanceof Mana_Potion) {
                 if (inGame == false) throw new IllegalArgumentException("Potions shouldn't be used outside of battle!");
-
+                restoreMana(((Mana_Potion) item).effect());
                 player.getBag().remove(item);
                 return item + " used!";
             }
@@ -263,6 +269,7 @@ public class Game {
     public boolean isDefeated() {
         if (enemy.getHealth() <= 0) {
             critChance = 0;
+            powerBoost = 1;
             dropItems();
             gainExp();
             levelUp();
@@ -376,17 +383,29 @@ public class Game {
         return false;
     }
 
+    public void activatePowerBoost(double value) {
+        powerBoost = value;
+    }
+
     public void restoreMana(double restoration) {
-        manapool += maxMana * restoration;
+        if (restoration >= 100 || restoration < 0) {
+            if (manapool + restoration > maxMana) manapool = maxMana;
+            else manapool += restoration;
+        } else {
+            if (manapool + maxMana * restoration > maxMana) manapool = maxMana;
+            else manapool += maxMana * restoration;
+        }
+
+
     }
 
     public void regenerateMana() {
-        if (manapool < maxMana) {
+        if (manapool + maxMana * 0.001 <= maxMana) {
             manapool += maxMana * 0.001;
+        } else {
+            manapool = maxMana;
         }
-        if (manapool + maxMana * 0.001 > getMaxMana() && manapool < getMaxMana()) {
-            manapool = getMaxMana();
-        }
+
     }
 
     public List<Items> merchantStock() {
@@ -394,18 +413,32 @@ public class Game {
         if (player.getLevel() < 10) {
             stock.add(new Weapon("Novice Staff", 1));
             stock.add(new Armor("Novice Robe", 1));
+            stock.add(new Mana_Potion("Beginner Mana Potion", 1));
+            stock.add(new Power_Potion("Beginner Power Potion", 1));
         }
         if (player.getLevel() < 20 && player.getLevel() >= 10) {
-
+            stock.add(new Weapon("Beginner Staff", 2));
+            stock.add(new Armor("Beginner Robe", 2));
+            stock.add(new Mana_Potion("Beginner Mana Potion", 2));
+            stock.add(new Power_Potion("Beginner Power Potion", 2));
         }
         if (player.getLevel() < 30 && player.getLevel() >= 20) {
-
+            stock.add(new Weapon("Intermediate Staff", 3));
+            stock.add(new Armor("Intermediate Robe", 3));
+            stock.add(new Mana_Potion("Intermediate Mana Potion", 3));
+            stock.add(new Power_Potion("Intermediate Power Potion", 3));
         }
         if (player.getLevel() < 40 && player.getLevel() >= 30) {
-
+            stock.add(new Weapon("Advanced Staff", 4));
+            stock.add(new Armor("Advanced Robe", 4));
+            stock.add(new Mana_Potion("Advanced Mana Potion", 4));
+            stock.add(new Power_Potion("Advanced Power Potion", 4));
         }
         if (player.getLevel() < 50 && player.getLevel() >= 40) {
-
+            stock.add(new Weapon("Master Staff", 5));
+            stock.add(new Armor("Master Robe", 5));
+            stock.add(new Mana_Potion("Master Staff", 5));
+            stock.add(new Power_Potion("Master Robe", 5));
         }
         return stock;
     }
@@ -417,16 +450,17 @@ public class Game {
 
         switch (grade.toLowerCase()) {
             case "damaged" -> price = 0;
-            case "common" -> price = sr.nextInt(75) + 75;
-            case "uncommon" -> price = sr.nextInt(250) + 250;
-            case "rare" -> price = sr.nextInt(850) + 850;
-            case "epic" -> price = sr.nextInt(6450) + 6450;
-            case "legendary" -> price = sr.nextInt(40000) + 175000;
+            case "common" -> price = sr.nextInt(300) + 200;
+            case "uncommon" -> price = sr.nextInt(300) + 700;
+            case "rare" -> price = sr.nextInt(300) + 1700;
+            case "epic" -> price = sr.nextInt(300) + 14700;
+            case "legendary" -> price = sr.nextInt(4000) + 196000;
             case "mythical" -> price = 5000000;
         }
 
 
         switch (player.getAdventureRank()) {
+            case "unranked" -> price += price * 0.1;
             case "F" -> price -= price * 0;
             case "E" -> price -= price * 0.01;
             case "D" -> price -= price * 0.05;
@@ -441,9 +475,20 @@ public class Game {
     }
 
     public void buyItem(String item) {
-        int price = getPriceItem(item);
+        Items soldItem = null;
+
+        int price = (int) (getPriceItem(item) * 0.5);
+
+        for (Items it : merchantStock()) {
+
+            if (it.toString().equals(item)) {
+                soldItem = it;
+            }
+
+        }
+
         player.removeMoney(price);
-        player.addItemToBag(new Items("Oi", 0));
+        player.addItemToBag(soldItem);
     }
 
     public void convertStonesToMoney() {
@@ -464,11 +509,11 @@ public class Game {
         for (Items stone : stones) {
             switch (stone.getGrade()) {
                 case 0 -> value += 0;
-                case 1 -> value += sr.nextInt(75) + 75;
-                case 2 -> value += sr.nextInt(250) + 250;
-                case 3 -> value += sr.nextInt(850) + 850;
-                case 4 -> value += sr.nextInt(6450) + 6450;
-                case 5 -> value += sr.nextInt(40000) + 175000;
+                case 1 -> value += sr.nextInt(10) + 40;
+                case 2 -> value += sr.nextInt(50) + 200;
+                case 3 -> value += sr.nextInt(50) + 800;
+                case 4 -> value += sr.nextInt(50) + 6400;
+                case 5 -> value += sr.nextInt(400) + 80000;
                 case 6 -> value += 5000000;
             }
         }

@@ -1,20 +1,14 @@
 package resources;
 
 
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.Scanner;
-
 import gui.GamePanel;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.image.PixelReader;
 
-
-import javax.imageio.ImageIO;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Scanner;
 
 /**
  * The type Tile manager.
@@ -109,38 +103,54 @@ public class TileManager {
 
 	}
 
-	public void generateMapFromImage(Image image){
-		int w = (int)image.getWidth();
-		int h  = (int)image.getHeight();
+	public void generateMapFromImage(Image image) {
+		int w = (int) Math.floor(image.getWidth());
+		int h = (int) Math.floor(image.getHeight());
+		System.err.print("Width " + w + " Height " + h);
 		map = new int[w][h];
 		for (int row = 0; row < h; row++) {
 			for (int column = 0; column < w; column++) {
 				PixelReader pixelR = image.getPixelReader();
-				int pixel = pixelR.getArgb(row,column);
+				int pixel = pixelR.getArgb(column, row);
 				int red = (pixel >> 16) & 0xff;
 				int green = (pixel >> 8) & 0xff;
 				int blue = (pixel) & 0xff;
 
-				if (red == 181 && green == 230 && blue == 29){
-					map[row][column] = 0;
+				if (red == 102 && green == 163 && blue == 93) {
+					map[column][row] = 0;
 				}
-				if (red == 63 && green == 72 && blue == 204){
-					map[row][column] = 23;
+				if (red == 64 && green == 145 && blue == 202) {
+					map[column][row] = 23;
 				}
-				if (red == 63 && green == 72 && blue == 204){
-					map[row][column] = 4;
+				if (red == 49 && green == 91 && blue == 43) {
+					map[column][row] = 4;
 				}
+
+				if (red == 195 && green == 153 && blue == 78) {
+					map[column][row] = 5;
+				}
+
+				if (red == 255 && green == 127 && blue == 39) {
+					map[column][row] = 20;
+				}
+				if (red == 195 && blue == 195 && green == 195) {
+					map[column][row] = 1;
+				}
+				if (red == 255 && green == 201 && blue == 14) {
+					map[column][row] = 18;
+				}
+
 
 			}
 		}
 	}
 
 	public void generateRandomMap(){
-		BufferedImage img = new BufferedImage(WIDTH,HEIGHT,BufferedImage.TYPE_INT_RGB);
+//		BufferedImage img = new BufferedImage(WIDTH,HEIGHT,BufferedImage.TYPE_INT_RGB);
 
 		OpenSimplexNoise noise = new OpenSimplexNoise();
 		map = new int[WIDTH][HEIGHT];
-		int color;
+//		int color;
 
 		for (int y = 0; y < HEIGHT; y++)
 		{
@@ -149,50 +159,44 @@ public class TileManager {
 				double value = noise.eval(x / FEATURE_SIZE, y / FEATURE_SIZE);
 
 
-				if (value < 0){
+				if (value < 0) {
 					map[x][y] = 22;
-					color = 256*256*5+256*17+245;
-					img.setRGB(x,y,color);
+//					color = 256*256*5+256*17+245;
+//					img.setRGB(x,y,color);
 
 				}
-				if (value > -0.5 && value < -0.25){
+				if (value > -0.5 && value < -0.25) {
 					map[x][y] = 4;
-					color = 256*256*33+256*89+4;
-					img.setRGB(x,y,color);
+//					color = 256*256*33+256*89+4;
+//					img.setRGB(x,y,color);
 				}
 
 				if (value > -0.25 && value < 0){
 					map[x][y] = 0;
 				}
 
-				if (value > 0 && value <0.3){
+				if (value > 0 && value <0.3) {
 					map[x][y] = 5;
-					color = 256*256*128+256*77+15;
-					img.setRGB(x,y,color);
+//					color = 256*256*128+256*77+15;
+//					img.setRGB(x,y,color);
 				}
 
-				if (value > 0.3 && value < 0.9){
+				if (value > 0.3) {
 					map[x][y] = 3;
-					color = 256*256*5+256*245+101;
-					img.setRGB(x,y,color);
+//					color = 256*256*5+256*245+101;
+//					img.setRGB(x,y,color);
 				}
 
-				if (value>0.98){
-					map[x][y] = 19;
-					color = 256*256*237+28*256+36;
-					img.setRGB(x,y,color);
-					System.err.print(value+" ");
-				}
 
 			}
 
 		}
 
-		try {
+		/*try {
 			ImageIO.write(img,"png", new File("noise2.png"));
 		} catch (IOException e) {
 			throw new RuntimeException(e);
-		}
+		}*/
 	}
 
 	/**

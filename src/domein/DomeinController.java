@@ -215,6 +215,14 @@ public class DomeinController {
         return game.getPlayerMaxExp();
     }
 
+    public int getPlayerMoney() {
+        return player.getMoney();
+    }
+
+    public String getPlayerRank() {
+        return player.getAdventureRank();
+    }
+
     /**
      * Show damage string.
      *

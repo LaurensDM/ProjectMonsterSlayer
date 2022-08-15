@@ -89,11 +89,13 @@ public class Weapon extends Items {
 	}
 
 	/**
-	 * Lower durability.
-	 */
-	public void lowerDurability() {
-		durability -= 10;
-	}
+     * Lower durability.
+     */
+    public void lowerDurability(boolean fullPower) {
+        if (destroyable == true && fullPower == true) {
+            durability = 0;
+        } else durability -= 10;
+    }
 
 	/**
 	 * Repair.
