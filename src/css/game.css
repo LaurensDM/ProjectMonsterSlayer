@@ -24,7 +24,6 @@
     -fx-text-fill: red;
 }
 
-
 #settings{
     -fx-background-color: black;
     -fx-background-radius: 10px;
@@ -178,4 +177,9 @@
 #dialogue .button:hover{
     -fx-background-color: green;
     -fx-text-fill: black;
+}
+
+#dialogue #learned{
+    -fx-opacity: 1.0;
+    -fx-background-color: red;
 }

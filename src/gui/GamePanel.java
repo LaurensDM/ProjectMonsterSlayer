@@ -369,7 +369,7 @@ public class GamePanel extends StackPane {
     }
 
     private void configureStatus() {
-        status.setMaxWidth(0.3 * screenWidth);
+        status.setMaxWidth(0.4 * screenWidth);
         status.setMaxHeight(0.7 * screenHeight);
         status.setVisible(false);
     }

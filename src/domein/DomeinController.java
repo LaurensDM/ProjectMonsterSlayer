@@ -2,6 +2,7 @@ package domein;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map.Entry;
 
 /**
  * The type Domein controller.
@@ -131,9 +132,8 @@ public class DomeinController {
 
     public List<String> giveBag() {
         List<String> items = new ArrayList<>();
-        for (Items item : player.getBag()) {
-            if (item != null)
-                items.add(item.toString());
+        for (Entry<Items, Integer> entry : player.getBag().entrySet()) {
+            items.add(entry.getKey().toString() + " " + entry.getValue());
         }
         return items;
     }

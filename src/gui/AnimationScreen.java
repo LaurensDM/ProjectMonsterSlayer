@@ -140,7 +140,7 @@ public class AnimationScreen extends BorderPane {
                                 timerCounter++;
                                 if (timerCounter == 150) {
                                     critLbl.setText("");
-                                    damageLbl.setText("You have successfully defeated the enemy!\n\t\tReturning");
+                                    damageLbl.setText("You have successfully defeated the enemy!\n\t\tReturning ...");
                                 }
                                 if (timerCounter == 250) {
                                     if (dc.bagIsFull()) {

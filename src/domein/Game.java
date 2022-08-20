@@ -4,6 +4,7 @@ import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map.Entry;
 
 /**
  * The type Game.
@@ -173,9 +174,19 @@ public class Game {
 
     public String selectItem(String itemDesc, boolean inGame) {
         Items item = null;
-        for (Items it : player.getBag()) {
-            if (it.toString().equals(itemDesc)) {
-                item = it;
+        String[] array = itemDesc.split(" ");
+        String itemString = "";
+
+        for (int i = 0; i < array.length - 1; i++) {
+
+            if (i == array.length - 2) itemString += array[i];
+            else itemString += array[i] + " ";
+
+        }
+
+        for (Entry<Items, Integer> entry : player.getBag().entrySet()) {
+            if (entry.getKey().toString().equals(itemString)) {
+                item = entry.getKey();
             }
         }
 
@@ -183,27 +194,27 @@ public class Game {
             if (item instanceof Weapon) {
                 if (inGame == true) throw new IllegalArgumentException("Weapons cannot be equipped mid battle!");
                 player.equipWeapon((Weapon) item);
-                player.getBag().remove(item);
+                player.removeItemFromBag(item);
                 return item + " equipped!";
             }
 
             if (item instanceof Armor) {
                 if (inGame == true) throw new IllegalArgumentException("Armor cannot be equipped mid battle!");
                 player.equipArmor((Armor) item);
-                player.getBag().remove(item);
+                player.removeItemFromBag(item);
                 return item + " equipped!";
             }
-            //TODO: potion effects still to be implemented
+
             if (item instanceof Power_Potion) {
                 if (inGame == false) throw new IllegalArgumentException("Potions shouldn't be used outside of battle!");
                 activatePowerBoost(((Power_Potion) item).effect());
-                player.getBag().remove(item);
+                player.removeItemFromBag(item);
                 return item + " used!";
             }
             if (item instanceof Mana_Potion) {
                 if (inGame == false) throw new IllegalArgumentException("Potions shouldn't be used outside of battle!");
                 restoreMana(((Mana_Potion) item).effect());
-                player.getBag().remove(item);
+                player.removeItemFromBag(item);
                 return item + " used!";
             }
         }
@@ -300,19 +311,19 @@ public class Game {
         int maxExp = 100;
 
         if (player.getLevel() < 10) {
-            maxExp -= player.getLevel() * 100;
+            maxExp = player.getLevel() * 100;
         }
         if (player.getLevel() < 20 && player.getLevel() >= 10) {
-            maxExp -= player.getLevel() * 200;
+            maxExp = player.getLevel() * 200;
         }
         if (player.getLevel() < 30 && player.getLevel() >= 20) {
-            maxExp -= player.getLevel() * 400;
+            maxExp = player.getLevel() * 400;
         }
         if (player.getLevel() < 40 && player.getLevel() >= 30) {
-            maxExp -= player.getLevel() * 800;
+            maxExp = player.getLevel() * 800;
         }
         if (player.getLevel() < 50 && player.getLevel() >= 40) {
-            maxExp -= player.getLevel() * 1600;
+            maxExp = player.getLevel() * 1600;
         }
 
         return maxExp;
@@ -494,9 +505,9 @@ public class Game {
     public void convertStonesToMoney() {
 
         List<Items> stones = new ArrayList<>();
-        for (Items item : player.getBag()) {
-            if (item instanceof Magic_Stone) {
-                stones.add(item);
+        for (Entry<Items, Integer> entry : player.getBag().entrySet()) {
+            if (entry.getKey() instanceof Magic_Stone) {
+                stones.add(entry.getKey());
             }
         }
 

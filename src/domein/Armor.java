@@ -51,6 +51,7 @@ public class Armor extends Items {
                 MAX_DURABILITY = 100;
                 break;
         }
+        durability = MAX_DURABILITY;
     }
 
     public Armor(String name, int grade, double durability) {
@@ -113,7 +114,7 @@ public class Armor extends Items {
      * @return the durability
      */
     public double getDurability() {
-        return MAX_DURABILITY;
+        return durability;
     }
 
 

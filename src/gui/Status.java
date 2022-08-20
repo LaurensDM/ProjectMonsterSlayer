@@ -46,7 +46,7 @@ public class Status extends GridPane {
 
         Label manaLbl = new Label("Mana: ");
         this.add(manaLbl, 1, 4);
-        manaPool.setText(dc.getManapool() + " / " + dc.getMaxMana());
+        manaPool.setText(String.format("%.0f / %.0f", dc.getManapool(), dc.getMaxMana()));
         this.add(manaPool, 2, 4);
 
         Label levelLbl = new Label("Level: ");
@@ -56,7 +56,7 @@ public class Status extends GridPane {
 
         Label expLbl = new Label("EXP: ");
         this.add(expLbl, 1, 3);
-        exp.setText(dc.getPlayerExp() + " / " + dc.getPlayerMaxExp());
+        exp.setText(String.format("%d/%d", dc.getPlayerExp(), dc.getPlayerMaxExp()));
         this.add(exp, 2, 3);
 
         Label moneyLbl = new Label("Money: ");
@@ -132,9 +132,9 @@ public class Status extends GridPane {
     }
 
     public void update() {
-        manaPool.setText(dc.getManapool() + " / " + dc.getMaxMana());
+        manaPool.setText(String.format("%.0f / %.0f", dc.getManapool(), dc.getMaxMana()));
         level.setText(dc.getPlayerLevel() + "");
-        exp.setText(dc.getPlayerExp() + "");
+        exp.setText(String.format("%d / %d", dc.getPlayerExp(), dc.getPlayerMaxExp()));
         money.setText(dc.getPlayerMoney() + "");
         rank.setText(dc.getPlayerRank());
         try {

@@ -1,7 +1,7 @@
 package domein;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map.Entry;
 import java.util.Objects;
 
 /**
@@ -16,7 +16,7 @@ public class Player {
     private int level;
     private int exp;
     private int money;
-    private List<Items> bag;
+    private HashMap<Items, Integer> bag;
     private Skills skills;
     private Weapon weapon;
     private Armor armor;
@@ -38,7 +38,7 @@ public class Player {
      * @param weapon       the weapon
      * @param armor        the armor
      */
-    public Player(String name, String passwordHash, String salt, String affinity, int level, int exp, int money, List<Items> bag,
+    public Player(String name, String passwordHash, String salt, String affinity, int level, int exp, int money, HashMap<Items, Integer> bag,
                   Skills skills, Weapon weapon, Armor armor, String rank) {
         setName(name);
         this.passwordHash = passwordHash;
@@ -63,7 +63,7 @@ public class Player {
      * @param affinity     the affinity
      */
     public Player(String name, String passwordHash, String salt, String affinity) {
-        this(name, passwordHash, salt, affinity, 1, 0, 100, new ArrayList<>(), new Skills(), null, null, "unranked");
+        this(name, passwordHash, salt, affinity, 1, 0, 100, new HashMap<>(), new Skills(), null, null, "unranked");
     }
 
     /**
@@ -160,7 +160,7 @@ public class Player {
      *
      * @return the bag
      */
-    public List<Items> getBag() {
+    public HashMap<Items, Integer> getBag() {
         return bag;
     }
 
@@ -258,14 +258,30 @@ public class Player {
      * @param item the item
      */
     protected void addItemToBag(Items item) {
-        if (bag.size() < 34) {
-            bag.add(item);
+        if (bag.isEmpty()) {
+            bag.put(item, 1);
+            return;
         }
 
+        if (bag.size() < 34) {
+            for (Entry<Items, Integer> entry : bag.entrySet()) {
+                if (entry.getKey().toString().equals(item.toString())) {
+                    entry.setValue(entry.getValue() + 1);
+                    return;
+                }
+            }
+            bag.put(item, 1);
+        }
     }
 
+
     protected void removeItemFromBag(Items item) {
-        bag.remove(item);
+        if (bag.get(item) > 1) {
+            bag.replace(item, bag.get(item) - 1);
+        } else {
+            bag.remove(item);
+        }
+
     }
 
     /**
