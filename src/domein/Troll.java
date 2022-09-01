@@ -23,7 +23,7 @@ public class Troll extends Enemy {
 		}
 		int power = sr.nextInt(51) + 25;
 		if (super.evolved == true) {
-			power = sr.nextInt(76) + 50;
+			power = sr.nextInt(5) + 75;
 		}
 		return power;
 	}
@@ -36,11 +36,19 @@ public class Troll extends Enemy {
 		super.evolved = true;
 	}
 
+	/**
+	 *
+	 */
+	@Override
+	public void applyNamedPower() {
+
+	}
+
 	@Override
 	public int determineItemGrade(boolean fullpower) {
 		int grade = 1;
 		if (getType().equals("Rock")) {
-			grade = sr.nextInt(3) + 1;
+			grade = sr.nextInt(2) + 2;
 		} else
 			grade = sr.nextInt(2) + 1;
 

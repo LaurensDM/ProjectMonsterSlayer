@@ -146,8 +146,8 @@ public class SpelScherm extends GridPane {
 
 
             if (dc.isDefeated()) {
-                    defeated = true;
-                } else {
+                defeated = true;
+            } else {
                 dc.attackBack();
             }
 
@@ -234,6 +234,7 @@ public class SpelScherm extends GridPane {
             }
             if (string.contains("lightning")) {
                 enemyImg.setImage(new Image(getClass().getResourceAsStream("/images/Lightning_Golem.gif")));
+                adjustSize(300, 400);
             }
             if (string.contains("wind")) {
                 enemyImg.setImage(new Image(getClass().getResourceAsStream("/images/Wind_Golem.gif")));
@@ -250,6 +251,14 @@ public class SpelScherm extends GridPane {
                 adjustSize(300, 350);
             }
             adjustSize(200, 300);
+        } else if (string.contains("demon")) {
+            if (string.contains("arch")) {
+                enemyImg.setImage(new Image(getClass().getResourceAsStream("/images/demonLord.gif")));
+                adjustSize(300, 500);
+                return;
+            }
+            enemyImg.setImage(new Image(getClass().getResourceAsStream("/images/demon.gif")));
+            adjustSize(300, 300);
         }
         enemyImg.setPreserveRatio(false);
 

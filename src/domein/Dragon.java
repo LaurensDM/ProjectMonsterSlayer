@@ -17,19 +17,12 @@ public class Dragon extends Enemy {
 		}
 	}
 
-	@Override
-	public double takeDamage(String damageType, double damage) {
-		// TODO Auto-generated method stub
-		double totalDamage = (damage - damage * super.getDefence()) + super.getTickDamage();
-		if (super.isWeakness(damageType)) {
-			super.registerDamage(totalDamage * 2);
-			return totalDamage * 2;
-		}
-		if (super.isStrongAgainst(damageType)) {
-			super.registerDamage(totalDamage * 0.5);
-			return totalDamage * 0.5;
-		}
-		return super.takeDamage(damageType, damage);
+	public Dragon(String name, boolean evolved) {
+		this();
+		super.evolved = evolved;
+		if (evolved) evolve();
+		applyNamedPower();
+		setName(name);
 	}
 
 	@Override
@@ -38,10 +31,11 @@ public class Dragon extends Enemy {
 			super.breakFrozen();
 			return 0;
 		}
-		double attack = sr.nextInt(101) + 50;
+		double attack = sr.nextInt(125) + 225;
 		if (evolved) {
-			attack = sr.nextInt(150) + 75;
+			attack = 500;
 		}
+		if (named) attack *= 1.5;
 		return attack;
 	}
 
@@ -53,6 +47,16 @@ public class Dragon extends Enemy {
 		super.evolved = true;
 	}
 
+	/**
+	 *
+	 */
+	@Override
+	public void applyNamedPower() {
+		setHealth(getHealth() * 1.5);
+		setDefence(getDefence() * 1.24);
+		super.named = true;
+	}
+
 	@Override
 	public int determineItemGrade(boolean fullpower) {
 		int grade;
@@ -62,7 +66,7 @@ public class Dragon extends Enemy {
 		} else
 			grade = sr.nextInt(3) + 3;
 		if (fullpower) {
-			if (sr.nextInt(4) == 0) {
+			if (sr.nextInt(10) == 0) {
 				grade = 0;
 			}
 		}

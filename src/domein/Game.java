@@ -32,6 +32,7 @@ public class Game {
     private boolean criticalHit = false;
     private String damage = "";
     private double powerBoost = 1;
+    private Crafting craftingSystem;
 
     /**
      * Instantiates a new Game.
@@ -42,6 +43,7 @@ public class Game {
         this.player = player;
         manapool = player.getLevel() * 100;
         this.maxMana = manapool;
+        craftingSystem = new Crafting();
     }
 
     /**
@@ -77,6 +79,8 @@ public class Game {
             case "dragon" -> this.enemy = new Dragon();
 
             case "golem" -> this.enemy = new Golem();
+
+            case "demon" -> this.enemy = new Demon();
 
             case "troll" -> this.enemy = new Troll();
 
@@ -529,6 +533,10 @@ public class Game {
             }
         }
         player.addMoney(value);
+    }
+
+    public void craftItem(String component, String Mana_Stone) {
+        craftingSystem.craftItem(new Component("", 0), new Magic_Stone("", 0));
     }
 
 }

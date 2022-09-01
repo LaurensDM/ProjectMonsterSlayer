@@ -8,11 +8,25 @@ public class Slime extends Enemy {
 
     @Override
     public double attackBack() {
-        return 0.05 * getHealth();
+        if (isFrozen()) {
+            super.breakFrozen();
+            return 0;
+        }
+        int power = 10;
+
+        return power;
     }
 
     @Override
     public void evolve() {
+    }
+
+    /**
+     *
+     */
+    @Override
+    public void applyNamedPower() {
+
     }
 
     @Override

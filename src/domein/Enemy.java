@@ -10,32 +10,33 @@ import java.util.List;
 public abstract class Enemy {
 
     /**
-     * The constant sr.
-     */
-    protected static SecureRandom sr = new SecureRandom();
-    private double health;
-    public final double MAX_HEALTH;
-    private double defence;
-    public final double MAX_DEFENCE;
-    private String type;
-    private double tickDamage = 0;
-    private int freeze = 0;
-    private boolean frozen = false;
-    /**
-     * The Evolved.
-     */
-    protected boolean evolved = false;
-    /**
      * The Enemies.
      */
     public final static List<String> ENEMIES = Arrays.asList("Dragon", "Troll", "Goblin");
     public final static List<String> STAGE_0 = Arrays.asList("Slime");
     public final static List<String> STAGE_1 = Arrays.asList("Slime", "Goblin");
-    public final static List<String> STAGE_2 = Arrays.asList("Troll", "Goblin");
-    public final static List<String> STAGE_3 = Arrays.asList("Goblin", "Troll", "Golem");
-    public final static List<String> STAGE_4 = Arrays.asList("Troll", "Golem");
+    public final static List<String> STAGE_2 = Arrays.asList("Goblin", "Troll");
+    public final static List<String> STAGE_3 = Arrays.asList("Troll", "Demon");
+    public final static List<String> STAGE_4 = Arrays.asList("Demon", "Golem");
     public final static List<String> STAGE_5 = Arrays.asList("Golem", "Dragon");
-
+    /**
+     * The constant sr.
+     */
+    protected static SecureRandom sr = new SecureRandom();
+    public final double MAX_HEALTH;
+    public final double MAX_DEFENCE;
+    /**
+     * The Evolved.
+     */
+    protected boolean evolved = false;
+    protected boolean named = false;
+    private double health;
+    private double defence;
+    private String type;
+    private double tickDamage = 0;
+    private int freeze = 0;
+    private boolean frozen = false;
+    private String name;
 
     /**
      * Instantiates a new Enemy.
@@ -59,7 +60,7 @@ public abstract class Enemy {
      * @return the boolean
      */
     public boolean isStrongAgainst(String damageType) {
-        if (type.equals("Fire") && damageType.equals("Wind")) {
+        if ((type.equals("Fire") || type.equals("Hell")) && damageType.equals("Wind")) {
             return true;
         }
         if (type.equals("Wind") && damageType.equals("Earth")) {
@@ -85,7 +86,7 @@ public abstract class Enemy {
      */
     public boolean isWeakness(String damageType) {
 
-        if (type.equals("Fire") && damageType.equals("Water")) {
+        if ((type.equals("Fire") || type.equals("Hell") || type.equals("Rock")) && damageType.equals("Water")) {
             return true;
         }
         if (type.equals("Wind") && damageType.equals("Fire")) {
@@ -135,6 +136,20 @@ public abstract class Enemy {
     }
 
     /**
+     * Sets health.
+     *
+     * @param health the health
+     */
+    protected void setHealth(double health) {
+
+        this.health = health;
+    }
+
+    protected void setName(String name) {
+        this.name = name;
+    }
+
+    /**
      * Register damage.
      *
      * @param totalDamage the total damage
@@ -154,6 +169,8 @@ public abstract class Enemy {
      * Evolve.
      */
     public abstract void evolve();
+
+    public abstract void applyNamedPower();
 
     /**
      * Determine item grade int.
@@ -219,8 +236,10 @@ public abstract class Enemy {
                         name += " Hide Armor";
                     if (getClass().getSimpleName().equals("Goblin"))
                         name += " Cloth Armor";
+                    if (getClass().getSimpleName().equals("Demon"))
+                        name += " Armor";
                     if (grade == 5)
-                        name = "Robe of Power";
+                        name = "Robe of Life";
                     if (grade == 6)
                         name = "Robe of the Archmagi";
                     drops[i] = new Armor(name, grade);
@@ -236,6 +255,8 @@ public abstract class Enemy {
                         name += " Bone Staff";
                     if (getClass().getSimpleName().equals("Goblin"))
                         name = " Wooden Staff";
+                    if (getClass().getSimpleName().equals("Demon"))
+                        name += " Staff";
                     if (grade == 5)
                         name = "Staff of Power";
                     if (grade == 6)
@@ -264,16 +285,6 @@ public abstract class Enemy {
     }
 
     /**
-     * Sets health.
-     *
-     * @param health the health
-     */
-    protected void setHealth(double health) {
-
-        this.health = health;
-    }
-
-    /**
      * Gets defence.
      *
      * @return the defence
@@ -283,21 +294,21 @@ public abstract class Enemy {
     }
 
     /**
-     * Gets tick damage.
-     *
-     * @return the tick damage
-     */
-    public double getTickDamage() {
-        return tickDamage;
-    }
-
-    /**
      * Sets defence.
      *
      * @param defence the defence
      */
     protected void setDefence(double defence) {
         this.defence = defence;
+    }
+
+    /**
+     * Gets tick damage.
+     *
+     * @return the tick damage
+     */
+    public double getTickDamage() {
+        return tickDamage;
     }
 
     /**
@@ -323,7 +334,20 @@ public abstract class Enemy {
         if (damageType.equals("Earth") && !type.equals("Earth")) {
             lowerDefence(0.05);
         }
+
         double totalDamage = (damage - damage * getDefence()) + tickDamage;
+
+        if (isStrongAgainst(damageType)) {
+            totalDamage *= 0.75;
+        }
+        if (isWeakness(damageType)) {
+            totalDamage *= 1.5;
+        }
+        if (damageType.equals("True Magic")) {
+            totalDamage *= 2;
+            lowerDefence(1);
+        }
+
         registerDamage(totalDamage);
 
         if (damageType.equals("Lightning") && !type.equals("Lightning")) {
@@ -331,16 +355,17 @@ public abstract class Enemy {
 
         }
 
-        if (damageType.equals("True Magic")) {
-            totalDamage *= 2;
-            lowerDefence(1);
-        }
 
         return totalDamage;
     }
 
     public String toString() {
+
+        if (named) {
+            return name;
+        }
         return String.format("%s %s", type, this.getClass().getSimpleName());
+
     }
 
     /**

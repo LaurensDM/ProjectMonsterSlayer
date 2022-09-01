@@ -324,5 +324,7 @@ public class DomeinController {
         game.regenerateMana();
     }
 
-
+    public void craftItem(String component, String magicStone) {
+        game.craftItem(component, magicStone);
+    }
 }
