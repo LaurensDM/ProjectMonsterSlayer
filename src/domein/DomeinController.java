@@ -12,6 +12,9 @@ public class DomeinController {
     private Game game;
     private PlayerRepo repo;
     private Player player;
+    private String craftingComponent1;
+    private String craftingComponent2;
+
 
     /**
      * create an instance of PlayerRepository
@@ -133,6 +136,7 @@ public class DomeinController {
     public List<String> giveBag() {
         List<String> items = new ArrayList<>();
         for (Entry<Items, Integer> entry : player.getBag().entrySet()) {
+
             items.add(entry.getKey().toString() + " " + entry.getValue());
         }
         return items;
@@ -324,7 +328,37 @@ public class DomeinController {
         game.regenerateMana();
     }
 
-    public void craftItem(String component, String magicStone) {
-        game.craftItem(component, magicStone);
+    public void craftItem() {
+        game.craftItem(craftingComponent1, craftingComponent2);
+    }
+
+    public void selectComponent1(String component) {
+        craftingComponent1 = component;
+    }
+
+    public void selectComponent2(String component) {
+        craftingComponent2 = component;
+    }
+
+    public int deselectComponent(String component) {
+        if (craftingComponent1 != null && component.equals(craftingComponent1)) {
+            craftingComponent1 = null;
+            return 0;
+        }
+        if (craftingComponent2 != null && component.equals(craftingComponent2)) {
+            craftingComponent2 = null;
+            return 1;
+        }
+        return 2;
+    }
+
+    public String getCraftingComponent1() {
+        if (craftingComponent1 == null) return "";
+        return craftingComponent1;
+    }
+
+    public String getCraftingComponent2() {
+        if (craftingComponent2 == null) return "";
+        return craftingComponent2;
     }
 }

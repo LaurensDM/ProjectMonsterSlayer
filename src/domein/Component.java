@@ -9,8 +9,8 @@ public class Component extends Items {
      *
      * @param name the name
      */
-    public Component(String name, int itemClass) {
-        super(name, 0);
+    public Component(String name, int grade, int itemClass) {
+        super(name, grade);
         this.itemClass = itemClass;
     }
 

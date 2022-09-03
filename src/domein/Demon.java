@@ -80,7 +80,36 @@ public class Demon extends Enemy {
     }
 
     /**
-     * @return
+     * @return component
+     */
+    @Override
+    protected Component determineComponent() {
+        String itemClass = Items.ITEMS.get(sr.nextInt(Items.ITEMS.size()));
+
+        int grade;
+        String evolvedType;
+        if (evolved) {
+            evolvedType = "Arch ";
+            grade = 4;
+        } else {
+            evolvedType = "";
+            grade = 3;
+        }
+
+        Component component = null;
+
+        switch (itemClass) {
+            case "Mana Potion" -> component = new Component(evolvedType + "Demon Essence", grade, 0);
+            case "Power Potion" -> component = new Component(evolvedType + "Demon Blood", grade, 1);
+            case "Weapon" -> component = new Component(evolvedType + "Demon Staff", grade, 2);
+            case "Armor" -> component = new Component(evolvedType + "Demon Armor", grade, 3);
+        }
+
+        return component;
+    }
+
+    /**
+     * @return exp
      */
     @Override
     public int dropExp() {

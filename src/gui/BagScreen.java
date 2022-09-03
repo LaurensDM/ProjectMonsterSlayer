@@ -18,6 +18,7 @@ import java.util.List;
 public class BagScreen extends GridPane {
 
 
+    private final int actionEvent;
     private List<String> bag;
     private int column = 0;
     private int row = 1;
@@ -25,12 +26,15 @@ public class BagScreen extends GridPane {
     private DomeinController dc;
     private List<Button> lblList = new LinkedList<>();
     private boolean potionUsed = false;
+    private int selectCounter = 0;
+    private int deselectCounter = 0;
 
     /**
      * Instantiates a new Bag screen.
      */
-    public BagScreen(DomeinController dc) {
+    public BagScreen(DomeinController dc, int actionEvent) {
         this.dc = dc;
+        this.actionEvent = actionEvent;
         this.setId("bag");
 //		this.setVgap(10);
 
@@ -62,16 +66,23 @@ public class BagScreen extends GridPane {
             lblList.add(bagLbl);
 
             bagLbl.setOnAction(evt -> {
-                potionUsed = false;
-                try {
-                    String confirmation = dc.selectItem(bagLbl.getText(), GamePanel.inGame);
-                    error.setText(confirmation);
-                    potionUsed = true;
-                    update();
-                } catch (IllegalArgumentException e) {
-                    error.setText(e.getLocalizedMessage());
+                if (actionEvent == 0) {
+                    potionUsed = false;
+                    try {
+                        String confirmation = dc.selectItem(bagLbl.getText(), GamePanel.inGame);
+                        error.setText(confirmation);
+                        potionUsed = true;
+                        update();
+                    } catch (IllegalArgumentException e) {
+                        error.setText(e.getLocalizedMessage());
+                    }
                 }
+                if (actionEvent == 1) {
+                    craftingEvent(bagLbl);
+                }
+                if (actionEvent == 2) {
 
+                }
             });
 
             this.add(bagLbl, column, row);
@@ -89,6 +100,28 @@ public class BagScreen extends GridPane {
         boolean bool = potionUsed;
         potionUsed = false;
         return bool;
+    }
+
+    private void craftingEvent(Button bagLbl) {
+        if (bagLbl.getId() != null) {
+            selectCounter = dc.deselectComponent(bagLbl.getText());
+            bagLbl.setId(null);
+            System.err.println("Item deselected");
+            deselectCounter++;
+            if (deselectCounter >= 2) {
+                selectCounter = 0;
+                deselectCounter = 0;
+            }
+            return;
+        }
+        if (bagLbl.getId() == null) {
+            bagLbl.setId("selected");
+            System.err.println("Item selected");
+            if (selectCounter == 0) dc.selectComponent1(bagLbl.getText());
+            if (selectCounter == 1) dc.selectComponent2(bagLbl.getText());
+            selectCounter++;
+        }
+
     }
 
     public void update() {
@@ -111,6 +144,7 @@ public class BagScreen extends GridPane {
             }
 
             lblList.get(counter).setText(content);
+            lblList.get(counter).setId(null);
             if (tooltip != null) lblList.get(counter).setTooltip(tooltip);
 
 

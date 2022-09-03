@@ -62,6 +62,35 @@ public class Golem extends Enemy {
      * @return
      */
     @Override
+    protected Component determineComponent() {
+        String itemClass = Items.ITEMS.get(sr.nextInt(Items.ITEMS.size()));
+
+        int grade;
+        String evolvedType;
+        if (evolved) {
+            evolvedType = "Ancient ";
+            grade = 5;
+        } else {
+            evolvedType = "";
+            grade = 4;
+        }
+
+        Component component = null;
+
+        switch (itemClass) {
+            case "Mana Potion" -> component = new Component(evolvedType + "Golem Essence", grade, 0);
+            case "Power Potion" -> component = new Component(evolvedType + "Golem Energy", grade, 1);
+            case "Weapon" -> component = new Component(evolvedType + "Golem Conduit", grade, 2);
+            case "Armor" -> component = new Component(evolvedType + "Golem Ore", grade, 3);
+        }
+
+        return component;
+    }
+
+    /**
+     * @return
+     */
+    @Override
     public int dropExp() {
         int powerLevel = (int) (MAX_HEALTH + MAX_HEALTH * MAX_DEFENCE);
         return (int) (powerLevel * 0.5);

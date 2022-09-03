@@ -142,6 +142,7 @@ public class GamePanel extends StackPane {
     private BagScreen inventory;
     private SettingScreen settings;
     private Status status;
+    private CraftingScreen craftingSystem;
     private SageDialogue sageDialogue;
     private SkillPanel skills;
     private MerchantDialogue merchantDialogue;
@@ -190,7 +191,7 @@ public class GamePanel extends StackPane {
         setUpGame();
 
 
-        this.getChildren().addAll(canvas, bottomUI, topUI, notification, dialogue, inventory, status, settings);
+        this.getChildren().addAll(canvas, bottomUI, topUI, notification, dialogue, inventory, status, craftingSystem, settings);
 
         //KEYEVENTS
         this.setOnKeyPressed(evt -> {
@@ -245,6 +246,14 @@ public class GamePanel extends StackPane {
                 else {
                     status.update();
                     status.setVisible(true);
+                }
+            }
+
+            if (code.equals(KeyCode.C)) {
+                if (craftingSystem.isVisible()) craftingSystem.setVisible(false);
+                else {
+                    craftingSystem.reset();
+                    craftingSystem.setVisible(true);
                 }
             }
         });
@@ -366,6 +375,14 @@ public class GamePanel extends StackPane {
         configureStatus();
         configureSettings();
         configureInventory();
+        configureCraftingSystem();
+    }
+
+    private void configureCraftingSystem() {
+        craftingSystem = new CraftingScreen(dc, rs);
+        craftingSystem.setMaxHeight(0.5 * screenHeight);
+        craftingSystem.setMaxWidth(0.5 * screenWidth);
+        craftingSystem.setVisible(false);
     }
 
     private void configureStatus() {
@@ -506,7 +523,7 @@ public class GamePanel extends StackPane {
      * Configure Inventory.
      */
     private void configureInventory() {
-        inventory = new BagScreen(dc);
+        inventory = new BagScreen(dc, 0);
         inventory.setMaxWidth(screenWidth * 0.2);
         inventory.setMaxHeight(screenHeight * 0.8);
         StackPane.setAlignment(inventory, Pos.CENTER_RIGHT);

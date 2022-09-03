@@ -180,6 +180,8 @@ public abstract class Enemy {
      */
     protected abstract int determineItemGrade(boolean fullpower);
 
+    protected abstract Component determineComponent();
+
     /**
      * Drop items.
      *
@@ -202,69 +204,10 @@ public abstract class Enemy {
         drops[0] = new Magic_Stone(getType() + " " + this.getClass().getSimpleName() + " Stone", grade);
 
         for (int i = 1; i < drops.length; i++) {
-
-            item = Items.ITEMS.get(sr.nextInt(Items.ITEMS.size()));
-            grade = determineItemGrade(fullpower);
-
-            switch (item) {
-
-                case "Mana Potion":
-                    name = getType() + " " + getClass().getSimpleName() + " Essence Potion";
-                    if (grade == 5)
-                        name = "Greater Mana Potion";
-                    if (grade == 6)
-                        name = "Arcana Potion";
-                    drops[i] = new Mana_Potion(name, grade);
-                    break;
-
-                case "Power Potion":
-                    name = getType() + " " + getClass().getSimpleName() + " Blood Potion";
-                    if (grade == 5)
-                        name = "Greater Power Potion";
-                    if (grade == 6)
-                        name = "Ancient Power Potion";
-                    drops[i] = new Power_Potion(name, grade);
-                    break;
-
-                case "Armor":
-                    name = getType() + " " + getClass().getSimpleName();
-                    if (getClass().getSimpleName().equals("Dragon"))
-                        name += " Scale Armor";
-                    if (getClass().getSimpleName().equals("Golem"))
-                        name += " Rock Armor";
-                    if (getClass().getSimpleName().equals("Troll"))
-                        name += " Hide Armor";
-                    if (getClass().getSimpleName().equals("Goblin"))
-                        name += " Cloth Armor";
-                    if (getClass().getSimpleName().equals("Demon"))
-                        name += " Armor";
-                    if (grade == 5)
-                        name = "Robe of Life";
-                    if (grade == 6)
-                        name = "Robe of the Archmagi";
-                    drops[i] = new Armor(name, grade);
-                    break;
-
-                case "Weapon":
-                    name = getType() + " " + getClass().getSimpleName();
-                    if (getClass().getSimpleName().equals("Dragon"))
-                        name += " Bone Staff";
-                    if (getClass().getSimpleName().equals("Golem"))
-                        name += " Core Staff";
-                    if (getClass().getSimpleName().equals("Troll"))
-                        name += " Bone Staff";
-                    if (getClass().getSimpleName().equals("Goblin"))
-                        name = " Wooden Staff";
-                    if (getClass().getSimpleName().equals("Demon"))
-                        name += " Staff";
-                    if (grade == 5)
-                        name = "Staff of Power";
-                    if (grade == 6)
-                        name = "Staff of the Archmagi";
-                    drops[i] = new Weapon(name, grade);
-                    break;
-            }
+            drops[i] = determineComponent();
         }
+
+
 
         return drops;
     }

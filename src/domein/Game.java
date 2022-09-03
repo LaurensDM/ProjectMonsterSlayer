@@ -535,8 +535,45 @@ public class Game {
         player.addMoney(value);
     }
 
-    public void craftItem(String component, String Mana_Stone) {
-        craftingSystem.craftItem(new Component("", 0), new Magic_Stone("", 0));
+    public void craftItem(String component, String manaStone) {
+        String compTransformed = transformString(component);
+        String stoneTransformed = transformString(manaStone);
+
+        Magic_Stone stone = null;
+        for (Entry<Items, Integer> entry : player.getBag().entrySet()) {
+            if (entry.getKey() instanceof Magic_Stone && entry.getKey().toString().equals(stoneTransformed)) {
+                stone = (Magic_Stone) entry.getKey();
+            }
+        }
+
+        Component comp = null;
+        for (Entry<Items, Integer> entry : player.getBag().entrySet()) {
+            if (entry.getKey() instanceof Component && entry.getKey().toString().equals(compTransformed)) {
+                comp = (Component) entry.getKey();
+            }
+        }
+
+        Items craftedItem = craftingSystem.craftItem(comp, stone);
+        if (craftedItem != null) {
+            player.addItemToBag(craftedItem);
+            player.removeItemFromBag(stone);
+            player.removeItemFromBag(comp);
+        } else {
+            throw new IllegalArgumentException("Not a valid item combination!");
+        }
     }
 
+    private String transformString(String string) {
+        String transformedString = "";
+        String[] array = string.split(" ");
+        for (int i = 0; i < array.length - 1; i++) {
+
+            if (i == array.length - 2) {
+                transformedString += array[i];
+            } else {
+                transformedString += array[i] + " ";
+            }
+        }
+        return transformedString;
+    }
 }

@@ -281,8 +281,22 @@ public class PlayerMapper {
             case "Weapon" -> item = new Weapon(itemName, grade, durability);
             case "Armor" -> item = new Armor(itemName, grade, durability);
             case "Magic_Stone" -> item = new Magic_Stone(itemName, grade);
+            case "Component" -> item = new Component(itemName, grade, determineComponentClass(itemName));
         }
         return item;
     }
 
+    private int determineComponentClass(String component) {
+        int componentGrade = 0;
+        String key = component;
+
+        if (key.contains("Essence")) componentGrade = 0;
+        if (key.contains("Blood") || key.contains("Energy")) componentGrade = 1;
+        if (key.contains("Staff") || key.contains("Bone") || key.contains("Conduit")) componentGrade = 2;
+        if (key.contains("Ore") || key.contains("Armor") || key.contains("Hide") || key.contains("Scale"))
+            componentGrade = 3;
+
+
+        return componentGrade;
+    }
 }

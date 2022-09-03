@@ -75,6 +75,34 @@ public class Dragon extends Enemy {
 	}
 
 	/**
+	 * @return
+	 */
+	@Override
+	protected Component determineComponent() {
+		String itemClass = Items.ITEMS.get(sr.nextInt(Items.ITEMS.size()));
+		String evolvedType;
+		int grade;
+		if (evolved) {
+			evolvedType = "Golden ";
+			grade = 6;
+		} else {
+			evolvedType = "";
+			grade = 5;
+		}
+
+		Component component = null;
+
+		switch (itemClass) {
+			case "Mana Potion" -> component = new Component(evolvedType + "Dragon Essence", grade, 0);
+			case "Power Potion" -> component = new Component(evolvedType + "Dragon Blood", grade, 1);
+			case "Weapon" -> component = new Component(evolvedType + "Dragon Bone", grade, 2);
+			case "Armor" -> component = new Component(evolvedType + "Dragon Scales", grade, 3);
+		}
+
+		return component;
+	}
+
+	/**
 	 * @return exp
 	 */
 	@Override

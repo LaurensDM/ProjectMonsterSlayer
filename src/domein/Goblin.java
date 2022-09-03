@@ -68,10 +68,39 @@ public class Goblin extends Enemy {
         return grade;
     }
 
-	@Override
-	public int dropExp() {
-		int powerLevel = (int) (MAX_HEALTH + MAX_HEALTH * MAX_DEFENCE);
-		return (int) (powerLevel * 0.5);
-	}
+    /**
+     * @return
+     */
+    @Override
+    protected Component determineComponent() {
+        String itemClass = Items.ITEMS.get(sr.nextInt(Items.ITEMS.size()));
+
+        int grade;
+        String evolvedType;
+        if (evolved) {
+            evolvedType = "Hob ";
+            grade = 2;
+        } else {
+            evolvedType = "";
+            grade = 1;
+        }
+
+        Component component = null;
+
+        switch (itemClass) {
+            case "Mana Potion" -> component = new Component(evolvedType + " Goblin Essence", grade, 0);
+            case "Power Potion" -> component = new Component(evolvedType + " Goblin Blood", grade, 1);
+            case "Weapon" -> component = new Component(evolvedType + " Wooden Staff", grade, 2);
+            case "Armor" -> component = new Component(evolvedType + " Cloth Armor", grade, 3);
+        }
+
+        return component;
+    }
+
+    @Override
+    public int dropExp() {
+        int powerLevel = (int) (MAX_HEALTH + MAX_HEALTH * MAX_DEFENCE);
+        return (int) (powerLevel * 0.5);
+    }
 
 }

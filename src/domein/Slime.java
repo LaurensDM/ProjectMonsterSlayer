@@ -38,6 +38,14 @@ public class Slime extends Enemy {
     }
 
     /**
+     * @return
+     */
+    @Override
+    protected Component determineComponent() {
+        return null;
+    }
+
+    /**
      * @return exp
      */
     @Override

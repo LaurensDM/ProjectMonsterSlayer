@@ -64,6 +64,35 @@ public class Troll extends Enemy {
 	 * @return
 	 */
 	@Override
+	protected Component determineComponent() {
+		String itemClass = Items.ITEMS.get(sr.nextInt(Items.ITEMS.size()));
+
+		int grade;
+		String evolvedType;
+		if (evolved) {
+			evolvedType = "Rock ";
+			grade = 3;
+		} else {
+			evolvedType = "";
+			grade = 2;
+		}
+
+		Component component = null;
+
+		switch (itemClass) {
+			case "Mana Potion" -> component = new Component(evolvedType + "Troll Essence", grade, 0);
+			case "Power Potion" -> component = new Component(evolvedType + "Troll Blood", grade, 1);
+			case "Weapon" -> component = new Component(evolvedType + "Troll Bone", grade, 2);
+			case "Armor" -> component = new Component(evolvedType + "Troll Hide", grade, 3);
+		}
+
+		return component;
+	}
+
+	/**
+	 * @return
+	 */
+	@Override
 	public int dropExp() {
 		int powerLevel = (int) (MAX_HEALTH + MAX_HEALTH * MAX_DEFENCE);
 		return (int) (powerLevel * 0.5);
