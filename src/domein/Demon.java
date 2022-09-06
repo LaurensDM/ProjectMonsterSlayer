@@ -28,9 +28,9 @@ public class Demon extends Enemy {
             super.breakFrozen();
             return 0;
         }
-        int power = sr.nextInt(75) + 50;
+        int power = sr.nextInt(50) + 250;
         if (super.evolved == true) {
-            power = sr.nextInt(5) + 125;
+            power = sr.nextInt(5) + 430;
         }
         if (super.named == true) {
             power *= 1.5;
@@ -67,7 +67,7 @@ public class Demon extends Enemy {
     protected int determineItemGrade(boolean fullpower) {
         int grade;
         if (evolved) {
-            grade = 3;
+            grade = 4;
         } else
             grade = sr.nextInt(2) + 2;
 

@@ -24,9 +24,9 @@ public class Golem extends Enemy {
             super.breakFrozen();
             return 0;
         }
-        int power = sr.nextInt(100) + 125;
+        int power = sr.nextInt(100) + 450;
         if (super.evolved == true) {
-            power = sr.nextInt(5) + 225;
+            power = sr.nextInt(5) + 800;
         }
         if (named) power *= 1.5;
         return power;

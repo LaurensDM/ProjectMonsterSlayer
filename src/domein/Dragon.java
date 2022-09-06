@@ -31,9 +31,9 @@ public class Dragon extends Enemy {
 			super.breakFrozen();
 			return 0;
 		}
-		double attack = sr.nextInt(125) + 225;
+		double attack = sr.nextInt(100) + 800;
 		if (evolved) {
-			attack = 500;
+            attack = 2500;
 		}
 		if (named) attack *= 1.5;
 		return attack;

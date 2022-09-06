@@ -118,7 +118,7 @@ public class Game {
         if (judgement) {
             el = new True_Magic(manapool, player.getSkills(), maxMana);
             el.deliverJudgement();
-            judgement = false;
+
         }
 
         if (el instanceof Wind || el instanceof True_Magic) {
@@ -132,7 +132,7 @@ public class Game {
         }
 
         damage *= player.getSkills().getPower() * weaponDamage;
-        double totalDamage = enemy.takeDamage(element, damage);
+        double totalDamage = enemy.takeDamage(element, damage, judgement);
         manapool = el.getMana();
         if (player.getWeapon() != null) {
             player.getWeapon().lowerDurability(fullpower);
@@ -140,7 +140,7 @@ public class Game {
                 player.destroyWeapon();
             }
         }
-
+        judgement = false;
         fullpower = false;
         this.damage = String.format("You did %.0f damage!", totalDamage);
     }
@@ -154,7 +154,7 @@ public class Game {
 
         if (player.getSkills().isReflection()) {
             if (sr.nextInt(5) == 0) {
-                enemy.takeDamage(enemy.getType(), damage);
+                enemy.takeDamage(enemy.getType(), damage, false);
                 damage = 0;
             }
         }
@@ -415,8 +415,8 @@ public class Game {
     }
 
     public void regenerateMana() {
-        if (manapool + maxMana * 0.001 <= maxMana) {
-            manapool += maxMana * 0.001;
+        if (manapool + maxMana * 0.01 <= maxMana) {
+            manapool += maxMana * 0.01;
         } else {
             manapool = maxMana;
         }
@@ -460,19 +460,13 @@ public class Game {
 
     public int getPriceItem(String item) {
         double price = 0;
-        String grade = item.split(" ")[0];
-        SecureRandom sr = new SecureRandom();
 
-        switch (grade.toLowerCase()) {
-            case "damaged" -> price = 0;
-            case "common" -> price = sr.nextInt(300) + 200;
-            case "uncommon" -> price = sr.nextInt(300) + 700;
-            case "rare" -> price = sr.nextInt(300) + 1700;
-            case "epic" -> price = sr.nextInt(300) + 14700;
-            case "legendary" -> price = sr.nextInt(4000) + 196000;
-            case "mythical" -> price = 5000000;
+        Items itemObject = returnItem(item);
+        if (itemObject instanceof Component) {
+            price = getPriceComponent(itemObject);
+        } else {
+            price = getPriceNormalItem(itemObject);
         }
-
 
         switch (player.getAdventureRank()) {
             case "unranked" -> price += price * 0.1;
@@ -489,10 +483,44 @@ public class Game {
         return (int) Math.round(price);
     }
 
+    private double getPriceNormalItem(Items item) {
+        double value = 0;
+        switch (item.getGrade()) {
+            case 0 -> value = 0;
+            case 1 -> value += sr.nextInt(10) + 100;
+            case 2 -> value += sr.nextInt(50) + 400;
+            case 3 -> value += sr.nextInt(50) + 1600;
+            case 4 -> value += sr.nextInt(50) + 6400;
+            case 5 -> value += sr.nextInt(400) + 80000;
+            case 6 -> value += 5000000;
+        }
+
+        if (item instanceof Mana_Potion || item instanceof Power_Potion) {
+            value *= 0.75;
+        }
+
+        return value;
+    }
+
+    private double getPriceComponent(Items item) {
+        double value = 0;
+        switch (item.getGrade()) {
+            case 0 -> value = 0;
+            case 1 -> value += sr.nextInt(10) + 75;
+            case 2 -> value += sr.nextInt(50) + 300;
+            case 3 -> value += sr.nextInt(50) + 1000;
+            case 4 -> value += sr.nextInt(50) + 5000;
+            case 5 -> value += sr.nextInt(400) + 60000;
+            case 6 -> value += 3000000;
+        }
+
+        return value;
+    }
+
     public void buyItem(String item) {
         Items soldItem = null;
 
-        int price = (int) (getPriceItem(item) * 0.5);
+        int price = getPriceItem(item);
 
         for (Items it : merchantStock()) {
 
@@ -522,17 +550,26 @@ public class Game {
         int value = 0;
 
         for (Items stone : stones) {
-            switch (stone.getGrade()) {
-                case 0 -> value += 0;
-                case 1 -> value += sr.nextInt(10) + 40;
-                case 2 -> value += sr.nextInt(50) + 200;
-                case 3 -> value += sr.nextInt(50) + 800;
-                case 4 -> value += sr.nextInt(50) + 6400;
-                case 5 -> value += sr.nextInt(400) + 80000;
-                case 6 -> value += 5000000;
-            }
+            value += (int) getPriceNormalItem(stone);
         }
         player.addMoney(value);
+    }
+
+    public void sellItem(String item) {
+        Items soldItem = null;
+        String transformedString = transformString(item);
+        int price = (int) (getPriceItem(item) * 0.75);
+
+        for (Items it : player.getBag().keySet()) {
+
+            if (it.toString().equals(transformedString)) {
+                soldItem = it;
+            }
+
+        }
+
+        player.addMoney(price);
+        player.removeItemFromBag(soldItem);
     }
 
     public void craftItem(String component, String manaStone) {
@@ -561,6 +598,23 @@ public class Game {
         } else {
             throw new IllegalArgumentException("Not a valid item combination!");
         }
+    }
+
+    private Items returnItem(String itemString) {
+        Items item = null;
+        for (Items it : player.getBag().keySet()) {
+            if (it.toString().equals(transformString(itemString))) {
+                item = it;
+            }
+        }
+
+        if (item == null) {
+            for (Items it : merchantStock()) {
+                if (it.toString().equals(itemString)) item = it;
+            }
+        }
+        Items itemExample = item;
+        return item;
     }
 
     private String transformString(String string) {

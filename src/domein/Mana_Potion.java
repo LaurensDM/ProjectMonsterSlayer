@@ -25,19 +25,19 @@ public class Mana_Potion extends Potion {
 			effect = -100;
 			break;
 		case 1:
-            effect = 100;
+            effect = 300;
 			break;
 		case 2:
-            effect = 200;
+			effect = 0.25;
 			break;
 		case 3:
-            effect = 0.25;
+			effect = 0.35;
 			break;
 		case 4:
-            effect = 0.4;
+			effect = 0.5;
 			break;
 		case 5:
-            effect = 0.7;
+			effect = 0.8;
 			break;
 		case 6:
 			effect = 1;

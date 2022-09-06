@@ -25,7 +25,7 @@ public class GamePanel extends StackPane {
     /**
      * The constant maxScreenCol.
      */
-    public static final int maxScreenCol = 30;
+    public static final int maxScreenCol = 16;
     /**
      * The constant maxScreenRow.
      */
@@ -48,11 +48,11 @@ public class GamePanel extends StackPane {
      * The Max world col.
      */
 // WORLD parameters
-    public final int maxWorldCol = 1024;
+    public final int maxWorldCol = 50;
     /**
      * The Max world row.
      */
-    public final int MaxWorldRow = 1024;
+    public final int MaxWorldRow = 50;
     /**
      * The World width.
      */
@@ -179,8 +179,8 @@ public class GamePanel extends StackPane {
         gc = canvas.getGraphicsContext2D();
         player = new Player(this, initialX, initialY);
         tileM = new TileManager(this);
-//        tileM.createMap("world01");
-        tileM.generateRandomMap();
+        tileM.createMap("world01");
+//        tileM.generateRandomMap();
 //      tileM.generateMapFromImage(new Image(getClass().getResourceAsStream("/files/mapV1.png")));
         collision = new CollisionChecker(this);
         setter = new AssetSetter(this);

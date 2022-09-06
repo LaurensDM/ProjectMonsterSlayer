@@ -29,9 +29,9 @@ public class Goblin extends Enemy {
             super.breakFrozen();
             return 0;
         }
-        int power = sr.nextInt(41) + 10;
+        int power = sr.nextInt(26) + 50;
         if (super.evolved == true) {
-            power = sr.nextInt(5) + 50;
+            power = sr.nextInt(5) + 120;
         }
         if (named) power *= 1.5;
         return power;

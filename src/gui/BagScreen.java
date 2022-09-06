@@ -51,7 +51,8 @@ public class BagScreen extends GridPane {
             Tooltip tooltip = null;
             try {
                 content = bag.get(counter);
-                tooltip = new Tooltip(giveItemInformation(bag.get(counter)));
+                if (actionEvent == 2) tooltip = new Tooltip(giveItemPrice(content));
+                else tooltip = new Tooltip(giveItemInformation(content));
                 tooltip.setShowDelay(Duration.ZERO);
                 tooltip.setHideDelay(Duration.ZERO);
                 tooltip.setShowDuration(Duration.INDEFINITE);
@@ -81,7 +82,7 @@ public class BagScreen extends GridPane {
                     craftingEvent(bagLbl);
                 }
                 if (actionEvent == 2) {
-
+                    merchantEvent(bagLbl);
                 }
             });
 
@@ -94,6 +95,12 @@ public class BagScreen extends GridPane {
         }
 
 
+    }
+
+    private void merchantEvent(Button bagLbl) {
+        dc.sellItem(bagLbl.getText());
+        error.setText("You have sold " + bagLbl.getText());
+        update();
     }
 
     public boolean potionUsed() {
@@ -125,7 +132,8 @@ public class BagScreen extends GridPane {
     }
 
     public void update() {
-
+        selectCounter = 0;
+        deselectCounter = 0;
         String content = "";
         bag = dc.giveBag();
 
@@ -134,7 +142,8 @@ public class BagScreen extends GridPane {
             Tooltip tooltip = null;
             try {
                 content = bag.get(counter);
-                tooltip = new Tooltip(giveItemInformation(bag.get(counter)));
+                if (actionEvent == 2) tooltip = new Tooltip(giveItemPrice(content));
+                else tooltip = new Tooltip(giveItemInformation(content));
                 tooltip.setShowDelay(Duration.ZERO);
                 tooltip.setHideDelay(Duration.ZERO);
                 tooltip.setShowDuration(Duration.INDEFINITE);
@@ -149,6 +158,10 @@ public class BagScreen extends GridPane {
 
 
         }
+    }
+
+    private String giveItemPrice(String item) {
+        return String.format("This item costs %d", dc.getPriceItem(item));
     }
 
     private String giveItemInformation(String item) {

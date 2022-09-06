@@ -181,6 +181,10 @@ public class DomeinController {
         game.buyItem(item);
     }
 
+    public void sellItem(String item) {
+        game.sellItem(item);
+    }
+
     public List<String> getMerchantStock() {
         List<String> stock = new ArrayList<>();
         for (Items item : game.merchantStock()) {

@@ -220,7 +220,7 @@ public abstract class Enemy {
      * @param shred by how much the defense is lowered, usually by 5%
      */
     protected void lowerDefence(double shred) {
-        if (defence - shred > 0) {
+        if (defence - shred >= 0) {
             defence -= shred;
             return;
         }
@@ -261,7 +261,13 @@ public abstract class Enemy {
      * @param damage     the damage
      * @return how much damage was taken
      */
-    public double takeDamage(String damageType, double damage) {
+    public double takeDamage(String damageType, double damage, boolean judgement) {
+        double totalDamage = damage;
+
+        if (judgement) {
+            lowerDefence(1);
+        }
+
         if (damageType.equals(type)) {
             registerDamage(damage * 0.5);
             return damage * 0.5;
@@ -278,7 +284,11 @@ public abstract class Enemy {
             lowerDefence(0.05);
         }
 
-        double totalDamage = (damage - damage * getDefence()) + tickDamage;
+        if (damageType.equals("True Magic")) {
+            totalDamage *= 2;
+            lowerDefence(0.05);
+        }
+
 
         if (isStrongAgainst(damageType)) {
             totalDamage *= 0.75;
@@ -286,10 +296,8 @@ public abstract class Enemy {
         if (isWeakness(damageType)) {
             totalDamage *= 1.5;
         }
-        if (damageType.equals("True Magic")) {
-            totalDamage *= 2;
-            lowerDefence(1);
-        }
+        totalDamage += tickDamage;
+        totalDamage -= damage * getDefence();
 
         registerDamage(totalDamage);
 

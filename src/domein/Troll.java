@@ -21,9 +21,9 @@ public class Troll extends Enemy {
 			super.breakFrozen();
 			return 0;
 		}
-		int power = sr.nextInt(51) + 25;
+		int power = sr.nextInt(50) + 125;
 		if (super.evolved == true) {
-			power = sr.nextInt(5) + 75;
+            power = sr.nextInt(5) + 250;
 		}
 		return power;
 	}
